@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserStatus } from './dto/user-status.enum';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -14,12 +15,13 @@ export class UserService {
     const data: Prisma.UserCreateInput = {
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, 10),
+      status: UserStatus.PENDING,
     };
 
     const createdUser = await this.prisma.user.create({ data });
 
     return {
-      ...createdUser,
+      ...createdUser, 
       password: undefined,
     };
   }

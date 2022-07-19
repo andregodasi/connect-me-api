@@ -10,11 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserStatus {
+  PENDING
+  ACTIVATED
+  DEACTIVATE
+}
+
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  name     String
-  password String
+  id        Int        @id @default(autoincrement())
+  uuid      String     @unique @default(uuid()) @db.Uuid
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  email     String     @unique
+  nickname  String     @unique
+  name      String
+  password  String
+  status    UserStatus @default(PENDING)
 
   @@map("user")
 }

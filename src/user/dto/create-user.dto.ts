@@ -5,7 +5,10 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  IsEnum,
+  IsNotEmpty,
 } from 'class-validator';
+import { UserStatus } from './user-status.enum';
 
 export class CreateUserDto extends User {
   @IsEmail()
@@ -21,4 +24,7 @@ export class CreateUserDto extends User {
 
   @IsString()
   name: string;
+
+  @IsString()
+  nickname: string;
 }
