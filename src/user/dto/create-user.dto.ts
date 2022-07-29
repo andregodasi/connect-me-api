@@ -5,8 +5,6 @@ import {
   Matches,
   MaxLength,
   MinLength,
-  IsEnum,
-  IsNotEmpty,
 } from 'class-validator';
 import { UserStatus } from './user-status.enum';
 
