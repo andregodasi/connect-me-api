@@ -16,16 +16,84 @@ enum UserStatus {
   DEACTIVATE
 }
 
+enum UserGroupRole {
+  ADMIN
+  MAINTAINER
+  PARTICIPANT
+}
+
+enum UserGroupStatus {
+  PENDING
+  ACTIVATED
+  DEACTIVATE
+}
+
 model User {
-  id        Int        @id @default(autoincrement())
-  uuid      String     @unique @default(uuid()) @db.Uuid
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  email     String     @unique
-  nickname  String     @unique
+  id        Int         @id @default(autoincrement())
+  uuid      String      @unique @default(uuid()) @db.Uuid
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  email     String      @unique
+  nickname  String      @unique
   name      String
   password  String
-  status    UserStatus @default(PENDING)
+  status    UserStatus  @default(PENDING)
+  groups    UserGroup[]
+  events    UserEvent[]
 
   @@map("user")
+}
+
+model Group {
+  id          Int         @id @default(autoincrement())
+  uuid        String      @unique @default(uuid()) @db.Uuid
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  name        String
+  description String
+  slug        String      @unique
+  users       UserGroup[]
+  events      Event[]
+
+  @@map("group")
+}
+
+model UserGroup {
+  id          Int             @id @default(autoincrement())
+  user        User            @relation(fields: [fk_id_user], references: [id])
+  fk_id_user  Int
+  group       Group           @relation(fields: [fk_id_group], references: [id])
+  fk_id_group Int
+  role        UserGroupRole   @default(PARTICIPANT)
+  status      UserGroupStatus @default(ACTIVATED)
+
+  @@map("user_group")
+}
+
+model Event {
+  id                Int         @id @default(autoincrement())
+  uuid              String      @unique @default(uuid()) @db.Uuid
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("updated_at")
+  name              String
+  description       String
+  initialDate       DateTime    @map("initial_date")
+  finishDate        DateTime    @map("finish_date")
+  address           String
+  limitParticipants Int         @map("limit_participants")
+  users             UserEvent[]
+  group             Group?      @relation(fields: [groupId], references: [id])
+  groupId           Int?
+
+  @@map("event")
+}
+
+model UserEvent {
+  id          Int   @id @default(autoincrement())
+  user        User  @relation(fields: [fk_id_user], references: [id])
+  fk_id_user  Int
+  event       Event @relation(fields: [fk_id_event], references: [id])
+  fk_id_event Int
+
+  @@map("user_event")
 }
