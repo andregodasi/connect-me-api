@@ -1,0 +1,158 @@
+[
+  {
+    "_id": "d8ccd6fc-0439-4f9b-adff-7a8e5c26005d",
+    "colId": "a8356786-9515-4ccb-9fb3-5e0bc82b5546",
+    "containerId": "",
+    "name": "login",
+    "url": "{{url_api}}/login",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-07-26T00:29:52.468Z",
+    "modified": "2022-07-26T01:48:45.689Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"email\": \"andre@test.com\",\n    \"password\": \"Andre123\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "970aa03a-a383-4313-8eb2-e45f7df3fd6e",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "create",
+    "url": "{{url_api}}/user",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-07-26T01:41:17.608Z",
+    "modified": "2022-07-26T01:47:33.000Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\r\n    \"email\": \"andre@test.com\",\r\n    \"password\": \"Andre123\",\r\n    \"name\": \"Andre G\",\r\n    \"nickname\": \"andregodasi\"\r\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "7e58c7e8-f60c-4968-9437-d92087cc9c8e",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "create",
+    "url": "{{url_api}}/group",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-07-28T01:35:02.414Z",
+    "modified": "2022-07-29T02:15:17.514Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"name\": \"React CWB3\",\n    \"description\": \"Um evento para todos.\",\n    \"slug\": \"react-cwb3\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "68fee96a-806e-41e6-93a0-bb32609be267",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "findAll",
+    "url": "{{url_api}}/group",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-07-28T02:18:14.586Z",
+    "modified": "2022-07-28T02:35:17.960Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "b8519fee-e877-4fb7-9413-fcf72a8db4ef",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "findOne",
+    "url": "{{url_api}}/group/ed32c9d0-8fa3-428a-9024-0f5d81b30e11",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-07-28T02:33:57.804Z",
+    "modified": "2022-07-28T02:36:50.964Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "43ec7280-59cf-4abd-8439-2cf2d62b0356",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "update",
+    "url": "{{url_api}}/group/ed32c9d0-8fa3-428a-9024-0f5d81b30e11",
+    "method": "PATCH",
+    "sortNum": 40000,
+    "created": "2022-07-28T03:02:56.263Z",
+    "modified": "2022-07-28T03:08:48.590Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"name\": \"React CWB\",\n    \"description\": \"Um evento para todos.\",\n    \"slug\": \"react-cwb\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "3d6f0690-9f98-47ed-ac4f-c81da9fd6d87",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "delete",
+    "url": "{{url_api}}/group/e65c2ce0-8bcb-4973-8849-6a9337983e26",
+    "method": "DELETE",
+    "sortNum": 50000,
+    "created": "2022-07-28T03:39:34.594Z",
+    "modified": "2022-07-28T03:41:47.516Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "ea94f38a-0e01-4f55-9981-e8312cb4657b",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "me",
+    "url": "{{url_api}}/me",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-07-29T02:10:43.060Z",
+    "modified": "2022-07-29T02:13:15.292Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  }
+]

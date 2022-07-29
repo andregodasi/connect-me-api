@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "f105f715-2891-4dfa-a195-871291e69277",
+    "colId": "history",
+    "containerId": "",
+    "name": "{{url_api}}/user",
+    "url": "{{url_api}}/user",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-07-26T01:41:05.711Z",
+    "modified": "2022-07-26T01:41:05.712Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]
