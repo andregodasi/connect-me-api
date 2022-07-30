@@ -30,6 +30,10 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
+  findByUUID(uuid: string) {
+    return this.prisma.user.findUnique({ where: { uuid } });
+  }
+
   findAll() {
     return `This action returns all user`;
   }
