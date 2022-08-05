@@ -54,13 +54,13 @@ export class GroupService {
     });
   }
 
-  async findOne(uuid: string) {
+  async findByUuid(uuid: string) {
     return await this.prisma.group.findUnique({
       where: {
         uuid: uuid,
       },
       select: {
-        uuid: true,
+        id: true,
         name: true,
         description: true,
       },
