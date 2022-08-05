@@ -21,7 +21,7 @@ export class UserService {
     const createdUser = await this.prisma.user.create({ data });
 
     return {
-      ...createdUser, 
+      ...createdUser,
       password: undefined,
     };
   }
@@ -34,8 +34,8 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { uuid } });
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(): Promise<User[]> {
+    return this.prisma.user.findMany();
   }
 
   findOne(id: number) {
