@@ -154,5 +154,46 @@
       "bearer": "{{token}}"
     },
     "tests": []
+  },
+  {
+    "_id": "d963acfb-468f-4754-bbc3-368aa6767504",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "create",
+    "url": "{{url_api}}/event",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-07-30T20:21:11.112Z",
+    "modified": "2022-07-30T21:33:53.054Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"idGroup\": \"df610315-4cfa-4d3f-912e-1cdd3a04d679\",\n  \"name\": \"evento dia 01\",\n  \"description\": \"Evento de react boladao\",\n  \"initialDate\": \"2022-08-26T04:00:00.988Z\",\n  \"finishDate\": \"2022-08-26T06:00:00.988Z\",\n  \"address\": \"Rua número 0\",\n  \"limitParticipants\": 20\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "a9f3cf39-14d8-4ca0-ae5a-31d8b4baa5b8",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "findAll",
+    "url": "{{url_api}}/user",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-08-03T02:42:47.566Z",
+    "modified": "2022-08-03T02:43:17.206Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]
