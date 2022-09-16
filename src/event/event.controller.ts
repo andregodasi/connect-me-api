@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -28,6 +29,19 @@ export class EventController {
   @Get()
   findAll() {
     return this.eventService.findAll();
+  }
+
+  @Get('my/paginated')
+  getMyPaginated(
+    @CurrentUser() currentUser: User,
+    @Query('page') page: string,
+  ) {
+    return this.eventService.getMyPaginated(+page, currentUser);
+  }
+
+  @Get('paginated')
+  getPaginated(@Query('page') page: string) {
+    return this.eventService.getPaginated(+page);
   }
 
   @Get(':id')

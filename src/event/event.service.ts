@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { User } from '../user/entities/user.entity';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
@@ -17,7 +18,7 @@ export class EventService {
   }
 
   findAll() {
-    return `This action returns all event`;
+    return this.eventRepository.findAll();
   }
 
   findOne(id: number) {
@@ -30,5 +31,16 @@ export class EventService {
 
   remove(id: number) {
     return `This action removes a #${id} event`;
+  }
+
+  async getPaginated(page: number) {
+    return this.eventRepository.getPaginated(new PageOptionsDto(page));
+  }
+
+  async getMyPaginated(page: number, currentUser: User) {
+    return this.eventRepository.getMyPaginated(
+      new PageOptionsDto(page),
+      currentUser,
+    );
   }
 }

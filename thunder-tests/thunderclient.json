@@ -8,7 +8,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2022-07-26T01:48:45.689Z",
+    "modified": "2022-09-14T21:14:09.679Z",
     "headers": [],
     "params": [],
     "body": {
@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T01:41:17.608Z",
-    "modified": "2022-07-26T01:47:33.000Z",
+    "modified": "2022-08-08T17:19:45.952Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\r\n    \"email\": \"andre@test.com\",\r\n    \"password\": \"Andre123\",\r\n    \"name\": \"Andre G\",\r\n    \"nickname\": \"andregodasi\"\r\n}",
+      "raw": "{\n    \"email\": \"andre@test.com\",\n    \"password\": \"Andre123\",\n    \"name\": \"Andre G\",\n    \"nickname\": \"andregodasi\"\n}",
       "form": []
     },
     "tests": []
@@ -83,11 +83,11 @@
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
     "name": "findOne",
-    "url": "{{url_api}}/group/ed32c9d0-8fa3-428a-9024-0f5d81b30e11",
+    "url": "{{url_api}}/group/09182dd7-cda3-4c9b-a616-6b539361fd6d",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-07-28T02:33:57.804Z",
-    "modified": "2022-07-28T02:36:50.964Z",
+    "modified": "2022-09-14T21:09:07.953Z",
     "headers": [],
     "params": [],
     "auth": {
@@ -164,12 +164,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-30T20:21:11.112Z",
-    "modified": "2022-07-30T21:33:53.054Z",
+    "modified": "2022-09-12T02:43:35.594Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"idGroup\": \"df610315-4cfa-4d3f-912e-1cdd3a04d679\",\n  \"name\": \"evento dia 01\",\n  \"description\": \"Evento de react boladao\",\n  \"initialDate\": \"2022-08-26T04:00:00.988Z\",\n  \"finishDate\": \"2022-08-26T06:00:00.988Z\",\n  \"address\": \"Rua número 0\",\n  \"limitParticipants\": 20\n}",
+      "raw": "{\n  \"idGroup\": \"b6376f7b-18fd-4e5d-810c-7de64038cc50\",\n  \"name\": \"Full Stack Overflow\",\n  \"description\": \"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable\",\n  \"initialDate\": \"2022-08-26T04:00:00.988Z\",\n  \"finishDate\": \"2022-08-26T06:00:00.988Z\",\n  \"address\": \"Rua número 0\",\n  \"limitParticipants\": 20\n}",
       "form": []
     },
     "auth": {
@@ -190,6 +190,114 @@
     "modified": "2022-08-03T02:43:17.206Z",
     "headers": [],
     "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "52501908-5904-4e1d-ba85-3ea32eaff2b1",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "findAllMyGroups",
+    "url": "{{url_api}}/group/my",
+    "method": "GET",
+    "sortNum": 25000,
+    "created": "2022-08-23T03:46:41.336Z",
+    "modified": "2022-08-23T03:48:08.246Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "69c4c3d4-88e9-43ba-80bb-cc76c07203c2",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "findAll",
+    "url": "{{url_api}}/event",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-09-11T00:59:23.810Z",
+    "modified": "2022-09-11T01:00:06.671Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "d492392a-8127-44b3-abed-b12d95280c22",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "paginated",
+    "url": "{{url_api}}/event/paginated?page=1",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-09-11T01:17:25.424Z",
+    "modified": "2022-09-11T01:23:59.042Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "b8352805-f61b-4dc5-b598-eb04dac206d3",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "paginated",
+    "url": "{{url_api}}/group/paginated?page=1",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2022-09-13T22:07:20.044Z",
+    "modified": "2022-09-14T01:46:24.220Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "b2bc44a8-d87b-4850-8d97-21c56791217d",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "myPaginated",
+    "url": "{{url_api}}/event/my/paginated?page=1",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-09-14T03:49:42.593Z",
+    "modified": "2022-09-14T03:50:04.637Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"

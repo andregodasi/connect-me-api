@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
@@ -30,9 +31,19 @@ export class GroupController {
     return this.groupService.findAll();
   }
 
+  @Get('paginated')
+  getPaginated(@Query('page') page: string) {
+    return this.groupService.findPaginated(+page);
+  }
+
+  @Get('my')
+  findAllMyGroups(@CurrentUser() currentUser: User) {
+    return this.groupService.findAllMyGroups(currentUser);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.groupService.findByUuid(id);
+    return this.groupService.findByIdentifier(id);
   }
 
   @Patch(':id')
@@ -42,6 +53,6 @@ export class GroupController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.groupService.remove(id);
+    return this.groupService.delete(id);
   }
 }
