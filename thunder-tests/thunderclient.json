@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2022-09-14T21:14:09.679Z",
+    "modified": "2022-09-19T19:09:40.905Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"andre@test.com\",\n    \"password\": \"Andre123\"\n}",
+      "raw": "{\n    \"email\": \"andre@email.com\",\n    \"password\": \"@Andre123456\"\n}",
       "form": []
     },
     "tests": []
@@ -101,16 +101,16 @@
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
     "name": "update",
-    "url": "{{url_api}}/group/ed32c9d0-8fa3-428a-9024-0f5d81b30e11",
+    "url": "{{url_api}}/group/3b139d0a-bdba-4459-ab4e-2cf6643b4da5",
     "method": "PATCH",
     "sortNum": 40000,
     "created": "2022-07-28T03:02:56.263Z",
-    "modified": "2022-07-28T03:08:48.590Z",
+    "modified": "2022-09-19T19:14:51.359Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"name\": \"React CWB\",\n    \"description\": \"Um evento para todos.\",\n    \"slug\": \"react-cwb\"\n}",
+      "raw": "{\n  \"name\": \"Mussum\",\n  \"slug\": \"Mussum\",\n  \"description\": \"Mussum Ipsum, cacilds vidis litro abertis. Atirei o pau no gatis, per gatis num morreus.Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Quem num gosta di mim que vai caçá sua turmis!Si num tem leite então bota uma pinga aí cumpadi!\",\n  \"uuid\": \"3b139d0a-bdba-4459-ab4e-2cf6643b4da5\"\n}",
       "form": []
     },
     "auth": {
@@ -164,12 +164,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-30T20:21:11.112Z",
-    "modified": "2022-09-12T02:43:35.594Z",
+    "modified": "2022-10-05T00:08:37.723Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"idGroup\": \"b6376f7b-18fd-4e5d-810c-7de64038cc50\",\n  \"name\": \"Full Stack Overflow\",\n  \"description\": \"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable\",\n  \"initialDate\": \"2022-08-26T04:00:00.988Z\",\n  \"finishDate\": \"2022-08-26T06:00:00.988Z\",\n  \"address\": \"Rua número 0\",\n  \"limitParticipants\": 20\n}",
+      "raw": "{\n  \"idGroup\": \"3b139d0a-bdba-4459-ab4e-2cf6643b4da5\",\n  \"name\": \"Full Stack Overflow\",\n  \"slug\": \"full-stack-overflow\",\n  \"description\": \"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable\",\n  \"initialDate\": \"2022-08-26T04:00:00.988Z\",\n  \"finishDate\": \"2022-08-26T06:00:00.988Z\",\n  \"address\": \"Rua número 0\",\n  \"limitParticipants\": 20\n}",
       "form": []
     },
     "auth": {

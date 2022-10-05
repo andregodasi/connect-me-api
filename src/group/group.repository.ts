@@ -102,6 +102,7 @@ export class GroupRepository {
   }
 
   async update(id: string, updateGroupDto: UpdateGroupDto) {
+    console.log(id, updateGroupDto);
     return await this.prisma.group.update({
       where: {
         uuid: id,

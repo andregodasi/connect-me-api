@@ -26,9 +26,27 @@ export class EventController {
     return this.eventService.create(currentUser, createEventDto);
   }
 
+  @Post('subscribe')
+  subscribe(
+    @CurrentUser() currentUser: User,
+    @Body() uuid: string,
+  ) {
+    return this.eventService.subscribe(currentUser, uuid);
+  }
+
   @Get()
   findAll() {
     return this.eventService.findAll();
+  }
+
+  @Get('my/group/:uuid')
+  getEventsByGroup(
+    @CurrentUser() currentUser: User,
+    @Param('uuid') uuid: string,
+    @Query('page')
+    page: string,
+  ) {
+    return this.eventService.getEventsByGroup(+page, uuid, currentUser);
   }
 
   @Get('my/paginated')
@@ -44,9 +62,9 @@ export class EventController {
     return this.eventService.getPaginated(+page);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.eventService.findOne(+id);
+  @Get(':identifier')
+  findByIdentifier(@Param('identifier') identifier: string) {
+    return this.eventService.findByIdentifier(identifier);
   }
 
   @Patch(':id')

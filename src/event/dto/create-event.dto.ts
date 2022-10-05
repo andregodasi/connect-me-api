@@ -16,6 +16,10 @@ export class CreateEventDto extends Event {
   name: string;
 
   @IsString()
+  @IsNotEmpty()
+  slug: string;
+
+  @IsString()
   description: string;
 
   @IsDateString()

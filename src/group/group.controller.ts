@@ -41,9 +41,9 @@ export class GroupController {
     return this.groupService.findAllMyGroups(currentUser);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.groupService.findByIdentifier(id);
+  @Get(':identifier')
+  findByIdentifier(@Param('identifier') identifier: string) {
+    return this.groupService.findByIdentifier(identifier);
   }
 
   @Patch(':id')

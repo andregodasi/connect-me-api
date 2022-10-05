@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { User } from '../user/entities/user.entity';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -17,19 +18,23 @@ export class EventService {
     return await this.eventRepository.create(currntUser, createEventDto);
   }
 
+  async subscribe(currntUser: User, uuid: string): Promise<UserEvent> {
+    return this.eventRepository.subscribe(currntUser, uuid);
+  }
+
   findAll() {
     return this.eventRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findByIdentifier(identifier: string) {
+    return this.eventRepository.findByIdentifier(identifier);
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
+  async update(id: number, updateEventDto: UpdateEventDto) {
     return `This action updates a #${id} event`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} event`;
   }
 
@@ -40,6 +45,14 @@ export class EventService {
   async getMyPaginated(page: number, currentUser: User) {
     return this.eventRepository.getMyPaginated(
       new PageOptionsDto(page),
+      currentUser,
+    );
+  }
+
+  async getEventsByGroup(page: number, uuid: string, currentUser: User) {
+    return this.eventRepository.getEventsByGroup(
+      new PageOptionsDto(page),
+      uuid,
       currentUser,
     );
   }

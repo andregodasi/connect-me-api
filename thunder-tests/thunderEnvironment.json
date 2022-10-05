@@ -5,7 +5,7 @@
     "default": true,
     "sortNum": 10000,
     "created": "2022-07-26T00:23:58.943Z",
-    "modified": "2022-09-13T22:08:42.246Z",
+    "modified": "2022-09-29T18:18:41.497Z",
     "data": [
       {
         "name": "url_api",
@@ -13,7 +13,7 @@
       },
       {
         "name": "token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiZjA2NTZhYy1kYjMyLTRjZTctYjA4MS0zNGUyMTlkYzM4YTEiLCJuYW1lIjoiQW5kcmUgRyIsImVtYWlsIjoiYW5kcmVAdGVzdC5jb20iLCJpYXQiOjE2NjMxMDY5MDUsImV4cCI6MTY2NTY5ODkwNX0.gJzncLA-9_o5o9SfDJCs9cJqD2JJE-cBoUtJmSRizUo"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjgzY2FiZC1mMTczLTRkZTctYjQ5Ny0wNWQzZDk5MGI2ZDIiLCJuYW1lIjoiQW5kcsOpICIsImVtYWlsIjoiYW5kcmVAZW1haWwuY29tIiwiaWF0IjoxNjY0NDc1NTExLCJleHAiOjE2NjcwNjc1MTF9.CMAPLARKdokbpWPgOETaFiH1AdMp1l9JcfycdkNE7n8"
       }
     ]
   }

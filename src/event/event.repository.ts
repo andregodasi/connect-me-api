@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, UserEvent } from '@prisma/client';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
@@ -51,6 +51,52 @@ export class EventRepository {
     });
 
     return createdEvent;
+  }
+
+  async subscribe(currentUser: User, uuid: string): Promise<UserEvent> {
+    const eventSubscribe = await this.findByUUID(uuid);
+
+    const createdEventSubscribe = await this.prisma.userEvent.create({
+      data: { fk_id_event: eventSubscribe.id, fk_id_user: currentUser.id },
+    });
+
+    return createdEventSubscribe;
+  }
+
+  async findByIdentifier(identifier: string) {
+    return await this.prisma.event.findFirst({
+      where: {
+        OR: [
+          {
+            uuid: {
+              equals: identifier,
+            },
+          },
+          {
+            slug: {
+              equals: identifier,
+            },
+          },
+        ],
+      },
+      select: {
+        uuid: true,
+        name: true,
+        description: true,
+        slug: true,
+        users: {
+          select: {
+            user: {
+              select: {
+                uuid: true,
+                name: true,
+                nickname: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   async paginateMyGroups(currentUser: User) {
@@ -185,5 +231,75 @@ export class EventRepository {
     const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
 
     return new PageDto(data, pageMetaDto);
+  }
+
+  async getEventsByGroup(
+    pageOptionsDto: PageOptionsDto,
+    uuid: string,
+    currentUser: User,
+  ): Promise<PageDto<Event>> {
+    const itemCount: number = await this.prisma.event.count({
+      where: {
+        AND: [
+          {
+            group: {
+              uuid: uuid,
+              users: {
+                some: {
+                  fk_id_user: currentUser.id,
+                  role: 'ADMIN',
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
+    const data = await this.prisma.event.findMany({
+      take: pageOptionsDto.take,
+      skip: pageOptionsDto.skip,
+      where: {
+        AND: [
+          {
+            group: {
+              uuid: uuid,
+              users: {
+                some: {
+                  fk_id_user: currentUser.id,
+                  role: 'ADMIN',
+                },
+              },
+            },
+          },
+        ],
+      },
+      select: {
+        uuid: true,
+        name: true,
+        description: true,
+        initialDate: true,
+        finishDate: true,
+        address: true,
+        limitParticipants: true,
+        group: {
+          select: {
+            uuid: true,
+            name: true,
+            description: true,
+          },
+        },
+      },
+      orderBy: {
+        name: pageOptionsDto.order,
+      },
+    });
+
+    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+    return new PageDto(data, pageMetaDto);
+  }
+
+  async findByUUID(uuid: string) {
+    return this.prisma.event.findUnique({ where: { uuid: uuid } });
   }
 }
