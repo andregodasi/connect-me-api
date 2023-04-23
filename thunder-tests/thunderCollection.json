@@ -34,5 +34,19 @@
     "created": "2022-07-30T20:21:03.114Z",
     "sortNum": 40000,
     "folders": []
+  },
+  {
+    "_id": "a6b8b8e2-59f5-4457-b7d6-20e80ba7749d",
+    "colName": "file",
+    "created": "2022-10-21T19:46:05.733Z",
+    "sortNum": 50000,
+    "folders": []
+  },
+  {
+    "_id": "4a66f760-bb37-45f5-8d3c-bbfb86619112",
+    "colName": "mail",
+    "created": "2022-10-24T19:36:58.558Z",
+    "sortNum": 60000,
+    "folders": []
   }
 ]

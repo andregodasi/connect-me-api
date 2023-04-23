@@ -3,9 +3,9 @@
     "_id": "d5f5731a-3e4d-4fb4-97f4-81294dd8360b",
     "name": "env",
     "default": true,
-    "sortNum": 10000,
+    "sortNum": 5000,
     "created": "2022-07-26T00:23:58.943Z",
-    "modified": "2022-09-29T18:18:41.497Z",
+    "modified": "2022-10-24T19:39:59.194Z",
     "data": [
       {
         "name": "url_api",
@@ -13,7 +13,7 @@
       },
       {
         "name": "token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1YjgzY2FiZC1mMTczLTRkZTctYjQ5Ny0wNWQzZDk5MGI2ZDIiLCJuYW1lIjoiQW5kcsOpICIsImVtYWlsIjoiYW5kcmVAZW1haWwuY29tIiwiaWF0IjoxNjY0NDc1NTExLCJleHAiOjE2NjcwNjc1MTF9.CMAPLARKdokbpWPgOETaFiH1AdMp1l9JcfycdkNE7n8"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4Nzk5YzYzYS02ZmQ5LTQ0OGItYTdlZC1hYWEzMTVkZGUxOGEiLCJuYW1lIjoiSnVjYSIsImVtYWlsIjoianVjYUB0ZXN0LmNvbSIsImlhdCI6MTY2NjY0MDM4OSwiZXhwIjoxNjY5MjMyMzg5fQ.06r8x1g-RUdl-aMUQRh14RXln1zhCR4hwQS0DSwPROI"
       }
     ]
   }

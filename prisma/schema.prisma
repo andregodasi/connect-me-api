@@ -13,7 +13,7 @@ datasource db {
 enum UserStatus {
   PENDING
   ACTIVATED
-  DEACTIVATE
+  DEACTIVATED
 }
 
 enum UserGroupRole {
@@ -25,7 +25,7 @@ enum UserGroupRole {
 enum UserGroupStatus {
   PENDING
   ACTIVATED
-  DEACTIVATE
+  DEACTIVATED
 }
 
 model User {
@@ -52,6 +52,7 @@ model Group {
   name        String
   description String
   slug        String      @unique
+  coverUrl    String?
   users       UserGroup[]
   events      Event[]
 
@@ -77,6 +78,7 @@ model Event {
   updatedAt         DateTime    @updatedAt @map("updated_at")
   name              String
   description       String
+  coverUrl          String?
   slug              String      @unique
   initialDate       DateTime    @map("initial_date")
   finishDate        DateTime    @map("finish_date")

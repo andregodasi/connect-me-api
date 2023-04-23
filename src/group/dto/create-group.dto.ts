@@ -1,6 +1,8 @@
 import { Group } from '../entities/group.entity';
 import {
   IsEmail,
+  IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   Matches,
@@ -9,9 +11,6 @@ import {
 } from 'class-validator';
 
 export class CreateGroupDto extends Group {
-  @IsUUID()
-  uuid: string;
-
   @IsString()
   name: string;
 
@@ -20,4 +19,16 @@ export class CreateGroupDto extends Group {
 
   @IsString()
   slug: string;
+
+  @IsOptional()
+  @IsString()
+  coverUrl: string;
+
+  @IsOptional()
+  @IsString()
+  newCoverUrl: string;
+
+  @IsOptional()
+  @IsString()
+  newCoverName: string;
 }

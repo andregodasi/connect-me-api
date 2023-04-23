@@ -12,5 +12,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "c49d3b37-5feb-4e3d-9c47-7e96579d6cde",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://upcdn.io/W142hJk/thumbnail/demo/3VXzy3c.jpg.crop",
+    "url": "https://upcdn.io/W142hJk/thumbnail/demo/3VXzy3c.jpg.crop",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-11-02T21:31:28.794Z",
+    "modified": "2022-11-02T21:31:29.236Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

@@ -13,6 +13,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { User } from 'src/user/entities/user.entity';
+import { PageOptionEventDto } from './dto/page-option-event.dto';
 
 @Controller('event')
 export class EventController {
@@ -29,9 +30,14 @@ export class EventController {
   @Post('subscribe')
   subscribe(
     @CurrentUser() currentUser: User,
-    @Body() uuid: string,
+    @Body() dataSubscribe: { uuid: string },
   ) {
-    return this.eventService.subscribe(currentUser, uuid);
+    return this.eventService.subscribe(currentUser, dataSubscribe.uuid);
+  }
+
+  @Delete('unsubscribe/:uuid')
+  unsubscribe(@CurrentUser() currentUser: User, @Param('uuid') uuid: string) {
+    return this.eventService.unsubscribe(currentUser, uuid);
   }
 
   @Get()
@@ -58,8 +64,11 @@ export class EventController {
   }
 
   @Get('paginated')
-  getPaginated(@Query('page') page: string) {
-    return this.eventService.getPaginated(+page);
+  getPaginated(
+    @Query() pageOption: PageOptionEventDto,
+    @CurrentUser() currentUser: User,
+  ) {
+    return this.eventService.getPaginated(pageOption, currentUser);
   }
 
   @Get(':identifier')

@@ -3,6 +3,7 @@ import { UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { User } from '../user/entities/user.entity';
 import { CreateEventDto } from './dto/create-event.dto';
+import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
 import { EventRepository } from './event.repository';
@@ -22,6 +23,10 @@ export class EventService {
     return this.eventRepository.subscribe(currntUser, uuid);
   }
 
+  async unsubscribe(currntUser: User, uuid: string) {
+    return this.eventRepository.unsubscribe(currntUser, uuid);
+  }
+
   findAll() {
     return this.eventRepository.findAll();
   }
@@ -38,8 +43,17 @@ export class EventService {
     return `This action removes a #${id} event`;
   }
 
-  async getPaginated(page: number) {
-    return this.eventRepository.getPaginated(new PageOptionsDto(page));
+  async getPaginated(pageOption: PageOptionEventDto, currentUser: User) {
+    return this.eventRepository.getPaginated(
+      new PageOptionEventDto(
+        pageOption.page,
+        pageOption.take,
+        pageOption.q,
+        pageOption.isFollowing,
+        pageOption.isSubscribed,
+      ),
+      currentUser,
+    );
   }
 
   async getMyPaginated(page: number, currentUser: User) {

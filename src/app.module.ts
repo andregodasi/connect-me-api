@@ -8,9 +8,21 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { GroupModule } from './group/group.module';
 import { EventModule } from './event/event.module';
+import { FileModule } from './file/file.module';
+import { MailModule } from './mail/mail.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [PrismaModule, UserModule, AuthModule, GroupModule, EventModule],
+  imports: [
+    PrismaModule,
+    UserModule,
+    AuthModule,
+    GroupModule,
+    EventModule,
+    FileModule,
+    MailModule,
+    HttpModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

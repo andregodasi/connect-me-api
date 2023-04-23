@@ -7,6 +7,7 @@ import { GroupService } from 'src/group/group.service';
 import { User } from 'src/user/entities/user.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
+import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { Event } from './entities/event.entity';
 
 @Injectable()
@@ -63,6 +64,29 @@ export class EventRepository {
     return createdEventSubscribe;
   }
 
+  async unsubscribe(currentUser: User, uuid: string) {
+    const eventSubscribe = await this.findByUUID(uuid);
+
+    const deleteSubscription = await this.prisma.userEvent.deleteMany({
+      where: {
+        AND: [
+          {
+            fk_id_event: {
+              equals: eventSubscribe.id,
+            },
+          },
+          {
+            fk_id_user: {
+              equals: currentUser.id,
+            },
+          },
+        ],
+      },
+    });
+
+    return deleteSubscription;
+  }
+  //data: { fk_id_event: eventSubscribe.id, fk_id_user: currentUser.id },
   async findByIdentifier(identifier: string) {
     return await this.prisma.event.findFirst({
       where: {
@@ -139,11 +163,73 @@ export class EventRepository {
     });
   }
 
-  async getPaginated(pageOptionsDto: PageOptionsDto): Promise<PageDto<Event>> {
-    const itemCount: number = await this.prisma.event.count();
+  async getPaginated(
+    pageOptionEventDto: PageOptionEventDto,
+    currentUser: User,
+  ): Promise<PageDto<Event>> {
+    let queryUser: Prisma.UserEventFindManyArgs | boolean = false;
+    let queryGroupUser:
+      | (Prisma.Without<Prisma.GroupRelationFilter, Prisma.GroupWhereInput> &
+          Prisma.GroupWhereInput)
+      | (Prisma.Without<Prisma.GroupWhereInput, Prisma.GroupRelationFilter> &
+          Prisma.GroupRelationFilter);
+    let queryEventName: string | Prisma.StringFilter;
+    let queryIsSubscribed: Prisma.UserEventListRelationFilter;
+
+    if (currentUser) {
+      queryUser = {
+        select: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        where: {
+          fk_id_user: {
+            equals: currentUser.id,
+          },
+        },
+      };
+    }
+
+    if (pageOptionEventDto.isFollowing) {
+      queryGroupUser = {
+        users: {
+          some: {
+            fk_id_user: {
+              equals: currentUser.id,
+            },
+          },
+        },
+      };
+    }
+
+    if (pageOptionEventDto.q) {
+      queryEventName = {
+        contains: pageOptionEventDto.q,
+        mode: 'insensitive',
+      };
+    }
+
+    if (pageOptionEventDto.isSubscribed) {
+      queryIsSubscribed = {
+        some: {
+          fk_id_user: currentUser.id,
+        },
+      };
+    }
+
+    const itemCount: number = await this.prisma.event.count({
+      where: {
+        group: queryGroupUser,
+        name: queryEventName,
+        users: queryIsSubscribed,
+      },
+    });
     const data = await this.prisma.event.findMany({
-      take: pageOptionsDto.take,
-      skip: pageOptionsDto.skip,
+      take: pageOptionEventDto.take,
+      skip: pageOptionEventDto.skip,
       select: {
         uuid: true,
         name: true,
@@ -159,13 +245,19 @@ export class EventRepository {
             description: true,
           },
         },
+        users: queryUser,
+      },
+      where: {
+        group: queryGroupUser,
+        name: queryEventName,
+        users: queryIsSubscribed,
       },
       orderBy: {
-        name: pageOptionsDto.order,
+        name: pageOptionEventDto.order,
       },
     });
 
-    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+    const pageMetaDto = new PageMetaDto(pageOptionEventDto, itemCount);
 
     return new PageDto(data, pageMetaDto);
   }
@@ -176,13 +268,19 @@ export class EventRepository {
   ): Promise<PageDto<Event>> {
     const itemCount: number = await this.prisma.event.count({
       where: {
-        AND: [
+        OR: [
+          {
+            users: {
+              some: {
+                fk_id_user: currentUser.id,
+              },
+            },
+          },
           {
             group: {
               users: {
                 some: {
                   fk_id_user: currentUser.id,
-                  role: 'ADMIN',
                 },
               },
             },
@@ -194,13 +292,19 @@ export class EventRepository {
       take: pageOptionsDto.take,
       skip: pageOptionsDto.skip,
       where: {
-        AND: [
+        OR: [
+          {
+            users: {
+              some: {
+                fk_id_user: currentUser.id,
+              },
+            },
+          },
           {
             group: {
               users: {
                 some: {
                   fk_id_user: currentUser.id,
-                  role: 'ADMIN',
                 },
               },
             },
@@ -220,6 +324,11 @@ export class EventRepository {
             uuid: true,
             name: true,
             description: true,
+            users: {
+              where: {
+                fk_id_user: currentUser.id,
+              },
+            },
           },
         },
       },
@@ -228,7 +337,7 @@ export class EventRepository {
       },
     });
 
-    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+    const pageMetaDto = new PageMetaDto(pageOptionsDto, itemCount);
 
     return new PageDto(data, pageMetaDto);
   }
@@ -294,12 +403,12 @@ export class EventRepository {
       },
     });
 
-    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+    const pageMetaDto = new PageMetaDto(pageOptionsDto, itemCount);
 
     return new PageDto(data, pageMetaDto);
   }
 
   async findByUUID(uuid: string) {
-    return this.prisma.event.findUnique({ where: { uuid: uuid } });
+    return this.prisma.event.findUnique({ where: { uuid } });
   }
 }

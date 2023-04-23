@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2022-09-19T19:09:40.905Z",
+    "modified": "2022-10-06T02:42:59.639Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"andre@email.com\",\n    \"password\": \"@Andre123456\"\n}",
+      "raw": "{\n    \"email\": \"juca@test.com\",\n    \"password\": \"@Juca123\"\n}",
       "form": []
     },
     "tests": []
@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T01:41:17.608Z",
-    "modified": "2022-08-08T17:19:45.952Z",
+    "modified": "2022-10-06T02:42:23.746Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"andre@test.com\",\n    \"password\": \"Andre123\",\n    \"name\": \"Andre G\",\n    \"nickname\": \"andregodasi\"\n}",
+      "raw": "{\n    \"email\": \"juca@test.com\",\n    \"password\": \"@Juca123\",\n    \"name\": \"Juca G\",\n    \"nickname\": \"caju\"\n}",
       "form": []
     },
     "tests": []
@@ -46,13 +46,32 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-28T01:35:02.414Z",
-    "modified": "2022-07-29T02:15:17.514Z",
+    "modified": "2022-11-01T04:22:29.326Z",
     "headers": [],
     "params": [],
     "body": {
-      "type": "json",
-      "raw": "{\n    \"name\": \"React CWB3\",\n    \"description\": \"Um evento para todos.\",\n    \"slug\": \"react-cwb3\"\n}",
-      "form": []
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "name",
+          "value": "teste"
+        },
+        {
+          "name": "description",
+          "value": "teste"
+        },
+        {
+          "name": "slug",
+          "value": "teste"
+        }
+      ],
+      "files": [
+        {
+          "name": "communityImage",
+          "value": "../../microsoft-22.png"
+        }
+      ]
     },
     "auth": {
       "type": "bearer",
@@ -237,16 +256,26 @@
     "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
     "containerId": "",
     "name": "paginated",
-    "url": "{{url_api}}/event/paginated?page=1",
+    "url": "{{url_api}}/event/paginated?page=1&q=teste+qwe&isFollowing=true",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-09-11T01:17:25.424Z",
-    "modified": "2022-09-11T01:23:59.042Z",
+    "modified": "2022-10-14T03:00:28.804Z",
     "headers": [],
     "params": [
       {
         "name": "page",
         "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "q",
+        "value": "teste+qwe",
+        "isPath": false
+      },
+      {
+        "name": "isFollowing",
+        "value": "true",
         "isPath": false
       }
     ],
@@ -298,6 +327,85 @@
         "isPath": false
       }
     ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "fcf38f7c-934e-4186-a5d7-cf98875c8c76",
+    "colId": "a6b8b8e2-59f5-4457-b7d6-20e80ba7749d",
+    "containerId": "",
+    "name": "create",
+    "url": "{{url_api}}/file",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-10-21T19:46:15.286Z",
+    "modified": "2022-10-24T04:35:04.445Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "name",
+          "value": "teste"
+        }
+      ],
+      "files": [
+        {
+          "name": "file",
+          "value": "../../microsoft-22.png"
+        }
+      ]
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "589168a6-9a9e-43e9-be19-79e35c85d421",
+    "colId": "4a66f760-bb37-45f5-8d3c-bbfb86619112",
+    "containerId": "",
+    "name": "send email",
+    "url": "{{url_api}}/mail/send?name=andre teste 123&email=andre.godasi@gmail.com",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-10-24T19:37:06.817Z",
+    "modified": "2022-10-25T01:44:46.672Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "name",
+        "value": "andre teste 123",
+        "isPath": false
+      },
+      {
+        "name": "email",
+        "value": "andre.godasi@gmail.com",
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "name",
+          "value": "teste"
+        }
+      ],
+      "files": [
+        {
+          "name": "file",
+          "value": "../../microsoft-22.png"
+        }
+      ]
+    },
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"

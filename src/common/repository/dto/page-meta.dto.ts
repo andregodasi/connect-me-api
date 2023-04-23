@@ -1,4 +1,6 @@
 import { PageMetaDtoParameters } from './page-meta-parameters.dto';
+import { PageOptionsBaseDto } from './page-options-base.dto';
+import { PageOptionsDto } from './page-options.dto';
 
 export class PageMetaDto {
   readonly page: number;
@@ -13,7 +15,7 @@ export class PageMetaDto {
 
   readonly hasNextPage: boolean;
 
-  constructor({ pageOptionsDto, itemCount }: PageMetaDtoParameters) {
+  constructor(pageOptionsDto: PageOptionsBaseDto, itemCount: number) {
     this.page = pageOptionsDto.page;
     this.take = pageOptionsDto.take;
     this.itemCount = itemCount;

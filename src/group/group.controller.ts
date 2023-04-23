@@ -7,23 +7,51 @@ import {
   Param,
   Delete,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { User } from 'src/user/entities/user.entity';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { PageOptionGroupDto } from './dto/page-option-group.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('group')
 export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Post()
-  create(
-    @CurrentUser() currentUser: User,
-    @Body() createGroupDto: CreateGroupDto,
-  ) {
+  create(@CurrentUser() currentUser: User, @Body() createGroupDto: CreateGroupDto) {
     return this.groupService.create(currentUser, createGroupDto);
+  }
+
+  @Post('create-with-file')
+  @UseInterceptors(FileInterceptor('communityImage'))
+  createWithFile(
+    @CurrentUser() currentUser: User,
+    @UploadedFile() communityImage: Express.Multer.File,
+    @Body() createGroupDto: any,
+  ) {
+    return this.groupService.createWithFile(
+      currentUser,
+      createGroupDto,
+      communityImage,
+    );
+  }
+
+  @Post('follow')
+  subscribe(
+    @CurrentUser() currentUser: User,
+    @Body() dataSubscribe: { uuid: string },
+  ) {
+    return this.groupService.follow(currentUser, dataSubscribe.uuid);
+  }
+
+  @Delete('unfollow/:uuid')
+  unsubscribe(@CurrentUser() currentUser: User, @Param('uuid') uuid: string) {
+    return this.groupService.unfollow(currentUser, uuid);
   }
 
   @Get()
@@ -32,8 +60,11 @@ export class GroupController {
   }
 
   @Get('paginated')
-  getPaginated(@Query('page') page: string) {
-    return this.groupService.findPaginated(+page);
+  getPaginated(
+    @Query() pageOption: PageOptionGroupDto,
+    @CurrentUser() currentUser: User,
+  ) {
+    return this.groupService.getPaginated(pageOption, currentUser);
   }
 
   @Get('my')
