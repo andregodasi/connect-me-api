@@ -11,6 +11,7 @@ import { EventModule } from './event/event.module';
 import { FileModule } from './file/file.module';
 import { MailModule } from './mail/mail.module';
 import { HttpModule } from '@nestjs/axios';
+import { RecoveryPasswordModule } from './recovery-password/recovery-password.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { HttpModule } from '@nestjs/axios';
     FileModule,
     MailModule,
     HttpModule,
+    RecoveryPasswordModule,
   ],
   controllers: [AppController],
   providers: [

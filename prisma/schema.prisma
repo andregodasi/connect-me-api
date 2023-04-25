@@ -29,18 +29,19 @@ enum UserGroupStatus {
 }
 
 model User {
-  id           Int         @id @default(autoincrement())
-  uuid         String      @unique @default(uuid()) @db.Uuid
-  createdAt    DateTime    @default(now()) @map("created_at")
-  updatedAt    DateTime    @updatedAt @map("updated_at")
-  email        String      @unique
-  nickname     String      @unique
-  name         String
-  password     String
-  confirmEmail Boolean     @default(false)
-  status       UserStatus  @default(PENDING)
-  groups       UserGroup[]
-  events       UserEvent[]
+  id               Int                @id @default(autoincrement())
+  uuid             String             @unique @default(uuid()) @db.Uuid
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @updatedAt @map("updated_at")
+  email            String             @unique
+  nickname         String             @unique
+  name             String
+  password         String
+  confirmEmail     Boolean            @default(false)
+  status           UserStatus         @default(PENDING)
+  groups           UserGroup[]
+  events           UserEvent[]
+  RecoveryPassword RecoveryPassword[]
 
   @@map("user")
 }
@@ -100,4 +101,16 @@ model UserEvent {
   fk_id_event Int
 
   @@map("user_event")
+}
+
+model RecoveryPassword {
+  id         Int      @id @default(autoincrement())
+  uuid       String   @unique @default(uuid()) @db.Uuid
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [fk_id_user], references: [id])
+  fk_id_user Int
+  isUsed     Boolean  @default(false)
+
+  @@map("recovery_password")
 }

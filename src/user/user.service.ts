@@ -19,10 +19,14 @@ export class UserService {
     private readonly mailService: MailService,
   ) {}
 
+  static encryptPassword(password: string) {
+    return bcrypt.hash(password, 10);
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const data: Prisma.UserCreateInput = {
       ...createUserDto,
-      password: await bcrypt.hash(createUserDto.password, 10),
+      password: await UserService.encryptPassword(createUserDto.password),
       status: UserStatus.PENDING,
     };
 

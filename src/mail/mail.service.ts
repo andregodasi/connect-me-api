@@ -16,4 +16,16 @@ export class MailService {
       },
     });
   }
+
+  async sendRecoveryPassword(email: string, uuid: string) {
+    const url = `${process.env.FRONTEND_URL}/recovery-password/${uuid}`;
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Recovery Password',
+      template: 'recovery_password',
+      context: {
+        url,
+      },
+    });
+  }
 }

@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2023-04-25T19:53:25.997Z",
+    "modified": "2023-04-25T22:04:53.741Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"@Juca123\"\n}",
+      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"!Teste123\"\n}",
       "form": []
     },
     "tests": []
@@ -368,51 +368,6 @@
     "tests": []
   },
   {
-    "_id": "589168a6-9a9e-43e9-be19-79e35c85d421",
-    "colId": "4a66f760-bb37-45f5-8d3c-bbfb86619112",
-    "containerId": "",
-    "name": "send email",
-    "url": "{{url_api}}/mail/send?name=andre teste 123&email=andre.godasi@gmail.com",
-    "method": "POST",
-    "sortNum": 10000,
-    "created": "2022-10-24T19:37:06.817Z",
-    "modified": "2022-10-25T01:44:46.672Z",
-    "headers": [],
-    "params": [
-      {
-        "name": "name",
-        "value": "andre teste 123",
-        "isPath": false
-      },
-      {
-        "name": "email",
-        "value": "andre.godasi@gmail.com",
-        "isPath": false
-      }
-    ],
-    "body": {
-      "type": "formdata",
-      "raw": "",
-      "form": [
-        {
-          "name": "name",
-          "value": "teste"
-        }
-      ],
-      "files": [
-        {
-          "name": "file",
-          "value": "../../microsoft-22.png"
-        }
-      ]
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
     "_id": "9af9f1df-afbe-41e4-8a76-0dee9afb3f42",
     "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
     "containerId": "",
@@ -424,6 +379,59 @@
     "modified": "2023-04-25T19:55:31.843Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f92bd251-f009-4aa7-b724-6cf4fbb82460",
+    "colId": "179bee72-6927-448a-8f8d-7ca468c220ff",
+    "containerId": "",
+    "name": "insert",
+    "url": "{{url_api}}/recovery-password?user_email=pesun@emvil.com",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-04-25T21:30:47.812Z",
+    "modified": "2023-04-25T21:37:01.769Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "user_email",
+        "value": "pesun@emvil.com",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "f5008940-c820-4052-aae5-1d33f14fa155",
+    "colId": "179bee72-6927-448a-8f8d-7ca468c220ff",
+    "containerId": "",
+    "name": "validateByUUID",
+    "url": "{{url_api}}/recovery-password/validate/59bba642-62bf-4ea3-9dc3-c5a636e686e7",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2023-04-25T21:31:44.533Z",
+    "modified": "2023-04-25T22:03:57.712Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2a530c87-7940-4b73-bd4e-b33ea90daa7d",
+    "colId": "179bee72-6927-448a-8f8d-7ca468c220ff",
+    "containerId": "",
+    "name": "updatePassword",
+    "url": "{{url_api}}/recovery-password/59bba642-62bf-4ea3-9dc3-c5a636e686e7",
+    "method": "PUT",
+    "sortNum": 40000,
+    "created": "2023-04-25T21:32:22.421Z",
+    "modified": "2023-04-25T22:04:42.971Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"newPassword\": \"!Teste123\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]
