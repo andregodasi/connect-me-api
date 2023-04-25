@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { MailService } from './../mail/mail.service';
+import {
+  BadRequestException,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
@@ -9,7 +14,10 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mailService: MailService,
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const data: Prisma.UserCreateInput = {
@@ -19,6 +27,10 @@ export class UserService {
     };
 
     const createdUser = await this.prisma.user.create({ data });
+
+    this.mailService
+      .sendConfirmEmail(createdUser.email, createdUser.uuid)
+      .catch((e) => console.error(`Error to send confirm email: ${e}`));
 
     return {
       ...createdUser,
@@ -48,5 +60,12 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async setConfirmEmail(uuid: string) {
+    await this.prisma.user.update({
+      data: { confirmEmail: true },
+      where: { uuid },
+    });
   }
 }

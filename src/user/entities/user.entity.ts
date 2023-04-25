@@ -8,4 +8,5 @@ export class User {
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  confirmEmail: boolean;
 }

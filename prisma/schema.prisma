@@ -29,17 +29,18 @@ enum UserGroupStatus {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  uuid      String      @unique @default(uuid()) @db.Uuid
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  email     String      @unique
-  nickname  String      @unique
-  name      String
-  password  String
-  status    UserStatus  @default(PENDING)
-  groups    UserGroup[]
-  events    UserEvent[]
+  id           Int         @id @default(autoincrement())
+  uuid         String      @unique @default(uuid()) @db.Uuid
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+  email        String      @unique
+  nickname     String      @unique
+  name         String
+  password     String
+  confirmEmail Boolean     @default(false)
+  status       UserStatus  @default(PENDING)
+  groups       UserGroup[]
+  events       UserEvent[]
 
   @@map("user")
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedError } from './errors/unauthorized.error';
@@ -28,6 +28,10 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userService.findByEmail(email);
+
+    if (!user.confirmEmail) {
+      throw new UnprocessableEntityException('Email was not confirmed');
+    }
 
     if (user) {
       const isPasswordValid = await bcrypt.compare(password, user.password);

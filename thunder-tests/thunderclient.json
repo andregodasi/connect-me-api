@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2022-10-06T02:42:59.639Z",
+    "modified": "2023-04-25T19:53:25.997Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"juca@test.com\",\n    \"password\": \"@Juca123\"\n}",
+      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"@Juca123\"\n}",
       "form": []
     },
     "tests": []
@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T01:41:17.608Z",
-    "modified": "2022-10-06T02:42:23.746Z",
+    "modified": "2023-04-25T19:34:41.074Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"juca@test.com\",\n    \"password\": \"@Juca123\",\n    \"name\": \"Juca G\",\n    \"nickname\": \"caju\"\n}",
+      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"@Juca123\",\n    \"name\": \"Juca G\",\n    \"nickname\": \"caju\"\n}",
       "form": []
     },
     "tests": []
@@ -410,6 +410,20 @@
       "type": "bearer",
       "bearer": "{{token}}"
     },
+    "tests": []
+  },
+  {
+    "_id": "9af9f1df-afbe-41e4-8a76-0dee9afb3f42",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "confirmEmail",
+    "url": "{{url_api}}/user/confirm-email/fa322e70-80e6-4898-ac2f-036754417340",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2023-04-25T19:54:15.852Z",
+    "modified": "2023-04-25T19:55:31.843Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

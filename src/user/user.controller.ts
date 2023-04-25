@@ -41,4 +41,10 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  @IsPublic()
+  @Get('/confirm-email/:uuid')
+  async confirmEmail(@Param('uuid') uuid: string) {
+    await this.userService.setConfirmEmail(uuid);
+  }
 }
