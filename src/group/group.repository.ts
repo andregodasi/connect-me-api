@@ -52,6 +52,13 @@ export class GroupRepository {
   async follow(currentUser: User, uuid: string): Promise<UserGroup> {
     const groupFollowed = await this.findByUUID(uuid);
 
+    const exists = await this.prisma.userGroup.findFirst({
+      where: { fk_id_group: groupFollowed.id, fk_id_user: currentUser.id },
+    });
+    if (exists) {
+      return exists;
+    }
+
     const createdGroupFollowed = await this.prisma.userGroup.create({
       data: { fk_id_group: groupFollowed.id, fk_id_user: currentUser.id },
     });
