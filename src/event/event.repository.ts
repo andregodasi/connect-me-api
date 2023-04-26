@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma, UserEvent } from '@prisma/client';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
@@ -56,6 +56,25 @@ export class EventRepository {
 
   async subscribe(currentUser: User, uuid: string): Promise<UserEvent> {
     const eventSubscribe = await this.findByUUID(uuid);
+
+    const exists = await this.prisma.userEvent.findFirst({
+      where: { fk_id_event: eventSubscribe.id, fk_id_user: currentUser.id },
+    });
+    if (exists) {
+      return exists;
+    }
+
+    const now = new Date();
+    if (eventSubscribe.initialDate < now) {
+      throw new BadRequestException('Event already started');
+    }
+
+    const count = await this.prisma.userEvent.count({
+      where: { fk_id_event: eventSubscribe.id },
+    });
+    if (count >= eventSubscribe.limitParticipants) {
+      throw new BadRequestException('Limit participants was exceeded');
+    }
 
     const createdEventSubscribe = await this.prisma.userEvent.create({
       data: { fk_id_event: eventSubscribe.id, fk_id_user: currentUser.id },
