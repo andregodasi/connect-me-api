@@ -247,7 +247,7 @@ export class GroupRepository {
     });
     const data = await this.prisma.group.findMany({
       take: pageOptionGroupDto.take,
-      skip: pageOptionGroupDto.skip || 0,
+      skip: pageOptionGroupDto.skip,
       select: {
         uuid: true,
         name: true,

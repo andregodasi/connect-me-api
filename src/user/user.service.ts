@@ -11,6 +11,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserStatus } from './dto/user-status.enum';
 import { User } from './entities/user.entity';
+import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
+import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
+import { PageDto } from 'src/common/repository/dto/page.dto';
+import { PageOptionUserEventDto } from './dto/page-option-user-event.dto';
 
 @Injectable()
 export class UserService {
@@ -54,22 +58,90 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
-
   async setConfirmEmail(uuid: string) {
     await this.prisma.user.update({
       data: { confirmEmail: true },
       where: { uuid },
     });
+  }
+
+  async paginateByGroup(page: PageOptionUserGroupDto) {
+    const where = {
+      groups: {
+        some: {
+          group: {
+            uuid: page.groupUUID,
+          },
+        },
+      },
+    };
+
+    const itemCount: number = await this.prisma.user.count({
+      where,
+    });
+    const data = await this.prisma.user.findMany({
+      take: page.take,
+      skip: page.skip,
+      select: {
+        id: false,
+        uuid: true,
+        createdAt: false,
+        updatedAt: false,
+        email: true,
+        nickname: true,
+        name: true,
+        password: false,
+        confirmEmail: false,
+        status: false,
+      },
+      orderBy: {
+        name: page.order,
+      },
+      where,
+    });
+
+    const pageMetaDto = new PageMetaDto(page, itemCount);
+
+    return new PageDto(data, pageMetaDto);
+  }
+
+  async paginateByEvent(page: PageOptionUserEventDto) {
+    const where = {
+      events: {
+        some: {
+          event: {
+            uuid: page.eventUUID,
+          },
+        },
+      },
+    };
+
+    const itemCount: number = await this.prisma.user.count({
+      where,
+    });
+    const data = await this.prisma.user.findMany({
+      take: page.take,
+      skip: page.skip,
+      select: {
+        id: false,
+        uuid: true,
+        createdAt: false,
+        updatedAt: false,
+        email: true,
+        nickname: true,
+        name: true,
+        password: false,
+        confirmEmail: false,
+        status: false,
+      },
+      orderBy: {
+        name: page.order,
+      },
+      where,
+    });
+
+    const pageMetaDto = new PageMetaDto(page, itemCount);
+
+    return new PageDto(data, pageMetaDto);
   }
 }

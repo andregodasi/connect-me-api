@@ -433,5 +433,53 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "b2bd2235-eda5-4953-a09c-2cbc49853076",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "paginateByGroup",
+    "url": "{{url_api}}/user/page/group?groupUUID",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2023-04-27T00:09:09.205Z",
+    "modified": "2023-04-27T00:11:08.718Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "groupUUID",
+        "value": "",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "5e46706e-489a-4a27-9dca-dfa8fe745331",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "paginateByEvent",
+    "url": "{{url_api}}/user/page/event?eventUUID",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-04-27T00:10:05.551Z",
+    "modified": "2023-04-27T00:11:07.046Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "eventUUID",
+        "value": "",
+        "isPath": false
+      }
+    ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]

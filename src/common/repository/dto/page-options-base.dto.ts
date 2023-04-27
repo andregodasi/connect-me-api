@@ -28,6 +28,10 @@ export abstract class PageOptionsBaseDto {
   }
 
   get skip(): number {
-    return (this.page - 1) * this.take;
+    const skip = (this.page - 1) * this.take;
+    if (skip == null || isNaN(skip)) {
+      return 0;
+    }
+    return skip;
   }
 }

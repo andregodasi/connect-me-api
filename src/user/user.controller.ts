@@ -1,16 +1,9 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserService } from './user.service';
+import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
+import { PageOptionUserEventDto } from './dto/page-option-user-event.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,22 +20,16 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get('/page/group')
+  async paginateByGroup(@Query() page: PageOptionUserGroupDto) {
+    await this.userService.paginateByGroup(page);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @Get('/page/event')
+  async paginateByEvent(@Query() page: PageOptionUserEventDto) {
+    await this.userService.paginateByEvent(page);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
-
-  @IsPublic()
   @Get('/confirm-email/:uuid')
   async confirmEmail(@Param('uuid') uuid: string) {
     await this.userService.setConfirmEmail(uuid);
