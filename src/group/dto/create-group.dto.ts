@@ -23,12 +23,4 @@ export class CreateGroupDto extends Group {
   @IsOptional()
   @IsString()
   coverUrl: string;
-
-  @IsOptional()
-  @IsString()
-  newCoverUrl: string;
-
-  @IsOptional()
-  @IsString()
-  newCoverName: string;
 }

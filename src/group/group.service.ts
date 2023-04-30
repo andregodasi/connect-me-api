@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserGroup } from '@prisma/client';
 import { FileService } from 'src/file/file.service';
 import { User } from 'src/user/entities/user.entity';
@@ -18,32 +18,28 @@ export class GroupService {
   async create(
     currentUser: User,
     createGroupDto: CreateGroupDto,
-  ): Promise<Group> {
-    if (createGroupDto.newCoverName && createGroupDto.newCoverUrl) {
-      const cover = await this.fileService.uploadPublicFileFromUrl(
-        createGroupDto.newCoverUrl,
-        createGroupDto.newCoverName,
-      );
-
-      createGroupDto.coverUrl = cover.url;
-      delete createGroupDto.newCoverUrl;
-      delete createGroupDto.newCoverName;
-    }
-    return this.groupRepository.create(currentUser, createGroupDto);
-  }
-
-  async createWithFile(
-    currentUser: User,
-    createGroupDto: any,
     communityImage: Express.Multer.File,
-  ) /* : Promise<Group> */ {
-    if (communityImage) {
-      const infoImage = await this.fileService.uploadPublicFile(
-        communityImage.buffer,
-        communityImage.originalname,
+  ): Promise<Group> {
+    const slugAlreadyExists = await this.groupRepository.findByIdentifier(
+      createGroupDto.slug,
+    );
+
+    if (slugAlreadyExists) {
+      throw new BadRequestException(
+        `The slug ${createGroupDto.slug} already exists`,
       );
     }
-    return this.groupRepository.create(currentUser, createGroupDto);
+    let infoImage: { key: string; url: string };
+    if (communityImage) {
+      infoImage = await this.fileService.uploadPublicFile(
+        communityImage.buffer,
+        createGroupDto.slug,
+      );
+    }
+    return this.groupRepository.create(currentUser, {
+      ...createGroupDto,
+      coverUrl: infoImage.url,
+    });
   }
 
   async follow(currntUser: User, uuid: string): Promise<UserGroup> {
@@ -62,19 +58,44 @@ export class GroupService {
     return this.groupRepository.findByIdentifier(identifier);
   }
 
-  async update(id: string, updateGroupDto: UpdateGroupDto) {
-    if (updateGroupDto.newCoverName && updateGroupDto.newCoverUrl) {
-      const cover = await this.fileService.uploadPublicFileFromUrl(
-        updateGroupDto.newCoverUrl,
-        updateGroupDto.newCoverName,
-      );
-
-      updateGroupDto.coverUrl = cover.url;
-      delete updateGroupDto.newCoverUrl;
-      delete updateGroupDto.newCoverName;
+  async update(
+    uuid: string,
+    currentUser: User,
+    communityImage: Express.Multer.File,
+    updateGroupDto: UpdateGroupDto,
+  ) {
+    const group = await this.findByIdentifier(uuid);
+    if (!group) {
+      throw new BadRequestException(`Group not found.`);
     }
 
-    return this.groupRepository.update(id, updateGroupDto);
+    const isCheckUserAdmin = group.users.find(
+      (data) =>
+        data.user.uuid === currentUser.uuid &&
+        data.role === 'ADMIN' &&
+        data.status === 'ACTIVATED',
+    );
+
+    if (!isCheckUserAdmin) {
+      throw new BadRequestException(
+        `User must be an admin of a community to be able to make a change.`,
+      );
+    }
+
+    if (!communityImage && !updateGroupDto.coverUrl) {
+      throw new BadRequestException(`Mandatory cover image.`);
+    }
+
+    let infoImage: { key: string; url: string };
+    if (communityImage) {
+      infoImage = await this.fileService.uploadPublicFile(
+        communityImage.buffer,
+        updateGroupDto.slug,
+      );
+      updateGroupDto.coverUrl = infoImage.url;
+    }
+
+    return this.groupRepository.update(group.uuid, updateGroupDto);
   }
 
   async delete(id: string) {

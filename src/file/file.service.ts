@@ -57,7 +57,7 @@ export class FileService {
         .upload({
           Bucket: process.env.AWS_BUCKET_NAME,
           Body: dataBuffer,
-          Key: `${Date.now().toString()}-${filename}`,
+          Key: `${Date.now().toString()}-${filename}.png`,
         })
         .promise();
 

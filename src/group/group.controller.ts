@@ -23,22 +23,13 @@ export class GroupController {
   constructor(private readonly groupService: GroupService) {}
 
   @Post()
-  create(@CurrentUser() currentUser: User, @Body() createGroupDto: CreateGroupDto) {
-    return this.groupService.create(currentUser, createGroupDto);
-  }
-
-  @Post('create-with-file')
-  @UseInterceptors(FileInterceptor('communityImage'))
+  @UseInterceptors(FileInterceptor('coverImage'))
   createWithFile(
     @CurrentUser() currentUser: User,
-    @UploadedFile() communityImage: Express.Multer.File,
+    @UploadedFile() coverImage: Express.Multer.File,
     @Body() createGroupDto: any,
   ) {
-    return this.groupService.createWithFile(
-      currentUser,
-      createGroupDto,
-      communityImage,
-    );
+    return this.groupService.create(currentUser, createGroupDto, coverImage);
   }
 
   @Post('follow')
@@ -78,8 +69,19 @@ export class GroupController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
-    return this.groupService.update(id, updateGroupDto);
+  @UseInterceptors(FileInterceptor('coverImage'))
+  update(
+    @Param('id') id: string,
+    @CurrentUser() currentUser: User,
+    @UploadedFile() coverImage: Express.Multer.File,
+    @Body() updateGroupDto: any,
+  ) {
+    return this.groupService.update(
+      id,
+      currentUser,
+      coverImage,
+      updateGroupDto,
+    );
   }
 
   @Delete(':id')

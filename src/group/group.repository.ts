@@ -104,14 +104,11 @@ export class GroupRepository {
     return await this.prisma.group.findFirst({
       where: {
         OR: [
-          {
-            uuid: {
-              equals: identifier,
-            },
-          },
+          { uuid: { contains: identifier } },
           {
             slug: {
               equals: identifier,
+              mode: 'insensitive',
             },
           },
         ],
@@ -125,6 +122,8 @@ export class GroupRepository {
         coverUrl: true,
         users: {
           select: {
+            role: true,
+            status: true,
             user: {
               select: {
                 uuid: true,
