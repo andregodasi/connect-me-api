@@ -3,31 +3,26 @@ import { Prisma, UserEvent } from '@prisma/client';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
-import { GroupService } from 'src/group/group.service';
 import { User } from 'src/user/entities/user.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { Event } from './entities/event.entity';
+import { isUUID } from 'class-validator';
+import { Group } from '../group/entities/group.entity';
 
 @Injectable()
 export class EventRepository {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly groupService: GroupService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(
     currentUser: User,
     createEventDto: CreateEventDto,
+    group: Group,
   ): Promise<Event> {
-    const { idGroup, ...createEventData } = createEventDto;
-
     const data: Prisma.EventCreateInput = {
-      ...createEventData,
+      ...createEventDto,
     };
-
-    const groupData = await this.groupService.findByIdentifier(idGroup);
 
     const createdEvent = await this.prisma.event.create({
       data: {
@@ -45,7 +40,7 @@ export class EventRepository {
         },
         group: {
           connect: {
-            id: groupData.id,
+            id: group.id,
           },
         },
       },
@@ -105,23 +100,21 @@ export class EventRepository {
 
     return deleteSubscription;
   }
-  //data: { fk_id_event: eventSubscribe.id, fk_id_user: currentUser.id },
+
   async findByIdentifier(identifier: string) {
+    let queryEvent: Prisma.EventWhereInput;
+    if (isUUID(identifier)) {
+      queryEvent = {
+        uuid: identifier,
+      };
+    } else {
+      queryEvent = {
+        slug: identifier,
+      };
+    }
+
     return await this.prisma.event.findFirst({
-      where: {
-        OR: [
-          {
-            uuid: {
-              equals: identifier,
-            },
-          },
-          {
-            slug: {
-              equals: identifier,
-            },
-          },
-        ],
-      },
+      where: queryEvent,
       select: {
         uuid: true,
         name: true,

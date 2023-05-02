@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { User } from '../user/entities/user.entity';
@@ -7,16 +7,60 @@ import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Event } from './entities/event.entity';
 import { EventRepository } from './event.repository';
+import { FileService } from 'src/file/file.service';
+import { GroupService } from 'src/group/group.service';
+import { Group } from '../group/entities/group.entity';
 
 @Injectable()
 export class EventService {
-  constructor(private readonly eventRepository: EventRepository) {}
+  constructor(
+    private readonly eventRepository: EventRepository,
+    private readonly groupService: GroupService,
+    private readonly fileService: FileService,
+  ) {}
 
   async create(
-    currntUser: User,
+    currentUser: User,
     createEventDto: CreateEventDto,
+    coverImage: Express.Multer.File,
   ): Promise<Event> {
-    return await this.eventRepository.create(currntUser, createEventDto);
+    const group: Group = await this.groupService.findByIdentifier(
+      createEventDto.uuidGroup,
+    );
+
+    //TODO: verificar se o grupo está publicado
+
+    const slugAlreadyExists = await this.eventRepository.findByIdentifier(
+      createEventDto.slug,
+    );
+
+    if (slugAlreadyExists) {
+      throw new BadRequestException(
+        `The slug ${createEventDto.slug} already exists`,
+      );
+    }
+
+    let infoImage: { key: string; url: string };
+    if (coverImage) {
+      infoImage = await this.fileService.uploadPublicFile(
+        coverImage.buffer,
+        createEventDto.slug,
+      );
+    }
+
+    delete createEventDto.uuidGroup;
+
+    return this.eventRepository.create(
+      currentUser,
+      {
+        ...createEventDto,
+        coverUrl: infoImage.url,
+        initialDate: new Date(createEventDto.initialDate),
+        finishDate: new Date(createEventDto.finishDate),
+        limitParticipants: Number(createEventDto.limitParticipants),
+      },
+      group,
+    );
   }
 
   async subscribe(currntUser: User, uuid: string): Promise<UserEvent> {

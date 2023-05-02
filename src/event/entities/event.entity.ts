@@ -9,4 +9,5 @@ export class Event {
   limitParticipants: number;
   createdAt?: Date;
   updatedAt?: Date;
+  coverUrl?: string;
 }

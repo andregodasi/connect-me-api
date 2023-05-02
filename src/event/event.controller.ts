@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -14,17 +16,20 @@ import { UpdateEventDto } from './dto/update-event.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('event')
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Post()
-  create(
+  @UseInterceptors(FileInterceptor('coverImage'))
+  createWithFile(
     @CurrentUser() currentUser: User,
-    @Body() createEventDto: CreateEventDto,
+    @UploadedFile() coverImage: Express.Multer.File,
+    @Body() createEventDto: any,
   ) {
-    return this.eventService.create(currentUser, createEventDto);
+    return this.eventService.create(currentUser, createEventDto, coverImage);
   }
 
   @Post('subscribe')

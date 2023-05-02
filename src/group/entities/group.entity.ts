@@ -6,4 +6,5 @@ export class Group {
   slug: string;
   createdAt: Date;
   updatedAt: Date;
+  coverUrl?: string;
 }
