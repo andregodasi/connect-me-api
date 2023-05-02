@@ -2,6 +2,7 @@ import {
   IsDateString,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
@@ -9,7 +10,7 @@ import { Event } from '../entities/event.entity';
 
 export class CreateEventDto extends Event {
   @IsUUID()
-  idGroup: string;
+  uuidGroup: string;
 
   @IsString()
   @IsNotEmpty()
@@ -33,4 +34,8 @@ export class CreateEventDto extends Event {
 
   @IsInt()
   limitParticipants: number;
+
+  @IsOptional()
+  @IsString()
+  coverUrl: string;
 }

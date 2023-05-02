@@ -10,6 +10,7 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group } from './entities/group.entity';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class GroupRepository {
@@ -101,18 +102,19 @@ export class GroupRepository {
   }
 
   async findByIdentifier(identifier: string) {
+    let queryGroup: Prisma.GroupWhereInput;
+    if (isUUID(identifier)) {
+      queryGroup = {
+        uuid: identifier,
+      };
+    } else {
+      queryGroup = {
+        slug: identifier,
+      };
+    }
+
     return await this.prisma.group.findFirst({
-      where: {
-        OR: [
-          { uuid: { contains: identifier } },
-          {
-            slug: {
-              equals: identifier,
-              mode: 'insensitive',
-            },
-          },
-        ],
-      },
+      where: queryGroup,
       select: {
         id: true,
         uuid: true,
@@ -120,6 +122,8 @@ export class GroupRepository {
         description: true,
         slug: true,
         coverUrl: true,
+        createdAt: true,
+        updatedAt: true,
         users: {
           select: {
             role: true,
