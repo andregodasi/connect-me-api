@@ -53,7 +53,7 @@ export class UserService {
 
   async setConfirmEmail(uuid: string) {
     await this.prisma.user.update({
-      data: { confirmEmail: true },
+      data: { confirmEmail: true, status: UserStatus.ACTIVATED },
       where: { uuid },
     });
   }

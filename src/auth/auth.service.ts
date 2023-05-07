@@ -5,7 +5,7 @@ import { UnauthorizedError } from './errors/unauthorized.error';
 import { UserService } from '../user/user.service';
 import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
-import { User } from '@prisma/client';
+import { User, UserStatus } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -29,8 +29,8 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<User> {
     const user = await this.userService.findByEmail(email);
 
-    if (!user.confirmEmail) {
-      throw new UnprocessableEntityException('Email was not confirmed');
+    if (user.status !== UserStatus.ACTIVATED) {
+      throw new UnprocessableEntityException('User is not activated');
     }
 
     if (user) {
