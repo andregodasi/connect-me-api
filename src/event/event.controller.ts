@@ -14,9 +14,9 @@ import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { User } from 'src/user/entities/user.entity';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { User } from '@prisma/client';
 
 @Controller('event')
 export class EventController {

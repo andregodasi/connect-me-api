@@ -1,20 +1,13 @@
-import { MailService } from './../mail/mail.service';
-import {
-  BadRequestException,
-  Injectable,
-  UnprocessableEntityException,
-} from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { Prisma, UserStatus } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserStatus } from './dto/user-status.enum';
-import { User } from './entities/user.entity';
-import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { MailService } from './../mail/mail.service';
+import { CreateUserDto } from './dto/create-user.dto';
 import { PageOptionUserEventDto } from './dto/page-option-user-event.dto';
+import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
 
 @Injectable()
 export class UserService {
@@ -27,7 +20,7 @@ export class UserService {
     return bcrypt.hash(password, 10);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto) {
     const data: Prisma.UserCreateInput = {
       ...createUserDto,
       password: await UserService.encryptPassword(createUserDto.password),
@@ -54,7 +47,7 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { uuid } });
   }
 
-  findAll(): Promise<User[]> {
+  findAll() {
     return this.prisma.user.findMany();
   }
 

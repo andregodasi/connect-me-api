@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, UserGroup } from '@prisma/client';
+import { Prisma, User, UserGroup } from '@prisma/client';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
-import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
-import { GroupService } from 'src/group/group.service';
-import { User } from 'src/user/entities/user.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';

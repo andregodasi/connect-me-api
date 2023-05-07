@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserGroup } from '@prisma/client';
+import { User, UserGroup } from '@prisma/client';
 import { FileService } from 'src/file/file.service';
-import { User } from 'src/user/entities/user.entity';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';

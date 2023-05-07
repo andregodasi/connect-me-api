@@ -1,22 +1,20 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { GroupService } from './group.service';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
-import { User } from 'src/user/entities/user.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { GroupService } from './group.service';
+import { User } from '@prisma/client';
 
 @Controller('group')
 export class GroupController {

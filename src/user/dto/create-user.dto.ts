@@ -1,4 +1,3 @@
-import { User } from '../entities/user.entity';
 import {
   IsEmail,
   IsString,
@@ -6,9 +5,8 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { UserStatus } from './user-status.enum';
 
-export class CreateUserDto extends User {
+export class CreateUserDto {
   @IsEmail()
   email: string;
 

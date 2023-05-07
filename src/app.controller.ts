@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
-import { User } from './user/entities/user.entity';
 import { IsPublic } from './auth/decorators/is-public.decorator';
+import { User } from '@prisma/client';
 
 @Controller()
 export class AppController {
