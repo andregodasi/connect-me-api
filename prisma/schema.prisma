@@ -29,19 +29,28 @@ enum UserGroupStatus {
 }
 
 model User {
-  id               Int                @id @default(autoincrement())
-  uuid             String             @unique @default(uuid()) @db.Uuid
-  createdAt        DateTime           @default(now()) @map("created_at")
-  updatedAt        DateTime           @updatedAt @map("updated_at")
-  email            String             @unique
-  nickname         String             @unique
-  name             String
-  password         String
-  confirmEmail     Boolean            @default(false)
-  status           UserStatus         @default(PENDING)
+  id           Int        @id @default(autoincrement())
+  uuid         String     @unique @default(uuid()) @db.Uuid
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  email        String     @unique
+  nickname     String     @unique
+  name         String
+  password     String
+  confirmEmail Boolean    @default(false) @map("confirm_email")
+  status       UserStatus @default(PENDING)
+  title        String?
+  aboutMe      String?    @map("about_me")
+  companyName  String?    @map("company_name")
+  companyRole  String?    @map("company_role")
+  photoUrl     String?    @map("photo_url")
+
   groups           UserGroup[]
   events           UserEvent[]
-  RecoveryPassword RecoveryPassword[]
+  recoveryPassword RecoveryPassword[]
+  degree           Degree?
+  socialNetworks   SocialNetwork[]
+  knowledge        Knowledge[]
 
   @@map("user")
 }
@@ -113,4 +122,44 @@ model RecoveryPassword {
   isUsed     Boolean  @default(false)
 
   @@map("recovery_password")
+}
+
+enum Degree {
+  UNDER_GRADUATE
+  GRADUATE
+  MASTER
+  DOCTOR
+}
+
+enum SocialNetworkType {
+  FACEBOOK
+  LINKEDIN
+  GITHUB
+  TWITTER
+}
+
+model SocialNetwork {
+  id         Int               @id @default(autoincrement())
+  createdAt  DateTime          @default(now()) @map("created_at")
+  updatedAt  DateTime          @updatedAt @map("updated_at")
+  user       User              @relation(fields: [fk_id_user], references: [id])
+  fk_id_user Int
+  type       SocialNetworkType
+  link       String
+
+  @@unique([fk_id_user, type])
+  @@map("social_network")
+}
+
+model Knowledge {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  user        User     @relation(fields: [fk_id_user], references: [id])
+  fk_id_user  Int
+  name        String
+  description String
+
+  @@unique([fk_id_user, name])
+  @@map("knowledge")
 }

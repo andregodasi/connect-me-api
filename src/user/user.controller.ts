@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
 import { PageOptionUserEventDto } from './dto/page-option-user-event.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -21,17 +22,22 @@ export class UserController {
   }
 
   @Get('/page/group')
-  async paginateByGroup(@Query() page: PageOptionUserGroupDto) {
-    await this.userService.paginateByGroup(page);
+  paginateByGroup(@Query() page: PageOptionUserGroupDto) {
+    return this.userService.paginateByGroup(page);
   }
 
   @Get('/page/event')
-  async paginateByEvent(@Query() page: PageOptionUserEventDto) {
-    await this.userService.paginateByEvent(page);
+  paginateByEvent(@Query() page: PageOptionUserEventDto) {
+    return this.userService.paginateByEvent(page);
   }
 
   @Get('/confirm-email/:uuid')
   async confirmEmail(@Param('uuid') uuid: string) {
     await this.userService.setConfirmEmail(uuid);
+  }
+
+  @Put('/:uuid')
+  async update(@Param('uuid') uuid: string, @Body() updateDto: UpdateUserDto) {
+    return this.userService.update(uuid, updateDto);
   }
 }

@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, password: string): Promise<User> {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userService.findByEmailWithPassword(email);
 
     if (user.status !== UserStatus.ACTIVATED) {
       throw new UnprocessableEntityException('User is not activated');
