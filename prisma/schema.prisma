@@ -51,22 +51,24 @@ model User {
   degree           Degree?
   socialNetworks   SocialNetwork[]
   knowledge        Knowledge[]
-  EventComment     EventComment[]
+  eventComment     EventComment[]
+  groupComment     GroupComment[]
 
   @@map("user")
 }
 
 model Group {
-  id          Int         @id @default(autoincrement())
-  uuid        String      @unique @default(uuid()) @db.Uuid
-  createdAt   DateTime    @default(now()) @map("created_at")
-  updatedAt   DateTime    @updatedAt @map("updated_at")
-  name        String
-  description String
-  slug        String      @unique
-  coverUrl    String?
-  users       UserGroup[]
-  events      Event[]
+  id           Int            @id @default(autoincrement())
+  uuid         String         @unique @default(uuid()) @db.Uuid
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  name         String
+  description  String
+  slug         String         @unique
+  coverUrl     String?
+  users        UserGroup[]
+  events       Event[]
+  GroupComment GroupComment[]
 
   @@map("group")
 }
@@ -178,4 +180,18 @@ model EventComment {
   starts      Int
 
   @@map("event_comment")
+}
+
+model GroupComment {
+  id          Int      @id @default(autoincrement())
+  uuid        String   @unique @default(uuid()) @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User     @relation(fields: [fk_id_user], references: [id])
+  fk_id_user  Int
+  group       Group    @relation(fields: [fk_id_group], references: [id])
+  fk_id_group Int
+  text        String
+  starts      Int
+
+  @@map("group_comment")
 }

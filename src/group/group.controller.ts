@@ -15,6 +15,8 @@ import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { GroupService } from './group.service';
 import { User } from '@prisma/client';
+import { InsertGroupCommentDto } from './dto/insert-group-comment.dto';
+import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 
 @Controller('group')
 export class GroupController {
@@ -85,5 +87,27 @@ export class GroupController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.groupService.delete(id);
+  }
+
+  @Post('/:uuid/comment')
+  async insertComment(
+    @Param('uuid') uuid: string,
+    @CurrentUser() currentUser: User,
+    @Body() body: InsertGroupCommentDto,
+  ) {
+    await this.groupService.insertComment(
+      currentUser,
+      uuid,
+      body.text,
+      body.starts,
+    );
+  }
+
+  @Get('/:uuid/comment/paginated')
+  getPaginatedComments(
+    @Param('uuid') uuid: string,
+    @Query() pageOption: PageOptionGroupCommentDto,
+  ) {
+    return this.groupService.pageComments(uuid, pageOption);
   }
 }

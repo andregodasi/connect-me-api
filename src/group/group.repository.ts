@@ -8,6 +8,7 @@ import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group } from './entities/group.entity';
 import { isUUID } from 'class-validator';
+import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 
 @Injectable()
 export class GroupRepository {
@@ -273,5 +274,58 @@ export class GroupRepository {
 
   async findByUUID(uuid: string) {
     return this.prisma.group.findUnique({ where: { uuid } });
+  }
+
+  async insertComment(user: User, group: Group, text: string, starts: number) {
+    await this.prisma.groupComment.create({
+      data: {
+        text: text,
+        starts: starts,
+        user: {
+          connect: user,
+        },
+        group: {
+          connect: group,
+        },
+      },
+    });
+  }
+
+  async pageComments(
+    groupUUID: string,
+    pageOptions: PageOptionGroupCommentDto,
+  ) {
+    const itemCount = await this.prisma.groupComment.count({
+      where: { group: { uuid: groupUUID } },
+    });
+
+    const data = await this.prisma.groupComment.findMany({
+      take: pageOptions.take,
+      skip: pageOptions.skip,
+      where: {
+        group: {
+          uuid: groupUUID,
+        },
+      },
+      select: {
+        uuid: true,
+        text: true,
+        starts: true,
+        user: {
+          select: {
+            uuid: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: Prisma.SortOrder.desc,
+      },
+    });
+
+    const pageMetaDto = new PageMetaDto(pageOptions, itemCount);
+
+    return new PageDto(data, pageMetaDto);
   }
 }

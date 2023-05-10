@@ -6,6 +6,7 @@ import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group } from './entities/group.entity';
 import { GroupRepository } from './group.repository';
+import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 
 @Injectable()
 export class GroupService {
@@ -115,5 +116,22 @@ export class GroupService {
       ),
       currentUser,
     );
+  }
+
+  async insertComment(
+    user: User,
+    groupUUID: string,
+    text: string,
+    starts: number,
+  ) {
+    const event = await this.groupRepository.findByUUID(groupUUID);
+    await this.groupRepository.insertComment(user, event, text, starts);
+  }
+
+  async pageComments(
+    eventUUID: string,
+    pageOptions: PageOptionGroupCommentDto,
+  ) {
+    return this.groupRepository.pageComments(eventUUID, pageOptions);
   }
 }
