@@ -17,6 +17,8 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '@prisma/client';
+import { InsertEventComment } from './dto/insert-event-comment.dto';
+import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 
 @Controller('event')
 export class EventController {
@@ -89,5 +91,27 @@ export class EventController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
+  }
+
+  @Post('/:uuid/comment')
+  async insertComment(
+    @Param('uuid') uuid: string,
+    @CurrentUser() currentUser: User,
+    @Body() body: InsertEventComment,
+  ) {
+    await this.eventService.insertComment(
+      currentUser,
+      uuid,
+      body.text,
+      body.starts,
+    );
+  }
+
+  @Get('/:uuid/comment/paginated')
+  getPaginatedComments(
+    @Param('uuid') uuid: string,
+    @Query() pageOption: PageOptionEventCommentDto,
+  ) {
+    return this.eventService.pageComments(uuid, pageOption);
   }
 }

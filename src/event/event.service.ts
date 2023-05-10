@@ -9,6 +9,7 @@ import { EventRepository } from './event.repository';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
 import { Group } from '../group/entities/group.entity';
+import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 
 @Injectable()
 export class EventService {
@@ -112,5 +113,22 @@ export class EventService {
       uuid,
       currentUser,
     );
+  }
+
+  async insertComment(
+    user: User,
+    eventUUID: string,
+    text: string,
+    starts: number,
+  ) {
+    const event = await this.eventRepository.findByUUID(eventUUID);
+    await this.eventRepository.insertComment(user, event, text, starts);
+  }
+
+  async pageComments(
+    eventUUID: string,
+    pageOptions: PageOptionEventCommentDto,
+  ) {
+    return this.eventRepository.pageComments(eventUUID, pageOptions);
   }
 }

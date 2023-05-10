@@ -9,6 +9,7 @@ import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { Event } from './entities/event.entity';
 import { isUUID } from 'class-validator';
 import { Group } from '../group/entities/group.entity';
+import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 
 @Injectable()
 export class EventRepository {
@@ -421,5 +422,58 @@ export class EventRepository {
 
   async findByUUID(uuid: string) {
     return this.prisma.event.findUnique({ where: { uuid } });
+  }
+
+  async insertComment(user: User, event: Event, text: string, starts: number) {
+    await this.prisma.eventComment.create({
+      data: {
+        text: text,
+        starts: starts,
+        user: {
+          connect: user,
+        },
+        event: {
+          connect: event,
+        },
+      },
+    });
+  }
+
+  async pageComments(
+    eventUUID: string,
+    pageOptions: PageOptionEventCommentDto,
+  ) {
+    const itemCount = await this.prisma.eventComment.count({
+      where: { event: { uuid: eventUUID } },
+    });
+
+    const data = await this.prisma.eventComment.findMany({
+      take: pageOptions.take,
+      skip: pageOptions.skip,
+      where: {
+        event: {
+          uuid: eventUUID,
+        },
+      },
+      select: {
+        uuid: true,
+        text: true,
+        starts: true,
+        user: {
+          select: {
+            uuid: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: Prisma.SortOrder.desc,
+      },
+    });
+
+    const pageMetaDto = new PageMetaDto(pageOptions, itemCount);
+
+    return new PageDto(data, pageMetaDto);
   }
 }

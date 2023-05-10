@@ -51,6 +51,7 @@ model User {
   degree           Degree?
   socialNetworks   SocialNetwork[]
   knowledge        Knowledge[]
+  EventComment     EventComment[]
 
   @@map("user")
 }
@@ -83,21 +84,22 @@ model UserGroup {
 }
 
 model Event {
-  id                Int         @id @default(autoincrement())
-  uuid              String      @unique @default(uuid()) @db.Uuid
-  createdAt         DateTime    @default(now()) @map("created_at")
-  updatedAt         DateTime    @updatedAt @map("updated_at")
+  id                Int            @id @default(autoincrement())
+  uuid              String         @unique @default(uuid()) @db.Uuid
+  createdAt         DateTime       @default(now()) @map("created_at")
+  updatedAt         DateTime       @updatedAt @map("updated_at")
   name              String
   description       String
   coverUrl          String?
-  slug              String      @unique
-  initialDate       DateTime    @map("initial_date")
-  finishDate        DateTime    @map("finish_date")
+  slug              String         @unique
+  initialDate       DateTime       @map("initial_date")
+  finishDate        DateTime       @map("finish_date")
   address           String
-  limitParticipants Int         @map("limit_participants")
+  limitParticipants Int            @map("limit_participants")
   users             UserEvent[]
-  group             Group?      @relation(fields: [groupId], references: [id])
+  group             Group?         @relation(fields: [groupId], references: [id])
   groupId           Int?
+  EventComment      EventComment[]
 
   @@map("event")
 }
@@ -162,4 +164,18 @@ model Knowledge {
 
   @@unique([fk_id_user, name])
   @@map("knowledge")
+}
+
+model EventComment {
+  id          Int      @id @default(autoincrement())
+  uuid        String   @unique @default(uuid()) @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User     @relation(fields: [fk_id_user], references: [id])
+  fk_id_user  Int
+  event       Event    @relation(fields: [fk_id_event], references: [id])
+  fk_id_event Int
+  text        String
+  starts      Int
+
+  @@map("event_comment")
 }
