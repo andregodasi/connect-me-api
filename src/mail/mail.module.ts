@@ -9,9 +9,9 @@ import { MailService } from './mail.service';
     MailerModule.forRoot({
       transport: {
         host: process.env.EMAIL_HOST,
-        port: 587,
+        port: Number(process.env.EMAIL_PORT),
         auth: {
-          user: 'apikey',
+          user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASSWORD,
         },
       },

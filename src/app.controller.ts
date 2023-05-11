@@ -1,17 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Res } from '@nestjs/common';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
 import { IsPublic } from './auth/decorators/is-public.decorator';
 import { User } from '@prisma/client';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @IsPublic()
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  get(@Res() response: Response) {
+    response.status(200).send();
   }
 
   @Get('/me')
