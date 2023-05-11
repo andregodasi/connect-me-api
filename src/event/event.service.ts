@@ -43,7 +43,7 @@ export class EventService {
     let infoImage: { key: string; url: string };
     if (coverImage) {
       infoImage = await this.fileService.uploadPublicFile(
-        coverImage.buffer,
+        coverImage,
         createEventDto.slug,
       );
     }

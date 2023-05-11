@@ -32,7 +32,7 @@ export class GroupService {
     let infoImage: { key: string; url: string };
     if (communityImage) {
       infoImage = await this.fileService.uploadPublicFile(
-        communityImage.buffer,
+        communityImage,
         createGroupDto.slug,
       );
     }
@@ -89,7 +89,7 @@ export class GroupService {
     let infoImage: { key: string; url: string };
     if (communityImage) {
       infoImage = await this.fileService.uploadPublicFile(
-        communityImage.buffer,
+        communityImage,
         updateGroupDto.slug,
       );
       updateGroupDto.coverUrl = infoImage.url;

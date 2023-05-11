@@ -50,14 +50,17 @@ export class FileService {
     }),
   }).array('upload', 1); */
 
-  async uploadPublicFile(dataBuffer: Buffer, filename: string) {
+  async uploadPublicFile(file: Express.Multer.File, filename: string) {
     try {
       const s3 = new S3();
       const uploadResult = await s3
         .upload({
           Bucket: process.env.AWS_BUCKET_NAME,
-          Body: dataBuffer,
-          Key: `${Date.now().toString()}-${filename}.png`,
+          Body: file.buffer,
+          Key: `${Date.now().toString()}-${filename}.${
+            file.mimetype.split('/')[1]
+          }`,
+          ContentType: file.mimetype,
         })
         .promise();
 
