@@ -10,12 +10,14 @@ import { PageOptionUserEventDto } from './dto/page-option-user-event.dto';
 import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { exclude } from 'src/utils/utils';
+import { FileService } from 'src/file/file.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mailService: MailService,
+    private readonly fileService: FileService,
   ) {}
 
   private static removeBaseFieldsAndPassword(user: User) {
@@ -158,5 +160,21 @@ export class UserService {
     const ret = await this.prisma.user.findUnique({ where: { id: user.id } });
 
     return UserService.removeBaseFieldsAndPassword(user);
+  }
+
+  async uploadPhoto(user: User, photo: Express.Multer.File) {
+    const infoImage = await this.fileService.uploadPublicFile(
+      photo.buffer,
+      user.uuid,
+    );
+
+    await this.prisma.user.update({
+      data: {
+        photoUrl: infoImage.url,
+      },
+      where: {
+        id: user.id,
+      },
+    });
   }
 }
