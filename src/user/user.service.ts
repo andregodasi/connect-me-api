@@ -163,10 +163,7 @@ export class UserService {
   }
 
   async uploadPhoto(user: User, photo: Express.Multer.File) {
-    const infoImage = await this.fileService.uploadPublicFile(
-      photo.buffer,
-      user.uuid,
-    );
+    const infoImage = await this.fileService.uploadPublicFile(photo, user.uuid);
 
     await this.prisma.user.update({
       data: {
