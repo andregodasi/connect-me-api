@@ -1,15 +1,15 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma, User, UserEvent } from '@prisma/client';
+import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
+import { Group } from '../group/entities/group.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
+import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { Event } from './entities/event.entity';
-import { isUUID } from 'class-validator';
-import { Group } from '../group/entities/group.entity';
-import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 
 @Injectable()
 export class EventRepository {
@@ -421,7 +421,10 @@ export class EventRepository {
   }
 
   async findByUUID(uuid: string) {
-    return this.prisma.event.findUnique({ where: { uuid } });
+    return this.prisma.event.findUnique({
+      where: { uuid },
+      include: { group: { include: { users: true } } },
+    });
   }
 
   async insertComment(user: User, event: Event, text: string, starts: number) {
@@ -475,5 +478,16 @@ export class EventRepository {
     const pageMetaDto = new PageMetaDto(pageOptions, itemCount);
 
     return new PageDto(data, pageMetaDto);
+  }
+
+  async setPublised(uuid: string, isPublised: boolean) {
+    await this.prisma.event.update({
+      data: {
+        isPublised: isPublised,
+      },
+      where: {
+        uuid: uuid,
+      },
+    });
   }
 }

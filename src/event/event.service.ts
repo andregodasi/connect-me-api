@@ -1,5 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { User, UserEvent } from '@prisma/client';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
+import {
+  User,
+  UserEvent,
+  UserGroupRole,
+  UserGroupStatus,
+} from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
@@ -10,6 +20,7 @@ import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
 import { Group } from '../group/entities/group.entity';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
+import { group } from 'console';
 
 @Injectable()
 export class EventService {
@@ -130,5 +141,29 @@ export class EventService {
     pageOptions: PageOptionEventCommentDto,
   ) {
     return this.eventRepository.pageComments(eventUUID, pageOptions);
+  }
+
+  async publish(user: User, uuid: string) {
+    const event = await this.eventRepository.findByUUID(uuid);
+
+    if (!event.group.isPublised) {
+      throw new UnprocessableEntityException('Group is not publised');
+    }
+
+    const exists = event.group.users.find(
+      (u) =>
+        u.fk_id_user === user.id &&
+        u.status == UserGroupStatus.ACTIVATED &&
+        u.role == UserGroupRole.ADMIN,
+    );
+    if (!exists) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    if (event.isPublised) {
+      return;
+    }
+
+    await this.eventRepository.setPublised(uuid, true);
   }
 }

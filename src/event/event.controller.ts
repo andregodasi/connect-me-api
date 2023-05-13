@@ -9,6 +9,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
+  Put,
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -113,5 +114,10 @@ export class EventController {
     @Query() pageOption: PageOptionEventCommentDto,
   ) {
     return this.eventService.pageComments(uuid, pageOption);
+  }
+
+  @Put('/:uuid/publish')
+  async publish(@CurrentUser() user: User, @Param('uuid') uuid: string) {
+    await this.eventService.publish(user, uuid);
   }
 }

@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UploadedFile,
   UseInterceptors,
@@ -109,5 +110,10 @@ export class GroupController {
     @Query() pageOption: PageOptionGroupCommentDto,
   ) {
     return this.groupService.pageComments(uuid, pageOption);
+  }
+
+  @Put('/:uuid/publish')
+  async publish(@CurrentUser() user: User, @Param('uuid') uuid: string) {
+    await this.groupService.publish(user, uuid);
   }
 }

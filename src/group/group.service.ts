@@ -1,5 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { User, UserGroup } from '@prisma/client';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import {
+  User,
+  UserGroup,
+  UserGroupRole,
+  UserGroupStatus,
+} from '@prisma/client';
 import { FileService } from 'src/file/file.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
@@ -133,5 +142,24 @@ export class GroupService {
     pageOptions: PageOptionGroupCommentDto,
   ) {
     return this.groupRepository.pageComments(eventUUID, pageOptions);
+  }
+
+  async publish(user: User, uuid: string) {
+    const group = await this.groupRepository.findByUUID(uuid);
+    const exists = group.users.find(
+      (u) =>
+        u.fk_id_user === user.id &&
+        u.status == UserGroupStatus.ACTIVATED &&
+        u.role == UserGroupRole.ADMIN,
+    );
+    if (!exists) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    if (group.isPublised) {
+      return;
+    }
+
+    await this.groupRepository.setPublised(uuid, true);
   }
 }

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, User, UserGroup } from '@prisma/client';
+import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateGroupDto } from './dto/create-group.dto';
+import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group } from './entities/group.entity';
-import { isUUID } from 'class-validator';
-import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 
 @Injectable()
 export class GroupRepository {
@@ -273,7 +273,10 @@ export class GroupRepository {
   }
 
   async findByUUID(uuid: string) {
-    return this.prisma.group.findUnique({ where: { uuid } });
+    return this.prisma.group.findUnique({
+      where: { uuid },
+      include: { users: true },
+    });
   }
 
   async insertComment(user: User, group: Group, text: string, starts: number) {
@@ -327,5 +330,16 @@ export class GroupRepository {
     const pageMetaDto = new PageMetaDto(pageOptions, itemCount);
 
     return new PageDto(data, pageMetaDto);
+  }
+
+  async setPublised(uuid: string, isPublised: boolean) {
+    await this.prisma.group.update({
+      data: {
+        isPublised: isPublised,
+      },
+      where: {
+        uuid: uuid,
+      },
+    });
   }
 }
