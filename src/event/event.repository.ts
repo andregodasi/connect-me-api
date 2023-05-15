@@ -10,6 +10,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { Event } from './entities/event.entity';
+import { group } from 'console';
 
 @Injectable()
 export class EventRepository {
@@ -444,24 +445,27 @@ export class EventRepository {
 
   async pageComments(
     eventUUID: string,
+    withDeleted: boolean,
     pageOptions: PageOptionEventCommentDto,
   ) {
+    const where: any = { event: { uuid: eventUUID } };
+    if (!withDeleted) {
+      where.deletedAt = null;
+    }
+
     const itemCount = await this.prisma.eventComment.count({
-      where: { event: { uuid: eventUUID } },
+      where,
     });
 
     const data = await this.prisma.eventComment.findMany({
       take: pageOptions.take,
       skip: pageOptions.skip,
-      where: {
-        event: {
-          uuid: eventUUID,
-        },
-      },
+      where,
       select: {
         uuid: true,
         text: true,
         starts: true,
+        reasonDeleted: true,
         user: {
           select: {
             uuid: true,
@@ -487,6 +491,38 @@ export class EventRepository {
       },
       where: {
         uuid: uuid,
+      },
+    });
+  }
+
+  async findCommentByUUID(uuid: string) {
+    return this.prisma.eventComment.findUniqueOrThrow({
+      where: {
+        uuid,
+      },
+      include: {
+        event: {
+          include: {
+            group: {
+              include: {
+                users: true,
+              },
+            },
+          },
+        },
+        user: true,
+      },
+    });
+  }
+
+  async deleteComment(uuid: string, reasonDeleted: string) {
+    await this.prisma.eventComment.update({
+      data: {
+        reasonDeleted,
+        deletedAt: new Date(),
+      },
+      where: {
+        uuid,
       },
     });
   }

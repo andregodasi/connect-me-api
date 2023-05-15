@@ -4,23 +4,15 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import {
-  User,
-  UserEvent,
-  UserGroupRole,
-  UserGroupStatus,
-} from '@prisma/client';
+import { User, UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
-import { CreateEventDto } from './dto/create-event.dto';
-import { PageOptionEventDto } from './dto/page-option-event.dto';
-import { UpdateEventDto } from './dto/update-event.dto';
-import { Event } from './entities/event.entity';
-import { EventRepository } from './event.repository';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
-import { Group } from '../group/entities/group.entity';
+import { MailService } from 'src/mail/mail.service';
+import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
-import { group } from 'console';
+import { PageOptionEventDto } from './dto/page-option-event.dto';
+import { EventRepository } from './event.repository';
 
 @Injectable()
 export class EventService {
@@ -28,18 +20,21 @@ export class EventService {
     private readonly eventRepository: EventRepository,
     private readonly groupService: GroupService,
     private readonly fileService: FileService,
+    private readonly mailService: MailService,
   ) {}
 
   async create(
     currentUser: User,
     createEventDto: CreateEventDto,
     coverImage: Express.Multer.File,
-  ): Promise<Event> {
-    const group: Group = await this.groupService.findByIdentifier(
+  ) {
+    const group = await this.groupService.findByIdentifier(
       createEventDto.uuidGroup,
     );
 
-    //TODO: verificar se o grupo está publicado
+    if (group.isPublised) {
+      throw new BadRequestException('Group is not publised');
+    }
 
     const slugAlreadyExists = await this.eventRepository.findByIdentifier(
       createEventDto.slug,
@@ -86,16 +81,8 @@ export class EventService {
     return this.eventRepository.findAll();
   }
 
-  async findByIdentifier(identifier: string) {
+  findByIdentifier(identifier: string) {
     return this.eventRepository.findByIdentifier(identifier);
-  }
-
-  async update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
-  }
-
-  async remove(id: number) {
-    return `This action removes a #${id} event`;
   }
 
   async getPaginated(pageOption: PageOptionEventDto, currentUser: User) {
@@ -136,11 +123,26 @@ export class EventService {
     await this.eventRepository.insertComment(user, event, text, starts);
   }
 
-  async pageComments(
+  async pageCommentsPublic(
     eventUUID: string,
     pageOptions: PageOptionEventCommentDto,
   ) {
-    return this.eventRepository.pageComments(eventUUID, pageOptions);
+    return this.eventRepository.pageComments(eventUUID, false, pageOptions);
+  }
+
+  async pageComments(
+    user: User,
+    eventUUID: string,
+    pageOptions: PageOptionEventCommentDto,
+  ) {
+    const event = await this.eventRepository.findByUUID(eventUUID);
+
+    const userIsAdmin = GroupService.userIsAdmin(user, event.group);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    return this.eventRepository.pageComments(eventUUID, true, pageOptions);
   }
 
   async publish(user: User, uuid: string) {
@@ -150,13 +152,8 @@ export class EventService {
       throw new UnprocessableEntityException('Group is not publised');
     }
 
-    const exists = event.group.users.find(
-      (u) =>
-        u.fk_id_user === user.id &&
-        u.status == UserGroupStatus.ACTIVATED &&
-        u.role == UserGroupRole.ADMIN,
-    );
-    if (!exists) {
+    const userIsAdmin = GroupService.userIsAdmin(user, event.group);
+    if (!userIsAdmin) {
       throw new UnauthorizedException('you are not admin');
     }
 
@@ -165,5 +162,21 @@ export class EventService {
     }
 
     await this.eventRepository.setPublised(uuid, true);
+  }
+
+  async deleteComment(user: User, uuid: string, reasonDeleted: string) {
+    const comment = await this.eventRepository.findCommentByUUID(uuid);
+
+    const userIsAdmin = GroupService.userIsAdmin(user, comment.event.group);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    await this.eventRepository.deleteComment(uuid, reasonDeleted);
+
+    await this.mailService.sendReasonEventCommentDeleted(
+      comment,
+      reasonDeleted,
+    );
   }
 }

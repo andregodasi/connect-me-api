@@ -171,31 +171,35 @@ model Knowledge {
 }
 
 model EventComment {
-  id          Int      @id @default(autoincrement())
-  uuid        String   @unique @default(uuid()) @db.Uuid
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  user        User     @relation(fields: [fk_id_user], references: [id])
-  fk_id_user  Int
-  event       Event    @relation(fields: [fk_id_event], references: [id])
-  fk_id_event Int
-  text        String
-  starts      Int
+  id            Int       @id @default(autoincrement())
+  uuid          String    @unique @default(uuid()) @db.Uuid
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
+  user          User      @relation(fields: [fk_id_user], references: [id])
+  fk_id_user    Int
+  event         Event     @relation(fields: [fk_id_event], references: [id])
+  fk_id_event   Int
+  text          String
+  starts        Int
+  reasonDeleted String?   @map("reason_deleted")
 
   @@map("event_comment")
 }
 
 model GroupComment {
-  id          Int      @id @default(autoincrement())
-  uuid        String   @unique @default(uuid()) @db.Uuid
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  user        User     @relation(fields: [fk_id_user], references: [id])
-  fk_id_user  Int
-  group       Group    @relation(fields: [fk_id_group], references: [id])
-  fk_id_group Int
-  text        String
-  starts      Int
+  id            Int       @id @default(autoincrement())
+  uuid          String    @unique @default(uuid()) @db.Uuid
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
+  user          User      @relation(fields: [fk_id_user], references: [id])
+  fk_id_user    Int
+  group         Group     @relation(fields: [fk_id_group], references: [id])
+  fk_id_group   Int
+  text          String
+  starts        Int
+  reasonDeleted String?   @map("reason_deleted")
 
   @@map("group_comment")
 }

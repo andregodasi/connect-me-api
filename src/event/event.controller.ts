@@ -84,16 +84,6 @@ export class EventController {
     return this.eventService.findByIdentifier(identifier);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-    return this.eventService.update(+id, updateEventDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.eventService.remove(+id);
-  }
-
   @Post('/:uuid/comment')
   async insertComment(
     @Param('uuid') uuid: string,
@@ -108,16 +98,34 @@ export class EventController {
     );
   }
 
-  @Get('/:uuid/comment/paginated')
-  getPaginatedComments(
+  @Get('/:uuid/comment/public-paginated')
+  getPaginatedPublicComments(
     @Param('uuid') uuid: string,
     @Query() pageOption: PageOptionEventCommentDto,
   ) {
-    return this.eventService.pageComments(uuid, pageOption);
+    return this.eventService.pageCommentsPublic(uuid, pageOption);
+  }
+
+  @Get('/:uuid/comment/paginated')
+  getPaginatedComments(
+    @CurrentUser() user: User,
+    @Param('uuid') uuid: string,
+    @Query() pageOption: PageOptionEventCommentDto,
+  ) {
+    return this.eventService.pageComments(user, uuid, pageOption);
   }
 
   @Put('/:uuid/publish')
   async publish(@CurrentUser() user: User, @Param('uuid') uuid: string) {
     await this.eventService.publish(user, uuid);
+  }
+
+  @Put('/comment/:uuid')
+  async deleteComment(
+    @CurrentUser() user: User,
+    @Param('uuid') uuid: string,
+    @Body() body: { reasonDeleted: string },
+  ) {
+    await this.eventService.deleteComment(user, uuid, body.reasonDeleted);
   }
 }

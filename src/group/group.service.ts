@@ -11,18 +11,29 @@ import {
 } from '@prisma/client';
 import { FileService } from 'src/file/file.service';
 import { CreateGroupDto } from './dto/create-group.dto';
+import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { Group } from './entities/group.entity';
 import { GroupRepository } from './group.repository';
-import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class GroupService {
   constructor(
     private readonly groupRepository: GroupRepository,
     private readonly fileService: FileService,
+    private readonly mailService: MailService,
   ) {}
+
+  public static userIsAdmin(user: User, group: Group & { users: UserGroup[] }) {
+    return group.users.find(
+      (u) =>
+        u.fk_id_user === user.id &&
+        u.status == UserGroupStatus.ACTIVATED &&
+        u.role == UserGroupRole.ADMIN,
+    );
+  }
 
   async create(
     currentUser: User,
@@ -137,22 +148,33 @@ export class GroupService {
     await this.groupRepository.insertComment(user, event, text, starts);
   }
 
-  async pageComments(
+  async pageCommentsPublic(
     eventUUID: string,
     pageOptions: PageOptionGroupCommentDto,
   ) {
-    return this.groupRepository.pageComments(eventUUID, pageOptions);
+    return this.groupRepository.pageComments(eventUUID, false, pageOptions);
+  }
+
+  async pageComments(
+    user: User,
+    eventUUID: string,
+    pageOptions: PageOptionGroupCommentDto,
+  ) {
+    const event = await this.groupRepository.findByUUID(eventUUID);
+
+    const userIsAdmin = GroupService.userIsAdmin(user, event);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    return this.groupRepository.pageComments(eventUUID, true, pageOptions);
   }
 
   async publish(user: User, uuid: string) {
     const group = await this.groupRepository.findByUUID(uuid);
-    const exists = group.users.find(
-      (u) =>
-        u.fk_id_user === user.id &&
-        u.status == UserGroupStatus.ACTIVATED &&
-        u.role == UserGroupRole.ADMIN,
-    );
-    if (!exists) {
+
+    const userIsAdmin = GroupService.userIsAdmin(user, group);
+    if (!userIsAdmin) {
       throw new UnauthorizedException('you are not admin');
     }
 
@@ -161,5 +183,21 @@ export class GroupService {
     }
 
     await this.groupRepository.setPublised(uuid, true);
+  }
+
+  async deleteComment(user: User, uuid: string, reasonDeleted: string) {
+    const comment = await this.groupRepository.findCommentByUUID(uuid);
+
+    const userIsAdmin = GroupService.userIsAdmin(user, comment.group);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    await this.groupRepository.deleteComment(uuid, reasonDeleted);
+
+    await this.mailService.sendReasonGroupCommentDeleted(
+      comment,
+      reasonDeleted,
+    );
   }
 }

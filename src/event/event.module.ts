@@ -4,9 +4,10 @@ import { EventController } from './event.controller';
 import { EventRepository } from './event.repository';
 import { GroupModule } from 'src/group/group.module';
 import { FileModule } from 'src/file/file.module';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
-  imports: [GroupModule, FileModule],
+  imports: [GroupModule, FileModule, MailModule],
   controllers: [EventController],
   providers: [EventService, EventRepository],
 })

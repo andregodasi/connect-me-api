@@ -122,6 +122,7 @@ export class GroupRepository {
         coverUrl: true,
         createdAt: true,
         updatedAt: true,
+        isPublised: true,
         users: {
           select: {
             role: true,
@@ -296,20 +297,22 @@ export class GroupRepository {
 
   async pageComments(
     groupUUID: string,
+    withDeleted: boolean,
     pageOptions: PageOptionGroupCommentDto,
   ) {
+    const where: any = { group: { uuid: groupUUID } };
+    if (!withDeleted) {
+      where.deletedAt = null;
+    }
+
     const itemCount = await this.prisma.groupComment.count({
-      where: { group: { uuid: groupUUID } },
+      where,
     });
 
     const data = await this.prisma.groupComment.findMany({
       take: pageOptions.take,
       skip: pageOptions.skip,
-      where: {
-        group: {
-          uuid: groupUUID,
-        },
-      },
+      where,
       select: {
         uuid: true,
         text: true,
@@ -339,6 +342,34 @@ export class GroupRepository {
       },
       where: {
         uuid: uuid,
+      },
+    });
+  }
+
+  async findCommentByUUID(uuid: string) {
+    return this.prisma.groupComment.findUniqueOrThrow({
+      where: {
+        uuid,
+      },
+      include: {
+        user: true,
+        group: {
+          include: {
+            users: true,
+          },
+        },
+      },
+    });
+  }
+
+  async deleteComment(uuid: string, reasonDeleted: string) {
+    await this.prisma.groupComment.update({
+      data: {
+        reasonDeleted,
+        deletedAt: new Date(),
+      },
+      where: {
+        uuid,
       },
     });
   }

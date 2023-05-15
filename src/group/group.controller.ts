@@ -104,16 +104,34 @@ export class GroupController {
     );
   }
 
-  @Get('/:uuid/comment/paginated')
-  getPaginatedComments(
+  @Get('/:uuid/comment/public-paginated')
+  getPaginatedPublicComments(
     @Param('uuid') uuid: string,
     @Query() pageOption: PageOptionGroupCommentDto,
   ) {
-    return this.groupService.pageComments(uuid, pageOption);
+    return this.groupService.pageCommentsPublic(uuid, pageOption);
+  }
+
+  @Get('/:uuid/comment/paginated')
+  getPaginatedComments(
+    @CurrentUser() user: User,
+    @Param('uuid') uuid: string,
+    @Query() pageOption: PageOptionGroupCommentDto,
+  ) {
+    return this.groupService.pageComments(user, uuid, pageOption);
   }
 
   @Put('/:uuid/publish')
   async publish(@CurrentUser() user: User, @Param('uuid') uuid: string) {
     await this.groupService.publish(user, uuid);
+  }
+
+  @Put('/comment/:uuid')
+  async deleteComment(
+    @CurrentUser() user: User,
+    @Param('uuid') uuid: string,
+    @Body() body: { reasonDeleted: string },
+  ) {
+    await this.groupService.deleteComment(user, uuid, body.reasonDeleted);
   }
 }

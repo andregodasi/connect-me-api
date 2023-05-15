@@ -1,5 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import { EventComment, GroupComment, User } from '@prisma/client';
 
 @Injectable()
 export class MailService {
@@ -25,6 +26,34 @@ export class MailService {
       template: 'recovery_password',
       context: {
         url,
+      },
+    });
+  }
+
+  async sendReasonEventCommentDeleted(
+    eventComment: EventComment & { user: User },
+    reasonDeleted: string,
+  ) {
+    await this.mailerService.sendMail({
+      to: eventComment.user.email,
+      subject: 'Event Comment Deleted',
+      template: 'reason_event_comment_deleted',
+      context: {
+        reason: reasonDeleted,
+      },
+    });
+  }
+
+  async sendReasonGroupCommentDeleted(
+    groupComment: GroupComment & { user: User },
+    reasonDeleted: string,
+  ) {
+    await this.mailerService.sendMail({
+      to: groupComment.user.email,
+      subject: 'Group Comment Deleted',
+      template: 'reason_group_comment_deleted',
+      context: {
+        reason: reasonDeleted,
       },
     });
   }
