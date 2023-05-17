@@ -134,4 +134,14 @@ export class GroupController {
   ) {
     await this.groupService.deleteComment(user, uuid, body.reasonDeleted);
   }
+
+  @Get('/:uuid/followers')
+  getFollowers(@CurrentUser() user: User, @Param('uuid') uuid: string) {
+    return this.groupService.findFollowers(user, uuid);
+  }
+
+  @Get('/:uuid/events')
+  getEvents(@CurrentUser() user: User, @Param('uuid') uuid: string) {
+    return this.groupService.findEvents(user, uuid);
+  }
 }
