@@ -552,4 +552,21 @@ export class EventRepository {
       },
     });
   }
+
+  findSubscribed(id: number) {
+    return this.prisma.userEvent.findMany({
+      select: {
+        user: {
+          select: {
+            uuid: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
+      },
+      where: {
+        id,
+      },
+    });
+  }
 }

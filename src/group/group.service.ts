@@ -27,11 +27,13 @@ export class GroupService {
   ) {}
 
   public static userIsAdmin(user: User, group: Group & { users: UserGroup[] }) {
-    return group.users.find(
-      (u) =>
-        u.fk_id_user === user.id &&
-        u.status == UserGroupStatus.ACTIVATED &&
-        u.role == UserGroupRole.ADMIN,
+    return (
+      group.users.filter(
+        (u) =>
+          u.fk_id_user === user.id &&
+          u.status == UserGroupStatus.ACTIVATED &&
+          u.role == UserGroupRole.ADMIN,
+      )?.length > 0
     );
   }
 
@@ -199,5 +201,22 @@ export class GroupService {
       comment,
       reasonDeleted,
     );
+  }
+
+  async findFollowers(user: User, uuid: string) {
+    const group = await this.groupRepository.findByUUID(uuid);
+    if (!group.isPublised && !GroupService.userIsAdmin(user, group)) {
+      throw new BadRequestException('group not found');
+    }
+    return this.groupRepository.findFollowers(group.id);
+  }
+
+  async findEvents(user: User, uuid: string) {
+    const group = await this.groupRepository.findByUUID(uuid);
+    const userIsAdmin = GroupService.userIsAdmin(user, group);
+    if (!group.isPublised && !userIsAdmin) {
+      throw new BadRequestException('group not found');
+    }
+    return this.groupRepository.findEvents(group.id, !userIsAdmin);
   }
 }

@@ -144,4 +144,9 @@ export class EventController {
       updateEventDto,
     );
   }
+
+  @Get('/:uuid/subscribed')
+  getSubscribed(@CurrentUser() user: User, @Param('uuid') uuid: string) {
+    return this.eventService.findSubscribed(user, uuid);
+  }
 }

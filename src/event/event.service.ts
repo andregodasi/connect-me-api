@@ -231,4 +231,15 @@ export class EventService {
       limitParticipants: Number(updateEventDto.limitParticipants),
     });
   }
+
+  async findSubscribed(user: User, uuid: string) {
+    const event = await this.eventRepository.findByUUID(uuid);
+
+    const userIsAdmin = GroupService.userIsAdmin(user, event.group);
+    if ((!event.isPublised || !event.group.isPublised) && !userIsAdmin) {
+      throw new BadRequestException('event is not found');
+    }
+
+    return this.eventRepository.findSubscribed(event.id);
+  }
 }

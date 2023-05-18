@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User, UserGroup } from '@prisma/client';
+import { Prisma, User, UserGroup, UserStatus } from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
@@ -371,6 +371,44 @@ export class GroupRepository {
       where: {
         uuid,
       },
+    });
+  }
+
+  findFollowers(id: number) {
+    return this.prisma.userGroup.findMany({
+      select: {
+        user: {
+          select: {
+            uuid: true,
+            name: true,
+            photoUrl: true,
+          },
+        },
+      },
+      where: {
+        group: {
+          id,
+        },
+        user: {
+          status: UserStatus.ACTIVATED,
+        },
+      },
+    });
+  }
+
+  findEvents(id: number, onlyPublished: boolean) {
+    const where: any = {
+      group: {
+        id,
+      },
+    };
+
+    if (onlyPublished) {
+      where.isPublised = true;
+    }
+
+    return this.prisma.event.findMany({
+      where,
     });
   }
 }
