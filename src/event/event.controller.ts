@@ -128,4 +128,20 @@ export class EventController {
   ) {
     await this.eventService.deleteComment(user, uuid, body.reasonDeleted);
   }
+
+  @Patch(':id')
+  @UseInterceptors(FileInterceptor('coverImage'))
+  update(
+    @Param('id') id: string,
+    @CurrentUser() currentUser: User,
+    @UploadedFile() coverImage: Express.Multer.File,
+    @Body() updateEventDto: any,
+  ) {
+    return this.eventService.update(
+      id,
+      currentUser,
+      coverImage,
+      updateEventDto,
+    );
+  }
 }

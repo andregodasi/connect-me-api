@@ -13,6 +13,7 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { EventRepository } from './event.repository';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -178,5 +179,56 @@ export class EventService {
       comment,
       reasonDeleted,
     );
+  }
+
+  async update(
+    uuid: string,
+    currentUser: User,
+    eventImage: Express.Multer.File,
+    updateEventDto: UpdateEventDto,
+  ) {
+    const event = await this.findByIdentifier(uuid);
+    if (!event) {
+      throw new BadRequestException(`Event not found.`);
+    }
+
+    const group = await this.groupService.findByIdentifier(event.group.uuid);
+    if (!group) {
+      throw new BadRequestException(`Group not found.`);
+    }
+
+    const isCheckUserAdmin = group.users.find(
+      (data) =>
+        data.user.uuid === currentUser.uuid &&
+        data.role === 'ADMIN' &&
+        data.status === 'ACTIVATED',
+    );
+
+    if (!isCheckUserAdmin) {
+      throw new BadRequestException(
+        `User must be an admin of a community to be able to make a change.`,
+      );
+    }
+
+    if (!eventImage && !updateEventDto.coverUrl) {
+      throw new BadRequestException(`Mandatory cover image.`);
+    }
+
+    let infoImage: { key: string; url: string };
+    if (eventImage) {
+      infoImage = await this.fileService.uploadPublicFile(
+        eventImage,
+        updateEventDto.slug,
+      );
+      updateEventDto.coverUrl = infoImage.url;
+    }
+    delete updateEventDto.uuidGroup;
+    return this.eventRepository.update(event.uuid, {
+      ...updateEventDto,
+      coverUrl: updateEventDto.coverUrl,
+      initialDate: new Date(updateEventDto.initialDate),
+      finishDate: new Date(updateEventDto.finishDate),
+      limitParticipants: Number(updateEventDto.limitParticipants),
+    });
   }
 }

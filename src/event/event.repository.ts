@@ -11,6 +11,7 @@ import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { Event } from './entities/event.entity';
 import { group } from 'console';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
 export class EventRepository {
@@ -121,6 +122,17 @@ export class EventRepository {
         name: true,
         description: true,
         slug: true,
+        address: true,
+        coverUrl: true,
+        initialDate: true,
+        finishDate: true,
+        limitParticipants: true,
+        group: {
+          select: {
+            uuid: true,
+            name: true,
+          },
+        },
         users: {
           select: {
             user: {
@@ -332,6 +344,7 @@ export class EventRepository {
         finishDate: true,
         address: true,
         limitParticipants: true,
+        coverUrl: true,
         group: {
           select: {
             uuid: true,
@@ -403,6 +416,8 @@ export class EventRepository {
         finishDate: true,
         address: true,
         limitParticipants: true,
+        coverUrl: true,
+        isPublised: true,
         group: {
           select: {
             uuid: true,
@@ -523,6 +538,17 @@ export class EventRepository {
       },
       where: {
         uuid,
+      },
+    });
+  }
+
+  async update(id: string, updateEventDto: UpdateEventDto) {
+    return await this.prisma.event.update({
+      where: {
+        uuid: id,
+      },
+      data: {
+        ...updateEventDto,
       },
     });
   }
