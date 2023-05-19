@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { group } from 'console';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, User, UserGroup, UserStatus } from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
@@ -286,10 +287,14 @@ export class GroupRepository {
         text: text,
         starts: starts,
         user: {
-          connect: user,
+          connect: {
+            id: user.id,
+          },
         },
         group: {
-          connect: group,
+          connect: {
+            id: group.id,
+          },
         },
       },
     });
@@ -346,10 +351,11 @@ export class GroupRepository {
     });
   }
 
-  async findCommentByUUID(uuid: string) {
-    return this.prisma.groupComment.findUniqueOrThrow({
+  findCommentByUUID(uuid: string) {
+    return this.prisma.groupComment.findFirstOrThrow({
       where: {
         uuid,
+        deletedAt: null,
       },
       include: {
         user: true,
