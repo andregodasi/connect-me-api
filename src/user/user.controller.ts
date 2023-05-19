@@ -50,9 +50,22 @@ export class UserController {
     await this.userService.setConfirmEmail(uuid);
   }
 
-  @Put('/:uuid')
-  async update(@Param('uuid') uuid: string, @Body() updateDto: UpdateUserDto) {
-    return this.userService.update(uuid, updateDto);
+  @Put('/current/profile')
+  async updateCurrentProfile(
+    @CurrentUser() currentUser: User,
+    @Body() updateDto: UpdateUserDto,
+  ) {
+    return this.userService.update(currentUser, updateDto);
+  }
+
+  @Get('/current/profile')
+  async getCurrentProfile(@CurrentUser() currentUser: User) {
+    return this.userService.findWithProfileByUUID(currentUser.uuid);
+  }
+
+  @Get('/:uuid/profile')
+  async getProfileByUUID(@Param('uuid') uuid: string) {
+    return this.userService.findWithProfileByUUID(uuid);
   }
 
   @Post('/photo')

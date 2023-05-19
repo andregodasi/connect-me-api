@@ -8,12 +8,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2023-04-25T22:04:53.741Z",
+    "modified": "2023-05-19T20:31:09.916Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"!Teste123\"\n}",
+      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"@Juca123\"\n}",
       "form": []
     },
     "tests": []
@@ -372,11 +372,11 @@
     "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
     "containerId": "",
     "name": "confirmEmail",
-    "url": "{{url_api}}/user/confirm-email/fa322e70-80e6-4898-ac2f-036754417340",
+    "url": "{{url_api}}/user/confirm-email/36411e7c-c239-452c-ad6f-9eb3510a4319",
     "method": "GET",
     "sortNum": 40000,
     "created": "2023-04-25T19:54:15.852Z",
-    "modified": "2023-04-25T19:55:31.843Z",
+    "modified": "2023-05-19T20:30:24.863Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -476,6 +476,65 @@
         "isPath": false
       }
     ],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "e4f881ae-8944-4c9e-8b7c-c698bd875471",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "updateCurrentProfile",
+    "url": "{{url_api}}/user/current/profile",
+    "method": "PUT",
+    "sortNum": 70000,
+    "created": "2023-05-19T20:35:48.012Z",
+    "modified": "2023-05-19T21:44:42.118Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"Juca G\",\n  \"nickname\": \"caju\",\n  \"title\": \"alterado\",\n  \"aboutMe\": \"about meeee\",\n  \"companyName\": \"company\",\n  \"companyRole\": \"company role\",\n  \"degree\": \"GRADUATE\",\n  \"socialNetworks\": [\n    {\n      \"type\": \"GITHUB\",\n      \"link\": \"github.com\"\n    }\n  ],\n  \"knowledge\": [\n    {\n      \"name\": \"knowledge\",\n      \"description\": \"descriptioonnn\"\n    }\n  ]\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "e037c953-3289-4505-890e-f3beb543c674",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "getCurrentProfile",
+    "url": "{{url_api}}/user/current/profile",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-05-19T21:42:53.385Z",
+    "modified": "2023-05-19T21:44:49.158Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "91cd5f8a-9897-4fc4-b71f-adf559da1fd5",
+    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "containerId": "",
+    "name": "getProfileByUUID",
+    "url": "{{url_api}}/user/36411e7c-c239-452c-ad6f-9eb3510a4319/profile",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2023-05-19T21:43:15.328Z",
+    "modified": "2023-05-19T21:44:55.802Z",
+    "headers": [],
+    "params": [],
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"

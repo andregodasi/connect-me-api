@@ -131,15 +131,13 @@ export class UserService {
     );
   }
 
-  async update(uuid: string, update: UpdateUserDto) {
-    const user = await this.prisma.user.findUnique({ where: { uuid } });
-
-    this.prisma.$transaction([
+  async update(user: User, update: UpdateUserDto) {
+    await this.prisma.$transaction([
       this.prisma.knowledge.deleteMany({ where: { fk_id_user: user.id } }),
       this.prisma.socialNetwork.deleteMany({ where: { fk_id_user: user.id } }),
       this.prisma.user.update({
         data: {
-          ...user,
+          ...update,
           knowledge: {
             createMany: {
               data: update.knowledge,
@@ -157,9 +155,19 @@ export class UserService {
       }),
     ]);
 
-    const ret = await this.prisma.user.findUnique({ where: { id: user.id } });
+    return this.findWithProfileByUUID(user.uuid);
+  }
 
-    return UserService.removeBaseFieldsAndPassword(user);
+  async findWithProfileByUUID(uuid: string) {
+    const ret = await this.prisma.user.findUnique({
+      where: { uuid },
+      include: {
+        knowledge: { select: { name: true, description: true } },
+        socialNetworks: { select: { type: true, link: true } },
+      },
+    });
+
+    return UserService.removeBaseFieldsAndPassword(ret);
   }
 
   async uploadPhoto(user: User, photo: Express.Multer.File) {
