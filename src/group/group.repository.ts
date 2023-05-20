@@ -322,6 +322,7 @@ export class GroupRepository {
         uuid: true,
         text: true,
         starts: true,
+        reasonDeleted: true,
         user: {
           select: {
             uuid: true,
@@ -351,10 +352,13 @@ export class GroupRepository {
     });
   }
 
-  findCommentByUUID(uuid: string) {
-    return this.prisma.groupComment.findFirstOrThrow({
+  findCommentByUUID(groupUUID: string, commentUUID: string) {
+    return this.prisma.groupComment.findFirst({
       where: {
-        uuid,
+        uuid: commentUUID,
+        group: {
+          uuid: groupUUID,
+        },
         deletedAt: null,
       },
       include: {
@@ -368,14 +372,14 @@ export class GroupRepository {
     });
   }
 
-  async deleteComment(uuid: string, reasonDeleted: string) {
+  async deleteComment(commentID: number, reasonDeleted: string) {
     await this.prisma.groupComment.update({
       data: {
         reasonDeleted,
         deletedAt: new Date(),
       },
       where: {
-        uuid,
+        id: commentID,
       },
     });
   }

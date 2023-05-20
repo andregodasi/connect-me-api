@@ -449,10 +449,14 @@ export class EventRepository {
         text: text,
         starts: starts,
         user: {
-          connect: user,
+          connect: {
+            id: user.id,
+          },
         },
         event: {
-          connect: event,
+          connect: {
+            id: event.id,
+          },
         },
       },
     });
@@ -510,10 +514,14 @@ export class EventRepository {
     });
   }
 
-  async findCommentByUUID(uuid: string) {
-    return this.prisma.eventComment.findUniqueOrThrow({
+  async findCommentByUUID(eventUUID: string, commentUUID: string) {
+    return this.prisma.eventComment.findFirst({
       where: {
-        uuid,
+        uuid: commentUUID,
+        event: {
+          uuid: eventUUID,
+        },
+        deletedAt: null,
       },
       include: {
         event: {
@@ -530,14 +538,14 @@ export class EventRepository {
     });
   }
 
-  async deleteComment(uuid: string, reasonDeleted: string) {
+  async deleteComment(id: number, reasonDeleted: string) {
     await this.prisma.eventComment.update({
       data: {
         reasonDeleted,
         deletedAt: new Date(),
       },
       where: {
-        uuid,
+        id,
       },
     });
   }

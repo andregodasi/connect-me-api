@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import {
@@ -151,25 +152,25 @@ export class GroupService {
   }
 
   async pageCommentsPublic(
-    eventUUID: string,
+    groupUUID: string,
     pageOptions: PageOptionGroupCommentDto,
   ) {
-    return this.groupRepository.pageComments(eventUUID, false, pageOptions);
+    return this.groupRepository.pageComments(groupUUID, false, pageOptions);
   }
 
   async pageComments(
     user: User,
-    eventUUID: string,
+    groupUUID: string,
     pageOptions: PageOptionGroupCommentDto,
   ) {
-    const event = await this.groupRepository.findByUUID(eventUUID);
+    const event = await this.groupRepository.findByUUID(groupUUID);
 
     const userIsAdmin = GroupService.userIsAdmin(user, event);
     if (!userIsAdmin) {
       throw new UnauthorizedException('you are not admin');
     }
 
-    return this.groupRepository.pageComments(eventUUID, true, pageOptions);
+    return this.groupRepository.pageComments(groupUUID, true, pageOptions);
   }
 
   async publish(user: User, uuid: string) {
@@ -187,15 +188,26 @@ export class GroupService {
     await this.groupRepository.setPublised(uuid, true);
   }
 
-  async deleteComment(user: User, uuid: string, reasonDeleted: string) {
-    const comment = await this.groupRepository.findCommentByUUID(uuid);
+  async deleteComment(
+    user: User,
+    groupUUID: string,
+    commentUUID: string,
+    reasonDeleted: string,
+  ) {
+    const comment = await this.groupRepository.findCommentByUUID(
+      groupUUID,
+      commentUUID,
+    );
+    if (!comment?.id) {
+      throw new NotFoundException();
+    }
 
     const userIsAdmin = GroupService.userIsAdmin(user, comment.group);
     if (!userIsAdmin) {
       throw new UnauthorizedException('you are not admin');
     }
 
-    await this.groupRepository.deleteComment(uuid, reasonDeleted);
+    await this.groupRepository.deleteComment(comment.id, reasonDeleted);
 
     await this.mailService.sendReasonGroupCommentDeleted(
       comment,

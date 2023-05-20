@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -33,7 +34,7 @@ export class EventService {
       createEventDto.uuidGroup,
     );
 
-    if (group.isPublised) {
+    if (!group.isPublised) {
       throw new BadRequestException('Group is not publised');
     }
 
@@ -165,15 +166,27 @@ export class EventService {
     await this.eventRepository.setPublised(uuid, true);
   }
 
-  async deleteComment(user: User, uuid: string, reasonDeleted: string) {
-    const comment = await this.eventRepository.findCommentByUUID(uuid);
+  async deleteComment(
+    user: User,
+    eventUUID: string,
+    commentUUID: string,
+    reasonDeleted: string,
+  ) {
+    const comment = await this.eventRepository.findCommentByUUID(
+      eventUUID,
+      commentUUID,
+    );
+
+    if (!comment?.id) {
+      throw new NotFoundException();
+    }
 
     const userIsAdmin = GroupService.userIsAdmin(user, comment.event.group);
     if (!userIsAdmin) {
       throw new UnauthorizedException('you are not admin');
     }
 
-    await this.eventRepository.deleteComment(uuid, reasonDeleted);
+    await this.eventRepository.deleteComment(comment.id, reasonDeleted);
 
     await this.mailService.sendReasonEventCommentDeleted(
       comment,

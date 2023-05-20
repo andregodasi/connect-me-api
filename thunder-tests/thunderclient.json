@@ -183,13 +183,52 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-30T20:21:11.112Z",
-    "modified": "2022-10-05T00:08:37.723Z",
+    "modified": "2023-05-20T00:58:45.886Z",
     "headers": [],
     "params": [],
     "body": {
-      "type": "json",
-      "raw": "{\n  \"idGroup\": \"3b139d0a-bdba-4459-ab4e-2cf6643b4da5\",\n  \"name\": \"Full Stack Overflow\",\n  \"slug\": \"full-stack-overflow\",\n  \"description\": \"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable\",\n  \"initialDate\": \"2022-08-26T04:00:00.988Z\",\n  \"finishDate\": \"2022-08-26T06:00:00.988Z\",\n  \"address\": \"Rua número 0\",\n  \"limitParticipants\": 20\n}",
-      "form": []
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "uuidGroup",
+          "value": "ac2a7d27-3783-4be6-a2c8-2b9d915563b1"
+        },
+        {
+          "name": "name",
+          "value": "Full Stack Overflow"
+        },
+        {
+          "name": "slug",
+          "value": "full-stack-overflow"
+        },
+        {
+          "name": "description",
+          "value": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable"
+        },
+        {
+          "name": "initialDate",
+          "value": "2022-08-26T04:00:00.988Z"
+        },
+        {
+          "name": "finishDate",
+          "value": "2022-08-26T06:00:00.988Z"
+        },
+        {
+          "name": "address",
+          "value": "Rua número 0"
+        },
+        {
+          "name": "limitParticipants",
+          "value": "20"
+        }
+      ],
+      "files": [
+        {
+          "name": "coverImage",
+          "value": "../../../../../Downloads/group_image.png"
+        }
+      ]
     },
     "auth": {
       "type": "bearer",
@@ -568,12 +607,12 @@
     "method": "POST",
     "sortNum": 80000,
     "created": "2023-05-19T22:06:47.550Z",
-    "modified": "2023-05-19T22:07:49.439Z",
+    "modified": "2023-05-20T00:40:55.847Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"text\": \"comment\",\n  \"starts\": 5\n}",
+      "raw": "{\n  \"text\": \"olhaaa\",\n  \"starts\": 5\n}",
       "form": []
     },
     "auth": {
@@ -623,18 +662,172 @@
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
     "name": "deleteComment",
-    "url": "{{url_api}}/group/comment/74185027-170e-4230-b97a-e4c5b70ad024",
+    "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/comment/b65dabc1-d5f6-4b14-8fee-4882230adadf",
     "method": "PUT",
     "sortNum": 110000,
     "created": "2023-05-19T22:10:38.639Z",
-    "modified": "2023-05-19T22:14:55.416Z",
+    "modified": "2023-05-20T00:43:33.123Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"reasonDeleted\": \"dai não da neh\"\n}",
+      "raw": "{\n  \"reasonDeleted\": \"apagado\"\n}",
       "form": []
     },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "7e9407a4-8a20-45c1-8a22-1770297db724",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "getFollowers",
+    "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/followers",
+    "method": "GET",
+    "sortNum": 120000,
+    "created": "2023-05-20T00:44:34.309Z",
+    "modified": "2023-05-20T00:44:54.428Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "a0ec9b4a-aaa9-4564-b68c-ef7fb120a7f8",
+    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "containerId": "",
+    "name": "getEvents",
+    "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/events",
+    "method": "GET",
+    "sortNum": 130000,
+    "created": "2023-05-20T00:45:15.369Z",
+    "modified": "2023-05-20T00:45:25.372Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "ff063423-840b-40bc-8381-c950a4e8a99c",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "publish",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/publish",
+    "method": "PUT",
+    "sortNum": 50000,
+    "created": "2023-05-20T01:00:12.760Z",
+    "modified": "2023-05-20T01:00:59.715Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "ab2d0d1d-2def-4a5b-9291-d5f5acb767e1",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "insertComment",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/comment",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2023-05-20T01:01:44.171Z",
+    "modified": "2023-05-20T01:03:24.312Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"text\": \"comentario\",\n  \"starts\": 5\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "b798c1e7-273d-4963-8c0a-148b32fa4444",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "getPaginatedPublicComments",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/comment/public-paginated",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-05-20T01:04:35.748Z",
+    "modified": "2023-05-20T01:05:03.649Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "127a39f8-2bd5-48f6-954b-40668e3a1373",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "getPaginatedComments",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/comment/paginated",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-05-20T01:05:10.730Z",
+    "modified": "2023-05-20T01:07:44.453Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "f4e84dee-15e0-4c33-bc58-2b6c167045e8",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "deleteComment",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/comment/6ec70adb-caea-4229-877c-e1388d0c667c",
+    "method": "PUT",
+    "sortNum": 90000,
+    "created": "2023-05-20T01:06:02.970Z",
+    "modified": "2023-05-20T01:07:57.265Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"reasonDeleted\": \"deletado\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "5d7579a8-61d4-4b93-b5e4-9d3c40067c0b",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "getSubscribed",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/subscribed",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2023-05-20T01:09:21.637Z",
+    "modified": "2023-05-20T01:09:40.366Z",
+    "headers": [],
+    "params": [],
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"

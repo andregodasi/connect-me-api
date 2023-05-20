@@ -126,13 +126,19 @@ export class GroupController {
     await this.groupService.publish(user, uuid);
   }
 
-  @Put('/comment/:uuid')
+  @Put('/:groupUUID/comment/:commentUUID')
   async deleteComment(
     @CurrentUser() user: User,
-    @Param('uuid') uuid: string,
+    @Param('groupUUID') groupUUID: string,
+    @Param('commentUUID') commentUUID: string,
     @Body() body: { reasonDeleted: string },
   ) {
-    await this.groupService.deleteComment(user, uuid, body.reasonDeleted);
+    await this.groupService.deleteComment(
+      user,
+      groupUUID,
+      commentUUID,
+      body.reasonDeleted,
+    );
   }
 
   @Get('/:uuid/followers')

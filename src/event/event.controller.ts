@@ -120,13 +120,19 @@ export class EventController {
     await this.eventService.publish(user, uuid);
   }
 
-  @Put('/comment/:uuid')
+  @Put('/:eventUUID/comment/:commentUUID')
   async deleteComment(
     @CurrentUser() user: User,
-    @Param('uuid') uuid: string,
+    @Param('eventUUID') eventUUID: string,
+    @Param('commentUUID') commentUUID: string,
     @Body() body: { reasonDeleted: string },
   ) {
-    await this.eventService.deleteComment(user, uuid, body.reasonDeleted);
+    await this.eventService.deleteComment(
+      user,
+      eventUUID,
+      commentUUID,
+      body.reasonDeleted,
+    );
   }
 
   @Patch(':id')
