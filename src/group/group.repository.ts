@@ -421,4 +421,18 @@ export class GroupRepository {
       where,
     });
   }
+
+  findAllIsPublised() {
+    return this.prisma.group.findMany({
+      where: {
+        isPublised: true,
+      },
+      select: {
+        uuid: true,
+        name: true,
+        description: true,
+        coverUrl: true,
+      },
+    });
+  }
 }

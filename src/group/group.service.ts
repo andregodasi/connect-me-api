@@ -231,4 +231,8 @@ export class GroupService {
     }
     return this.groupRepository.findEvents(group.id, !userIsAdmin);
   }
+
+  findAllIsPublised() {
+    return this.groupRepository.findAllIsPublised();
+  }
 }
