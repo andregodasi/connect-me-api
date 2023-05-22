@@ -245,13 +245,44 @@ export class EventRepository {
       };
     }
 
+    const where: Prisma.EventWhereInput = {
+      group: queryGroupUser,
+      name: queryEventName,
+      users: queryIsSubscribed,
+      isPublised: true,
+    };
+
+    if (
+      pageOptionEventDto.dateInitial &&
+      pageOptionEventDto.dateFinal &&
+      pageOptionEventDto.dateInitial <= pageOptionEventDto.dateFinal
+    ) {
+      where.initialDate = {
+        gte: pageOptionEventDto.dateInitial,
+        lte: pageOptionEventDto.dateFinal,
+      };
+    } else if (
+      pageOptionEventDto.dateInitial &&
+      !pageOptionEventDto.dateFinal
+    ) {
+      where.initialDate = {
+        gte: new Date(pageOptionEventDto.dateInitial.setHours(0, 0, 0, 0)),
+        lte: new Date(pageOptionEventDto.dateInitial.setHours(23, 59, 59, 999)),
+      };
+    } else if (
+      !pageOptionEventDto.dateInitial &&
+      pageOptionEventDto.dateFinal
+    ) {
+      where.initialDate = {
+        gte: new Date(pageOptionEventDto.dateFinal.setHours(0, 0, 0, 0)),
+        lte: new Date(pageOptionEventDto.dateFinal.setHours(23, 59, 59, 999)),
+      };
+    }
+
     const itemCount: number = await this.prisma.event.count({
-      where: {
-        group: queryGroupUser,
-        name: queryEventName,
-        users: queryIsSubscribed,
-      },
+      where,
     });
+
     const data = await this.prisma.event.findMany({
       take: pageOptionEventDto.take,
       skip: pageOptionEventDto.skip,
@@ -272,13 +303,12 @@ export class EventRepository {
         },
         users: queryUser,
       },
-      where: {
-        group: queryGroupUser,
-        name: queryEventName,
-        users: queryIsSubscribed,
-      },
+      where: where,
       orderBy: {
-        name: pageOptionEventDto.order,
+        initialDate: Prisma.SortOrder.asc,
+        users: {
+          _count: Prisma.SortOrder.desc,
+        },
       },
     });
 

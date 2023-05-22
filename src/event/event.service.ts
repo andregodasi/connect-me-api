@@ -88,16 +88,7 @@ export class EventService {
   }
 
   async getPaginated(pageOption: PageOptionEventDto, currentUser: User) {
-    return this.eventRepository.getPaginated(
-      new PageOptionEventDto(
-        pageOption.page,
-        pageOption.take,
-        pageOption.q,
-        pageOption.isFollowing,
-        pageOption.isSubscribed,
-      ),
-      currentUser,
-    );
+    return this.eventRepository.getPaginated(pageOption, currentUser);
   }
 
   async getMyPaginated(page: number, currentUser: User) {
