@@ -433,6 +433,11 @@ export class GroupRepository {
         description: true,
         coverUrl: true,
       },
+      orderBy: {
+        users: {
+          _count: Prisma.SortOrder.desc,
+        },
+      },
     });
   }
 }
