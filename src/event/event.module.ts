@@ -10,5 +10,6 @@ import { MailModule } from 'src/mail/mail.module';
   imports: [GroupModule, FileModule, MailModule],
   controllers: [EventController],
   providers: [EventService, EventRepository],
+  exports: [EventService],
 })
 export class EventModule {}

@@ -18,6 +18,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from '@prisma/client';
+import { PageOptionsBaseDto } from 'src/common/repository/dto/page-options-base.dto';
 
 @Controller('user')
 export class UserController {
@@ -39,9 +40,30 @@ export class UserController {
     return this.userService.paginateByGroup(page);
   }
 
-  @Get('/page/event')
-  paginateByEvent(@Query() page: PageOptionUserEventDto) {
-    return this.userService.paginateByEvent(page);
+  @Get('/page/event/:eventIdentifier')
+  paginateByEvent(
+    @Param('eventIdentifier') eventIdentifier: string,
+    @Query() page: PageOptionsBaseDto,
+  ) {
+    return this.userService.paginateByEvent(eventIdentifier, page);
+  }
+
+  @Get('/my-event/:eventUUID/paginated')
+  paginateByMyEvent(
+    @CurrentUser() currentUser: User,
+    @Param('eventUUID') eventUUID: string,
+    @Query() page: PageOptionsBaseDto,
+  ) {
+    return this.userService.paginateByMyEvent(eventUUID, currentUser, page);
+  }
+
+  @Get('/my-group/:groupUUID/paginated')
+  paginateByMyGroup(
+    @CurrentUser() currentUser: User,
+    @Param('groupUUID') groupUUID: string,
+    @Query() page: PageOptionsBaseDto,
+  ) {
+    return this.userService.paginateByMyGroup(groupUUID, currentUser, page);
   }
 
   @IsPublic()

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma, User, UserStatus } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
@@ -11,6 +11,11 @@ import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { exclude } from 'src/utils/utils';
 import { FileService } from 'src/file/file.service';
+import { PageOptionsBaseDto } from 'src/common/repository/dto/page-options-base.dto';
+import { EventService } from 'src/event/event.service';
+import { GroupService } from 'src/group/group.service';
+import { UserDto } from './dto/user.dto';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
@@ -18,11 +23,10 @@ export class UserService {
     private readonly prisma: PrismaService,
     private readonly mailService: MailService,
     private readonly fileService: FileService,
+    private readonly userRepository: UserRepository,
+    private readonly eventService: EventService,
+    private readonly groupService: GroupService,
   ) {}
-
-  private static removeBaseFieldsAndPassword(user: User) {
-    return exclude(user, ['id', 'createdAt', 'updatedAt', 'password']);
-  }
 
   private static removePassword(user: User) {
     return exclude(user, ['password']);
@@ -45,7 +49,7 @@ export class UserService {
       .sendConfirmEmail(createdUser.email, createdUser.uuid)
       .catch((e) => console.error(`Error to send confirm email: ${e}`));
 
-    return UserService.removeBaseFieldsAndPassword(createdUser);
+    return UserDto.removeBaseFieldsAndPassword(createdUser);
   }
 
   findByEmailWithPassword(email: string) {
@@ -59,7 +63,7 @@ export class UserService {
 
   async findAll() {
     const users = await this.prisma.user.findMany();
-    return users.map((u) => UserService.removeBaseFieldsAndPassword(u));
+    return users.map((u) => UserDto.removeBaseFieldsAndPassword(u));
   }
 
   async setConfirmEmail(uuid: string) {
@@ -95,17 +99,17 @@ export class UserService {
     const pageMetaDto = new PageMetaDto(page, itemCount);
 
     return new PageDto(
-      data.map((d) => UserService.removeBaseFieldsAndPassword(d)),
+      data.map((d) => UserDto.removeBaseFieldsAndPassword(d)),
       pageMetaDto,
     );
   }
 
-  async paginateByEvent(page: PageOptionUserEventDto) {
+  async paginateByEvent(eventIdentifier: string, page: PageOptionsBaseDto) {
     const where = {
       events: {
         some: {
           event: {
-            uuid: page.eventUUID,
+            uuid: eventIdentifier,
           },
         },
       },
@@ -126,9 +130,41 @@ export class UserService {
     const pageMetaDto = new PageMetaDto(page, itemCount);
 
     return new PageDto(
-      data.map((d) => UserService.removeBaseFieldsAndPassword(d)),
+      data.map((d) => UserDto.removeBaseFieldsAndPassword(d)),
       pageMetaDto,
     );
+  }
+
+  async paginateByMyEvent(
+    eventUUID: string,
+    currentUser: User,
+    page: PageOptionsBaseDto,
+  ) {
+    const event = await this.eventService.findByUUID(eventUUID);
+
+    const group = await this.groupService.findByUUID(event.group.uuid);
+
+    const userIsAdmin = GroupService.userIsAdmin(currentUser, group);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    return this.userRepository.paginateByMyEvent(eventUUID, page);
+  }
+
+  async paginateByMyGroup(
+    groupUUID: string,
+    currentUser: User,
+    page: PageOptionsBaseDto,
+  ) {
+    const group = await this.groupService.findByUUID(groupUUID);
+
+    const userIsAdmin = GroupService.userIsAdmin(currentUser, group);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
+    return this.userRepository.paginateByMyGroup(groupUUID, page);
   }
 
   async update(user: User, update: UpdateUserDto) {
@@ -167,7 +203,7 @@ export class UserService {
       },
     });
 
-    return UserService.removeBaseFieldsAndPassword(ret);
+    return UserDto.removeBaseFieldsAndPassword(ret);
   }
 
   async uploadPhoto(user: User, photo: Express.Multer.File) {

@@ -81,6 +81,10 @@ export class GroupService {
     return this.groupRepository.findByIdentifier(identifier);
   }
 
+  async findByUUID(uuid: string) {
+    return this.groupRepository.findByUUID(uuid);
+  }
+
   async update(
     uuid: string,
     currentUser: User,

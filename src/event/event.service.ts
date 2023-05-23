@@ -87,6 +87,10 @@ export class EventService {
     return this.eventRepository.findByIdentifier(identifier);
   }
 
+  findByUUID(uuid: string) {
+    return this.eventRepository.findByUUID(uuid);
+  }
+
   async getPaginated(pageOption: PageOptionEventDto, currentUser: User) {
     return this.eventRepository.getPaginated(pageOption, currentUser);
   }
@@ -99,6 +103,13 @@ export class EventService {
   }
 
   async getEventsByGroup(page: number, uuid: string, currentUser: User) {
+    const group = await this.groupService.findByUUID(uuid);
+    console.log(group);
+    const userIsAdmin = GroupService.userIsAdmin(currentUser, group);
+    if (!userIsAdmin) {
+      throw new UnauthorizedException('you are not admin');
+    }
+
     return this.eventRepository.getEventsByGroup(
       new PageOptionsDto(page),
       uuid,
