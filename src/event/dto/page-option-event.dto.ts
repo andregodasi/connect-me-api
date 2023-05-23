@@ -2,6 +2,7 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDate,
+  IsDateString,
   IsNumber,
   IsOptional,
   IsString,
@@ -23,11 +24,11 @@ export class PageOptionEventDto extends PageOptionsBaseDto {
   @Transform(({ value }) => value === 'true')
   isSubscribed: boolean;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   dateInitial: Date;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   dateFinal: Date;
 }

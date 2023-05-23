@@ -304,12 +304,16 @@ export class EventRepository {
         users: queryUser,
       },
       where: where,
-      orderBy: {
-        initialDate: Prisma.SortOrder.asc,
-        users: {
-          _count: Prisma.SortOrder.desc,
+      orderBy: [
+        {
+          initialDate: Prisma.SortOrder.asc,
         },
-      },
+        {
+          users: {
+            _count: Prisma.SortOrder.desc,
+          },
+        },
+      ],
     });
 
     const pageMetaDto = new PageMetaDto(pageOptionEventDto, itemCount);

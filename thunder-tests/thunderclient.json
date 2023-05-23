@@ -295,11 +295,11 @@
     "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
     "containerId": "",
     "name": "paginated",
-    "url": "{{url_api}}/event/paginated?page=1&q=teste+qwe&isFollowing=true&dateInitial=2023-05-01&dateFinal=2023-05-30",
+    "url": "{{url_api}}/event/paginated?page=1&q=teste+qwe&isFollowing=true&dateInitial=2023-05-01T00:00:00Z&dateFinal=2023-05-30T00:00:00Z",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-09-11T01:17:25.424Z",
-    "modified": "2023-05-22T00:38:15.926Z",
+    "modified": "2023-05-23T11:46:11.179Z",
     "headers": [],
     "params": [
       {
@@ -319,12 +319,12 @@
       },
       {
         "name": "dateInitial",
-        "value": "2023-05-01",
+        "value": "2023-05-01T00:00:00Z",
         "isPath": false
       },
       {
         "name": "dateFinal",
-        "value": "2023-05-30",
+        "value": "2023-05-30T00:00:00Z",
         "isPath": false
       }
     ],
