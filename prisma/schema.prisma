@@ -76,9 +76,9 @@ model Group {
 
 model UserGroup {
   id          Int             @id @default(autoincrement())
-  user        User            @relation(fields: [fk_id_user], references: [id])
+  user        User            @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user  Int
-  group       Group           @relation(fields: [fk_id_group], references: [id])
+  group       Group           @relation(fields: [fk_id_group], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_group Int
   role        UserGroupRole   @default(PARTICIPANT)
   status      UserGroupStatus @default(ACTIVATED)
@@ -101,7 +101,7 @@ model Event {
   limitParticipants Int            @map("limit_participants")
   isPublised        Boolean        @default(false) @map("is_publised")
   users             UserEvent[]
-  group             Group?         @relation(fields: [groupId], references: [id])
+  group             Group?         @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groupId           Int?           @map("group_id")
   eventComment      EventComment[]
 
@@ -110,9 +110,9 @@ model Event {
 
 model UserEvent {
   id          Int   @id @default(autoincrement())
-  user        User  @relation(fields: [fk_id_user], references: [id])
+  user        User  @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user  Int
-  event       Event @relation(fields: [fk_id_event], references: [id])
+  event       Event @relation(fields: [fk_id_event], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_event Int
 
   @@map("user_event")
@@ -123,7 +123,7 @@ model RecoveryPassword {
   uuid       String   @unique @default(uuid()) @db.Uuid
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
-  user       User     @relation(fields: [fk_id_user], references: [id])
+  user       User     @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user Int
   isUsed     Boolean  @default(false) @map("is_used")
 
@@ -148,7 +148,7 @@ model SocialNetwork {
   id         Int               @id @default(autoincrement())
   createdAt  DateTime          @default(now()) @map("created_at")
   updatedAt  DateTime          @updatedAt @map("updated_at")
-  user       User              @relation(fields: [fk_id_user], references: [id])
+  user       User              @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user Int
   type       SocialNetworkType
   link       String
@@ -161,7 +161,7 @@ model Knowledge {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
-  user        User     @relation(fields: [fk_id_user], references: [id])
+  user        User     @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user  Int
   name        String
   description String
@@ -176,9 +176,9 @@ model EventComment {
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
-  user          User      @relation(fields: [fk_id_user], references: [id])
+  user          User      @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user    Int
-  event         Event     @relation(fields: [fk_id_event], references: [id])
+  event         Event     @relation(fields: [fk_id_event], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_event   Int
   text          String
   starts        Int
@@ -193,9 +193,9 @@ model GroupComment {
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
-  user          User      @relation(fields: [fk_id_user], references: [id])
+  user          User      @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_user    Int
-  group         Group     @relation(fields: [fk_id_group], references: [id])
+  group         Group     @relation(fields: [fk_id_group], references: [id], onDelete: Cascade, onUpdate: Cascade)
   fk_id_group   Int
   text          String
   starts        Int
