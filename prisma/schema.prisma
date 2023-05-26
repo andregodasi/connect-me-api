@@ -45,14 +45,15 @@ model User {
   companyRole  String?    @map("company_role")
   photoUrl     String?    @map("photo_url")
 
-  groups           UserGroup[]
-  events           UserEvent[]
-  recoveryPassword RecoveryPassword[]
-  degree           Degree?
-  socialNetworks   SocialNetwork[]
-  knowledge        Knowledge[]
-  eventComment     EventComment[]
-  groupComment     GroupComment[]
+  groups            UserGroup[]
+  events            UserEvent[]
+  recoveryPassword  RecoveryPassword[]
+  degree            Degree?
+  socialNetworks    SocialNetwork[]
+  knowledge         Knowledge[]
+  eventComment      EventComment[]
+  groupComment      GroupComment[]
+  eventNotification EventNotification[]
 
   @@map("user")
 }
@@ -87,23 +88,24 @@ model UserGroup {
 }
 
 model Event {
-  id                Int            @id @default(autoincrement())
-  uuid              String         @unique @default(uuid()) @db.Uuid
-  createdAt         DateTime       @default(now()) @map("created_at")
-  updatedAt         DateTime       @updatedAt @map("updated_at")
+  id                Int                 @id @default(autoincrement())
+  uuid              String              @unique @default(uuid()) @db.Uuid
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
   name              String
   description       String
-  coverUrl          String?        @map("cover_url")
-  slug              String         @unique
-  initialDate       DateTime       @map("initial_date")
-  finishDate        DateTime       @map("finish_date")
+  coverUrl          String?             @map("cover_url")
+  slug              String              @unique
+  initialDate       DateTime            @map("initial_date")
+  finishDate        DateTime            @map("finish_date")
   address           String
-  limitParticipants Int            @map("limit_participants")
-  isPublised        Boolean        @default(false) @map("is_publised")
+  limitParticipants Int                 @map("limit_participants")
+  isPublised        Boolean             @default(false) @map("is_publised")
   users             UserEvent[]
-  group             Group?         @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  groupId           Int?           @map("group_id")
+  group             Group?              @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  groupId           Int?                @map("group_id")
   eventComment      EventComment[]
+  eventNotification EventNotification[]
 
   @@map("event")
 }
@@ -202,4 +204,24 @@ model GroupComment {
   reasonDeleted String?   @map("reason_deleted")
 
   @@map("group_comment")
+}
+
+enum EventNotificationType {
+  NEW_EVENT
+  EVENT_DAY
+}
+
+model EventNotification {
+  id          Int                   @id @default(autoincrement())
+  uuid        String                @unique @default(uuid()) @db.Uuid
+  createdAt   DateTime              @default(now()) @map("created_at")
+  updatedAt   DateTime              @updatedAt @map("updated_at")
+  type        EventNotificationType
+  isRead      Boolean               @default(false) @map("is_read")
+  user        User                  @relation(fields: [fk_id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fk_id_user  Int
+  event       Event                 @relation(fields: [fk_id_event], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fk_id_event Int
+
+  @@map("event_notification")
 }
