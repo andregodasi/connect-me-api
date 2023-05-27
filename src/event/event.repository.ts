@@ -611,4 +611,28 @@ export class EventRepository {
       },
     });
   }
+
+  findByDate(date: Date) {
+    return this.prisma.event.findMany({
+      select: {
+        id: true,
+        users: {
+          select: {
+            user: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        isPublised: true,
+        initialDate: {
+          gte: new Date(date.setHours(0, 0, 0, 0)),
+          lte: new Date(date.setHours(23, 59, 59, 999)),
+        },
+      },
+    });
+  }
 }

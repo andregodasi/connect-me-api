@@ -4,6 +4,7 @@ import { EventNotificationService } from './event-notification.service';
 
 @Module({
   controllers: [EventNotificationController],
-  providers: [EventNotificationService]
+  providers: [EventNotificationService],
+  exports: [EventNotificationService],
 })
 export class EventNotificationModule {}

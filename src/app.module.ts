@@ -12,10 +12,13 @@ import { MailModule } from './mail/mail.module';
 import { HttpModule } from '@nestjs/axios';
 import { RecoveryPasswordModule } from './recovery-password/recovery-password.module';
 import { EventNotificationModule } from './event-notification/event-notification.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskService } from './task/task.service';
 
 @Module({
   imports: [
     PrismaModule,
+    ScheduleModule.forRoot(),
     UserModule,
     AuthModule,
     GroupModule,
@@ -32,6 +35,7 @@ import { EventNotificationModule } from './event-notification/event-notification
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    TaskService,
   ],
 })
 export class AppModule {}

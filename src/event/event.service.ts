@@ -1,3 +1,4 @@
+import { EventNotificationService } from './../event-notification/event-notification.service';
 import {
   BadRequestException,
   Injectable,
@@ -5,7 +6,7 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { User, UserEvent } from '@prisma/client';
+import { Event, EventNotificationType, User, UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
@@ -23,6 +24,7 @@ export class EventService {
     private readonly groupService: GroupService,
     private readonly fileService: FileService,
     private readonly mailService: MailService,
+    private readonly eventNotificationService: EventNotificationService,
   ) {}
 
   async create(
@@ -166,6 +168,12 @@ export class EventService {
     }
 
     await this.eventRepository.setPublised(uuid, true);
+
+    await this.eventNotificationService.insert(
+      event.group.users.map((u) => u.id),
+      event.id,
+      EventNotificationType.NEW_EVENT,
+    );
   }
 
   async deleteComment(
@@ -256,5 +264,9 @@ export class EventService {
     }
 
     return this.eventRepository.findSubscribed(event.id);
+  }
+
+  findByDate(date: Date) {
+    return this.eventRepository.findByDate(date);
   }
 }
