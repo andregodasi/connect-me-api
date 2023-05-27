@@ -635,4 +635,12 @@ export class EventRepository {
       },
     });
   }
+
+  async deleteEvent(id: number) {
+    await this.prisma.event.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import {
   User,
@@ -28,6 +29,9 @@ export class GroupService {
   ) {}
 
   public static userIsAdmin(user: User, group: Group & { users: UserGroup[] }) {
+    if (!group) {
+      throw new UnprocessableEntityException();
+    }
     return (
       group.users.filter(
         (u) =>
@@ -82,7 +86,11 @@ export class GroupService {
   }
 
   async findByUUID(uuid: string) {
-    return this.groupRepository.findByUUID(uuid);
+    const group = await this.groupRepository.findByUUID(uuid);
+    if (!group) {
+      throw new UnprocessableEntityException('group not found');
+    }
+    return group;
   }
 
   async update(
@@ -125,8 +133,12 @@ export class GroupService {
     return this.groupRepository.update(group.uuid, updateGroupDto);
   }
 
-  async delete(id: string) {
-    return this.groupRepository.delete(id);
+  async deleteGroup(user: User, uuid: string) {
+    const group = await this.findByUUID(uuid);
+    if (!GroupService.userIsAdmin(user, group)) {
+      throw new UnauthorizedException();
+    }
+    await this.groupRepository.deleteGroup(group.id);
   }
 
   async findAllMyGroups(currentUser: User) {

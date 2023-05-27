@@ -159,10 +159,10 @@ export class GroupRepository {
     });
   }
 
-  async delete(id: string) {
-    return await this.prisma.group.delete({
+  async deleteGroup(id: number) {
+    await this.prisma.group.delete({
       where: {
-        uuid: id,
+        id,
       },
     });
   }

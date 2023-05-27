@@ -1,25 +1,23 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  Query,
-  UseInterceptors,
-  UploadedFile,
+  Get,
+  Param,
+  Patch,
+  Post,
   Put,
+  Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { EventService } from './event.service';
-import { CreateEventDto } from './dto/create-event.dto';
-import { UpdateEventDto } from './dto/update-event.dto';
-import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { User } from '@prisma/client';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { InsertEventComment } from './dto/insert-event-comment.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
+import { PageOptionEventDto } from './dto/page-option-event.dto';
+import { EventService } from './event.service';
 
 @Controller('event')
 export class EventController {
@@ -33,6 +31,14 @@ export class EventController {
     @Body() createEventDto: any,
   ) {
     return this.eventService.create(currentUser, createEventDto, coverImage);
+  }
+
+  @Delete(':uuid')
+  async deleteEvent(
+    @CurrentUser() currentUser: User,
+    @Param('uuid') uuid: string,
+  ) {
+    await this.eventService.deleteEvent(currentUser, uuid);
   }
 
   @Post('subscribe')

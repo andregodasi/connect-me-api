@@ -90,9 +90,12 @@ export class GroupController {
     );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.groupService.delete(id);
+  @Delete(':uuid')
+  async deleteGroup(
+    @CurrentUser() currentUser: User,
+    @Param('uuid') uuid: string,
+  ) {
+    await this.groupService.deleteGroup(currentUser, uuid);
   }
 
   @Post('/:uuid/comment')

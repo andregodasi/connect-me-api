@@ -142,12 +142,12 @@
     "_id": "3d6f0690-9f98-47ed-ac4f-c81da9fd6d87",
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
-    "name": "delete",
-    "url": "{{url_api}}/group/e65c2ce0-8bcb-4973-8849-6a9337983e26",
+    "name": "deleteGroup",
+    "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1",
     "method": "DELETE",
     "sortNum": 50000,
     "created": "2022-07-28T03:39:34.594Z",
-    "modified": "2022-07-28T03:41:47.516Z",
+    "modified": "2023-05-27T14:41:05.655Z",
     "headers": [],
     "params": [],
     "auth": {
@@ -854,6 +854,24 @@
     "sortNum": 22500,
     "created": "2023-05-21T23:50:33.547Z",
     "modified": "2023-05-21T23:50:45.106Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "3988f1de-22fa-47a4-a5ae-e1e9218d7b0b",
+    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
+    "containerId": "",
+    "name": "deleteEvent",
+    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a",
+    "method": "DELETE",
+    "sortNum": 15000,
+    "created": "2023-05-27T14:24:53.889Z",
+    "modified": "2023-05-27T14:40:10.359Z",
     "headers": [],
     "params": [],
     "auth": {

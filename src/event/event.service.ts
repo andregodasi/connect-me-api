@@ -89,8 +89,12 @@ export class EventService {
     return this.eventRepository.findByIdentifier(identifier);
   }
 
-  findByUUID(uuid: string) {
-    return this.eventRepository.findByUUID(uuid);
+  async findByUUID(uuid: string) {
+    const event = await this.eventRepository.findByUUID(uuid);
+    if (!event) {
+      throw new UnprocessableEntityException('event not found');
+    }
+    return event;
   }
 
   async getPaginated(pageOption: PageOptionEventDto, currentUser: User) {
@@ -106,7 +110,7 @@ export class EventService {
 
   async getEventsByGroup(page: number, uuid: string, currentUser: User) {
     const group = await this.groupService.findByUUID(uuid);
-    console.log(group);
+
     const userIsAdmin = GroupService.userIsAdmin(currentUser, group);
     if (!userIsAdmin) {
       throw new UnauthorizedException('you are not admin');
@@ -268,5 +272,13 @@ export class EventService {
 
   findByDate(date: Date) {
     return this.eventRepository.findByDate(date);
+  }
+
+  async deleteEvent(user: User, uuid: string) {
+    const event = await this.findByUUID(uuid);
+    if (!GroupService.userIsAdmin(user, event.group)) {
+      throw new UnauthorizedException();
+    }
+    await this.eventRepository.deleteEvent(event.id);
   }
 }
