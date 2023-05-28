@@ -112,7 +112,7 @@ export class EventRepository {
       };
     }
 
-    return await this.prisma.event.findFirst({
+    return this.prisma.event.findFirst({
       where: queryEvent,
       select: {
         uuid: true,
@@ -148,7 +148,7 @@ export class EventRepository {
   }
 
   async paginateMyGroups(currentUser: User) {
-    return await this.prisma.group.findMany({
+    return this.prisma.group.findMany({
       take: 10,
       skip: 10,
       where: {
@@ -167,7 +167,7 @@ export class EventRepository {
   }
 
   async findAll() {
-    return await this.prisma.event.findMany({
+    return this.prisma.event.findMany({
       select: {
         uuid: true,
         name: true,
@@ -587,7 +587,7 @@ export class EventRepository {
   }
 
   async update(id: string, updateEventDto: UpdateEventDto) {
-    return await this.prisma.event.update({
+    return this.prisma.event.update({
       where: {
         uuid: id,
       },

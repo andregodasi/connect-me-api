@@ -54,7 +54,7 @@ export abstract class Base<T> {
   }
 
   async update(id: string, data: any) {
-    return await this.repository[this.entity].update({
+    return this.repository[this.entity].update({
       where: {
         uuid: id,
       },
@@ -65,7 +65,7 @@ export abstract class Base<T> {
   }
 
   async delete(id: string) {
-    return await this.repository[this.entity].group.delete({
+    return this.repository[this.entity].group.delete({
       where: {
         uuid: id,
       },

@@ -85,7 +85,7 @@ export class GroupRepository {
   }
 
   async findAll() {
-    return await this.prisma.group.findMany({
+    return this.prisma.group.findMany({
       select: {
         uuid: true,
         name: true,
@@ -107,7 +107,7 @@ export class GroupRepository {
       };
     }
 
-    return await this.prisma.group.findFirst({
+    return this.prisma.group.findFirst({
       where: queryGroup,
       select: {
         id: true,
@@ -144,7 +144,7 @@ export class GroupRepository {
   }
 
   async update(id: string, updateGroupDto: UpdateGroupDto) {
-    return await this.prisma.group.update({
+    return this.prisma.group.update({
       where: {
         uuid: id,
       },
@@ -163,7 +163,7 @@ export class GroupRepository {
   }
 
   async findAllMyGroups(currentUser: User) {
-    return await this.prisma.group.findMany({
+    return this.prisma.group.findMany({
       where: {
         users: {
           some: {
