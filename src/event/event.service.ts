@@ -1,4 +1,3 @@
-import { EventNotificationService } from './../event-notification/event-notification.service';
 import {
   BadRequestException,
   Injectable,
@@ -6,16 +5,17 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { Event, EventNotificationType, User, UserEvent } from '@prisma/client';
+import { EventNotificationType, User, UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
 import { MailService } from 'src/mail/mail.service';
+import { EventNotificationService } from './../event-notification/event-notification.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
-import { EventRepository } from './event.repository';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { EventRepository } from './event.repository';
 
 @Injectable()
 export class EventService {
@@ -249,7 +249,15 @@ export class EventService {
       );
       updateEventDto.coverUrl = infoImage.url;
     }
+
+    if (updateEventDto.limitParticipants < event.limitParticipants) {
+      throw new BadRequestException(
+        `Update limit participants must be greater than ${event.limitParticipants}`,
+      );
+    }
+
     delete updateEventDto.uuidGroup;
+
     return this.eventRepository.update(event.uuid, {
       ...updateEventDto,
       coverUrl: updateEventDto.coverUrl,
