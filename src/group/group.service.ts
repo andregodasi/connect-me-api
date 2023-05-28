@@ -6,6 +6,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import {
+  Group,
   User,
   UserGroup,
   UserGroupRole,
@@ -16,7 +17,6 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { Group } from './entities/group.entity';
 import { GroupRepository } from './group.repository';
 import { MailService } from 'src/mail/mail.service';
 
@@ -46,7 +46,7 @@ export class GroupService {
     currentUser: User,
     createGroupDto: CreateGroupDto,
     communityImage: Express.Multer.File,
-  ): Promise<Group> {
+  ) {
     const slugAlreadyExists = await this.groupRepository.findByIdentifier(
       createGroupDto.slug,
     );

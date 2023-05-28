@@ -1,6 +1,5 @@
-import { group } from 'console';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma, User, UserGroup, UserStatus } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { Group, Prisma, User, UserGroup, UserStatus } from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
@@ -9,16 +8,12 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';
 import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { Group } from './entities/group.entity';
 
 @Injectable()
 export class GroupRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(
-    currentUser: User,
-    createGroupDto: CreateGroupDto,
-  ): Promise<Group> {
+  async create(currentUser: User, createGroupDto: CreateGroupDto) {
     const data: Prisma.GroupCreateInput = {
       ...createGroupDto,
     };
@@ -201,7 +196,7 @@ export class GroupRepository {
   async getPaginated(
     pageOptionGroupDto: PageOptionGroupDto,
     currentUser: User,
-  ): Promise<PageDto<Group>> {
+  ) {
     let queryUser: Prisma.UserGroupFindManyArgs | boolean = false;
     let queryIsFollowing: Prisma.UserGroupListRelationFilter;
     if (currentUser) {

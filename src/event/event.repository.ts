@@ -1,10 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Event, Prisma, User, UserEvent } from '@prisma/client';
+import { Event, Group, Prisma, User, UserEvent } from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
-import { Group } from '../group/entities/group.entity';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';

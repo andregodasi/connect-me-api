@@ -1,16 +1,6 @@
-import { Group } from '../entities/group.entity';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
-export class CreateGroupDto extends Group {
+export class CreateGroupDto {
   @IsString()
   name: string;
 
