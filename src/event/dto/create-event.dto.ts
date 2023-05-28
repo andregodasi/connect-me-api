@@ -1,14 +1,16 @@
+import { Event, EventType } from '@prisma/client';
 import {
   IsDateString,
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
+  ValidateIf,
 } from 'class-validator';
-import { Event } from '../entities/event.entity';
 
-export class CreateEventDto extends Event {
+export class CreateEventDto {
   @IsUUID()
   uuidGroup: string;
 
@@ -29,6 +31,7 @@ export class CreateEventDto extends Event {
   @IsDateString()
   finishDate: Date;
 
+  @ValidateIf((e: Event) => e.type === EventType.IN_PERSON)
   @IsString()
   address: string;
 
@@ -38,4 +41,12 @@ export class CreateEventDto extends Event {
   @IsOptional()
   @IsString()
   coverUrl: string;
+
+  @ValidateIf((e: Event) => e.type === EventType.REMOTE)
+  @IsString()
+  link: string;
+
+  @IsEnum(EventType)
+  @IsNotEmpty()
+  type: EventType;
 }

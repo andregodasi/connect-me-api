@@ -87,6 +87,11 @@ model UserGroup {
   @@map("user_group")
 }
 
+enum EventType {
+  REMOTE
+  IN_PERSON
+}
+
 model Event {
   id                Int                 @id @default(autoincrement())
   uuid              String              @unique @default(uuid()) @db.Uuid
@@ -98,9 +103,11 @@ model Event {
   slug              String              @unique
   initialDate       DateTime            @map("initial_date")
   finishDate        DateTime            @map("finish_date")
-  address           String
+  address           String?
   limitParticipants Int                 @map("limit_participants")
   isPublised        Boolean             @default(false) @map("is_publised")
+  type              EventType           @default(IN_PERSON)
+  link              String?
   users             UserEvent[]
   group             Group?              @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groupId           Int?                @map("group_id")

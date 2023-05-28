@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma, User, UserEvent } from '@prisma/client';
+import { Event, Prisma, User, UserEvent } from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
@@ -9,8 +9,6 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
-import { Event } from './entities/event.entity';
-import { group } from 'console';
 import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
@@ -21,7 +19,7 @@ export class EventRepository {
     currentUser: User,
     createEventDto: CreateEventDto,
     group: Group,
-  ): Promise<Event> {
+  ) {
     const data: Prisma.EventCreateInput = {
       ...createEventDto,
     };
@@ -126,6 +124,8 @@ export class EventRepository {
         coverUrl: true,
         initialDate: true,
         finishDate: true,
+        link: true,
+        type: true,
         limitParticipants: true,
         group: {
           select: {
@@ -191,7 +191,7 @@ export class EventRepository {
   async getPaginated(
     pageOptionEventDto: PageOptionEventDto,
     currentUser: User,
-  ): Promise<PageDto<Event>> {
+  ) {
     let queryUser: Prisma.UserEventFindManyArgs | boolean = false;
     let queryGroupUser:
       | (Prisma.Without<Prisma.GroupRelationFilter, Prisma.GroupWhereInput> &
@@ -294,6 +294,8 @@ export class EventRepository {
         finishDate: true,
         address: true,
         limitParticipants: true,
+        link: true,
+        type: true,
         group: {
           select: {
             uuid: true,
@@ -321,10 +323,7 @@ export class EventRepository {
     return new PageDto(data, pageMetaDto);
   }
 
-  async getMyPaginated(
-    pageOptionsDto: PageOptionsDto,
-    currentUser: User,
-  ): Promise<PageDto<Event>> {
+  async getMyPaginated(pageOptionsDto: PageOptionsDto, currentUser: User) {
     const itemCount: number = await this.prisma.event.count({
       where: {
         OR: [
@@ -379,6 +378,8 @@ export class EventRepository {
         address: true,
         limitParticipants: true,
         coverUrl: true,
+        link: true,
+        type: true,
         group: {
           select: {
             uuid: true,
@@ -406,7 +407,7 @@ export class EventRepository {
     pageOptionsDto: PageOptionsDto,
     uuid: string,
     currentUser: User,
-  ): Promise<PageDto<Event>> {
+  ) {
     const itemCount: number = await this.prisma.event.count({
       where: {
         AND: [
@@ -452,6 +453,8 @@ export class EventRepository {
         limitParticipants: true,
         coverUrl: true,
         isPublised: true,
+        link: true,
+        type: true,
         group: {
           select: {
             uuid: true,
