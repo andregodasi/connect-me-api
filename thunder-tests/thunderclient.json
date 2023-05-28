@@ -8,7 +8,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T00:29:52.468Z",
-    "modified": "2023-05-19T20:31:09.916Z",
+    "modified": "2023-05-28T00:49:12.834Z",
     "headers": [],
     "params": [],
     "body": {
@@ -46,7 +46,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-28T01:35:02.414Z",
-    "modified": "2023-05-21T23:51:36.912Z",
+    "modified": "2023-05-28T00:47:24.035Z",
     "headers": [],
     "params": [],
     "body": {
@@ -55,21 +55,21 @@
       "form": [
         {
           "name": "name",
-          "value": "teste"
+          "value": "teste3"
         },
         {
           "name": "description",
-          "value": "teste"
+          "value": "teste3"
         },
         {
           "name": "slug",
-          "value": "teste"
+          "value": "teste3"
         }
       ],
       "files": [
         {
           "name": "coverImage",
-          "value": "../../../../Downloads/group_image.jpg"
+          "value": "../../../../../Downloads/group_image.png"
         }
       ]
     },
@@ -183,7 +183,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-30T20:21:11.112Z",
-    "modified": "2023-05-20T00:58:45.886Z",
+    "modified": "2023-05-28T00:51:24.924Z",
     "headers": [],
     "params": [],
     "body": {
@@ -192,7 +192,7 @@
       "form": [
         {
           "name": "uuidGroup",
-          "value": "ac2a7d27-3783-4be6-a2c8-2b9d915563b1"
+          "value": "4bb8e216-692a-4cc6-a93c-827feda8c8d6"
         },
         {
           "name": "name",
@@ -200,7 +200,7 @@
         },
         {
           "name": "slug",
-          "value": "full-stack-overflow"
+          "value": "full-stack-overflow-5"
         },
         {
           "name": "description",
@@ -421,11 +421,11 @@
     "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
     "containerId": "",
     "name": "confirmEmail",
-    "url": "{{url_api}}/user/confirm-email/b6f05913-fae5-4ec9-974f-d7c0160b26a8",
+    "url": "{{url_api}}/user/confirm-email/916eb600-0ad0-4193-a635-3d704396504b",
     "method": "GET",
     "sortNum": 40000,
     "created": "2023-04-25T19:54:15.852Z",
-    "modified": "2023-05-21T23:43:48.079Z",
+    "modified": "2023-05-28T00:48:38.897Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -435,16 +435,16 @@
     "colId": "179bee72-6927-448a-8f8d-7ca468c220ff",
     "containerId": "",
     "name": "insert",
-    "url": "{{url_api}}/recovery-password?user_email=pesun@emvil.com",
+    "url": "{{url_api}}/recovery-password?user_email=sdfsdf@sdsfd.com",
     "method": "POST",
     "sortNum": 10000,
     "created": "2023-04-25T21:30:47.812Z",
-    "modified": "2023-04-25T21:37:01.769Z",
+    "modified": "2023-05-28T00:55:45.432Z",
     "headers": [],
     "params": [
       {
         "name": "user_email",
-        "value": "pesun@emvil.com",
+        "value": "sdfsdf@sdsfd.com",
         "isPath": false
       }
     ],
@@ -469,11 +469,11 @@
     "colId": "179bee72-6927-448a-8f8d-7ca468c220ff",
     "containerId": "",
     "name": "updatePassword",
-    "url": "{{url_api}}/recovery-password/59bba642-62bf-4ea3-9dc3-c5a636e686e7",
+    "url": "{{url_api}}/recovery-password/e6c020e3-6eca-425a-8996-f36a1f26cf97",
     "method": "PUT",
     "sortNum": 40000,
     "created": "2023-04-25T21:32:22.421Z",
-    "modified": "2023-04-25T22:04:42.971Z",
+    "modified": "2023-05-28T00:56:00.858Z",
     "headers": [],
     "params": [],
     "body": {
@@ -595,11 +595,11 @@
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
     "name": "publish",
-    "url": "{{url_api}}/group/12442488-044b-41e5-83f9-01b60e326acd/publish",
+    "url": "{{url_api}}/group/4bb8e216-692a-4cc6-a93c-827feda8c8d6/publish",
     "method": "PUT",
     "sortNum": 70000,
     "created": "2023-05-19T22:04:40.724Z",
-    "modified": "2023-05-21T23:52:03.644Z",
+    "modified": "2023-05-28T00:50:49.856Z",
     "headers": [],
     "params": [],
     "auth": {
@@ -731,11 +731,11 @@
     "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
     "containerId": "",
     "name": "publish",
-    "url": "{{url_api}}/event/bc844b5c-f4f9-4752-adb3-9c6c831b476a/publish",
+    "url": "{{url_api}}/event/6c69c675-6f5f-483a-81e0-a4e34acfc798/publish",
     "method": "PUT",
     "sortNum": 50000,
     "created": "2023-05-20T01:00:12.760Z",
-    "modified": "2023-05-20T01:00:59.715Z",
+    "modified": "2023-05-28T01:12:37.409Z",
     "headers": [],
     "params": [],
     "auth": {
@@ -872,6 +872,42 @@
     "sortNum": 15000,
     "created": "2023-05-27T14:24:53.889Z",
     "modified": "2023-05-27T14:40:10.359Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "0f998b6e-504f-4ce1-918c-f2c19415cd33",
+    "colId": "754f81a8-b235-4663-9762-9c431504c413",
+    "containerId": "",
+    "name": "findByUserIdAndIsNotRead",
+    "url": "{{url_api}}/event-notification",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-05-28T01:26:34.378Z",
+    "modified": "2023-05-28T01:26:56.465Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
+  },
+  {
+    "_id": "87763ce4-4626-465a-81cd-c2fbff197e41",
+    "colId": "754f81a8-b235-4663-9762-9c431504c413",
+    "containerId": "",
+    "name": "markAsRead",
+    "url": "{{url_api}}/event-notification/c69a5fc0-c4f4-4715-a721-7381ed86379a/read",
+    "method": "PUT",
+    "sortNum": 20000,
+    "created": "2023-05-28T01:27:42.471Z",
+    "modified": "2023-05-28T01:28:44.718Z",
     "headers": [],
     "params": [],
     "auth": {

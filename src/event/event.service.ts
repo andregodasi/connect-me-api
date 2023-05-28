@@ -174,7 +174,7 @@ export class EventService {
     await this.eventRepository.setPublised(uuid, true);
 
     await this.eventNotificationService.insert(
-      event.group.users.map((u) => u.id),
+      event.group.users.map((u) => u.fk_id_user),
       event.id,
       EventNotificationType.NEW_EVENT,
     );
