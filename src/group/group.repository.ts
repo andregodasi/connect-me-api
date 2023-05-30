@@ -91,6 +91,11 @@ export class GroupRepository {
         name: true,
         description: true,
         coverUrl: true,
+        _count: {
+          select: {
+            users: true,
+          },
+        },
       },
     });
   }
@@ -137,6 +142,11 @@ export class GroupRepository {
             uuid: true,
             name: true,
             description: true,
+          },
+        },
+        _count: {
+          select: {
+            users: true,
           },
         },
       },
@@ -187,6 +197,11 @@ export class GroupRepository {
                 status: true,
               },
             },
+          },
+        },
+        _count: {
+          select: {
+            users: true,
           },
         },
       },
@@ -255,6 +270,11 @@ export class GroupRepository {
         updatedAt: true,
         slug: true,
         users: queryUser,
+        _count: {
+          select: {
+            users: true,
+          },
+        },
       },
       orderBy: {
         name: pageOptionGroupDto.order,
