@@ -447,6 +447,11 @@ export class GroupRepository {
         name: true,
         description: true,
         coverUrl: true,
+        _count: {
+          select: {
+            users: true,
+          },
+        },
       },
       orderBy: {
         users: {

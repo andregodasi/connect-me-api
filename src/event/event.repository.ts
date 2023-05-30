@@ -143,25 +143,11 @@ export class EventRepository {
             },
           },
         },
-      },
-    });
-  }
-
-  async paginateMyGroups(currentUser: User) {
-    return this.prisma.group.findMany({
-      take: 10,
-      skip: 10,
-      where: {
-        users: {
-          some: {
-            fk_id_user: currentUser.id,
+        _count: {
+          select: {
+            users: true,
           },
         },
-      },
-      select: {
-        uuid: true,
-        name: true,
-        description: true,
       },
     });
   }
@@ -181,6 +167,11 @@ export class EventRepository {
             uuid: true,
             name: true,
             description: true,
+          },
+        },
+        _count: {
+          select: {
+            users: true,
           },
         },
       },
@@ -303,6 +294,11 @@ export class EventRepository {
           },
         },
         users: queryUser,
+        _count: {
+          select: {
+            users: true,
+          },
+        },
       },
       where: where,
       orderBy: [
@@ -391,6 +387,11 @@ export class EventRepository {
             },
           },
         },
+        _count: {
+          select: {
+            users: true,
+          },
+        },
       },
       orderBy: {
         name: pageOptionsDto.order,
@@ -459,6 +460,11 @@ export class EventRepository {
             uuid: true,
             name: true,
             description: true,
+          },
+        },
+        _count: {
+          select: {
+            users: true,
           },
         },
       },
