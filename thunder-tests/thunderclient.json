@@ -507,11 +507,11 @@
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
     "name": "publish",
-    "url": "{{url_api}}/group/4bb8e216-692a-4cc6-a93c-827feda8c8d6/publish",
+    "url": "{{url_api}}/group/67c00416-b846-4ea9-a7da-72e4684ada90/publish",
     "method": "PUT",
     "sortNum": 70000,
     "created": "2023-05-19T22:04:40.724Z",
-    "modified": "2023-05-28T00:50:49.856Z",
+    "modified": "2023-06-09T00:13:40.642Z",
     "headers": [],
     "params": [],
     "auth": {

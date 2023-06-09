@@ -177,19 +177,6 @@ export class GroupRepository {
         name: true,
         description: true,
         coverUrl: true,
-        users: {
-          select: {
-            role: true,
-            user: {
-              select: {
-                uuid: true,
-                name: true,
-                email: true,
-                status: true,
-              },
-            },
-          },
-        },
         _count: {
           select: {
             users: true,
