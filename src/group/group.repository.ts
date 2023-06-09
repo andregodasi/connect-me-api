@@ -1,5 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Group, Prisma, User, UserGroup, UserStatus } from '@prisma/client';
+import {
+  Group,
+  Prisma,
+  User,
+  UserGroup,
+  UserGroupRole,
+  UserStatus,
+} from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageDto } from 'src/common/repository/dto/page.dto';
@@ -82,22 +89,6 @@ export class GroupRepository {
     });
 
     return deleteFollowed;
-  }
-
-  async findAll() {
-    return this.prisma.group.findMany({
-      select: {
-        uuid: true,
-        name: true,
-        description: true,
-        coverUrl: true,
-        _count: {
-          select: {
-            users: true,
-          },
-        },
-      },
-    });
   }
 
   async findByIdentifier(identifier: string) {
@@ -235,7 +226,7 @@ export class GroupRepository {
             },
             {
               role: {
-                equals: `ADMIN`,
+                equals: UserGroupRole.ADMIN,
               },
             },
           ],

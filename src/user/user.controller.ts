@@ -30,11 +30,6 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
   @Get('/page/group')
   paginateByGroup(@Query() page: PageOptionUserGroupDto) {
     return this.userService.paginateByGroup(page);
@@ -77,7 +72,7 @@ export class UserController {
     @CurrentUser() currentUser: User,
     @Body() updateDto: UpdateUserDto,
   ) {
-    return this.userService.update(currentUser, updateDto);
+    return this.userService.updateProfile(currentUser, updateDto);
   }
 
   @Get('/current/profile')

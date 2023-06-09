@@ -46,11 +46,6 @@ export class GroupController {
     return this.groupService.unfollow(currentUser, uuid);
   }
 
-  @Get()
-  findAll() {
-    return this.groupService.findAll();
-  }
-
   @Get('paginated')
   getPaginated(
     @Query() pageOption: PageOptionGroupDto,

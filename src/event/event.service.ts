@@ -81,10 +81,6 @@ export class EventService {
     return this.eventRepository.unsubscribe(currntUser, uuid);
   }
 
-  findAll() {
-    return this.eventRepository.findAll();
-  }
-
   findByIdentifier(identifier: string) {
     return this.eventRepository.findByIdentifier(identifier);
   }

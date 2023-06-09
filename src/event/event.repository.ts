@@ -152,32 +152,6 @@ export class EventRepository {
     });
   }
 
-  async findAll() {
-    return this.prisma.event.findMany({
-      select: {
-        uuid: true,
-        name: true,
-        description: true,
-        initialDate: true,
-        finishDate: true,
-        address: true,
-        limitParticipants: true,
-        group: {
-          select: {
-            uuid: true,
-            name: true,
-            description: true,
-          },
-        },
-        _count: {
-          select: {
-            users: true,
-          },
-        },
-      },
-    });
-  }
-
   async getPaginated(
     pageOptionEventDto: PageOptionEventDto,
     currentUser: User,

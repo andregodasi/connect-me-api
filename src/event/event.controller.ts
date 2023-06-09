@@ -54,11 +54,6 @@ export class EventController {
     return this.eventService.unsubscribe(currentUser, uuid);
   }
 
-  @Get()
-  findAll() {
-    return this.eventService.findAll();
-  }
-
   @Get('my/group/:uuid')
   getEventsByGroup(
     @CurrentUser() currentUser: User,

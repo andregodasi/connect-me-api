@@ -77,10 +77,6 @@ export class GroupService {
     return this.groupRepository.unfollow(currntUser, uuid);
   }
 
-  async findAll() {
-    return this.groupRepository.findAll();
-  }
-
   async findByIdentifier(identifier: string) {
     return this.groupRepository.findByIdentifier(identifier);
   }

@@ -27,12 +27,12 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-26T01:41:17.608Z",
-    "modified": "2023-04-25T19:34:41.074Z",
+    "modified": "2023-05-29T00:43:55.357Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"email\": \"pesun@emvil.com\",\n    \"password\": \"@Juca123\",\n    \"name\": \"Juca G\",\n    \"nickname\": \"caju\"\n}",
+      "raw": "{\n    \"email\": \"test1@emvil.com\",\n    \"password\": \"@Juca123\",\n    \"name\": \"Juca G\",\n    \"nickname\": \"teste1\"\n}",
       "form": []
     },
     "tests": []
@@ -46,7 +46,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-07-28T01:35:02.414Z",
-    "modified": "2023-05-28T00:47:24.035Z",
+    "modified": "2023-05-30T22:27:48.508Z",
     "headers": [],
     "params": [],
     "body": {
@@ -55,15 +55,15 @@
       "form": [
         {
           "name": "name",
-          "value": "teste3"
+          "value": "teste1"
         },
         {
           "name": "description",
-          "value": "teste3"
+          "value": "teste1"
         },
         {
           "name": "slug",
-          "value": "teste3"
+          "value": "teste1"
         }
       ],
       "files": [
@@ -73,24 +73,6 @@
         }
       ]
     },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "68fee96a-806e-41e6-93a0-bb32609be267",
-    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
-    "containerId": "",
-    "name": "findAll",
-    "url": "{{url_api}}/group",
-    "method": "GET",
-    "sortNum": 20000,
-    "created": "2022-07-28T02:18:14.586Z",
-    "modified": "2022-07-28T02:35:17.960Z",
-    "headers": [],
-    "params": [],
     "auth": {
       "type": "bearer",
       "bearer": "{{token}}"
@@ -237,24 +219,6 @@
     "tests": []
   },
   {
-    "_id": "a9f3cf39-14d8-4ca0-ae5a-31d8b4baa5b8",
-    "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
-    "containerId": "",
-    "name": "findAll",
-    "url": "{{url_api}}/user",
-    "method": "GET",
-    "sortNum": 30000,
-    "created": "2022-08-03T02:42:47.566Z",
-    "modified": "2022-08-03T02:43:17.206Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
     "_id": "52501908-5904-4e1d-ba85-3ea32eaff2b1",
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
@@ -264,24 +228,6 @@
     "sortNum": 25000,
     "created": "2022-08-23T03:46:41.336Z",
     "modified": "2022-08-23T03:48:08.246Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "69c4c3d4-88e9-43ba-80bb-cc76c07203c2",
-    "colId": "edad6b26-ac0f-4d27-a57f-c87b2ecaa474",
-    "containerId": "",
-    "name": "findAll",
-    "url": "{{url_api}}/event",
-    "method": "GET",
-    "sortNum": 20000,
-    "created": "2022-09-11T00:59:23.810Z",
-    "modified": "2022-09-11T01:00:06.671Z",
     "headers": [],
     "params": [],
     "auth": {
@@ -383,49 +329,15 @@
     "tests": []
   },
   {
-    "_id": "fcf38f7c-934e-4186-a5d7-cf98875c8c76",
-    "colId": "a6b8b8e2-59f5-4457-b7d6-20e80ba7749d",
-    "containerId": "",
-    "name": "create",
-    "url": "{{url_api}}/file",
-    "method": "POST",
-    "sortNum": 10000,
-    "created": "2022-10-21T19:46:15.286Z",
-    "modified": "2022-10-24T04:35:04.445Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "formdata",
-      "raw": "",
-      "form": [
-        {
-          "name": "name",
-          "value": "teste"
-        }
-      ],
-      "files": [
-        {
-          "name": "file",
-          "value": "../../microsoft-22.png"
-        }
-      ]
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
     "_id": "9af9f1df-afbe-41e4-8a76-0dee9afb3f42",
     "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
     "containerId": "",
     "name": "confirmEmail",
-    "url": "{{url_api}}/user/confirm-email/916eb600-0ad0-4193-a635-3d704396504b",
+    "url": "{{url_api}}/user/confirm-email/8945fc87-04df-46d1-a5f3-e422e26f07fb",
     "method": "GET",
     "sortNum": 40000,
     "created": "2023-04-25T19:54:15.852Z",
-    "modified": "2023-05-28T00:48:38.897Z",
+    "modified": "2023-05-29T00:44:17.387Z",
     "headers": [],
     "params": [],
     "tests": []
