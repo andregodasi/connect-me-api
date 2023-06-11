@@ -59,14 +59,12 @@ export class GroupController {
     return this.groupService.findAllMyGroups(currentUser);
   }
 
-  @Get('publised')
-  findAllIsPublised() {
-    return this.groupService.findAllIsPublised();
-  }
-
   @Get(':identifier')
-  findByIdentifier(@Param('identifier') identifier: string) {
-    return this.groupService.findByIdentifier(identifier);
+  findByIdentifier(
+    @CurrentUser() currentUser: User,
+    @Param('identifier') identifier: string,
+  ) {
+    return this.groupService.findByIdentifier(currentUser, identifier);
   }
 
   @Patch(':id')

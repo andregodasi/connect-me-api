@@ -32,9 +32,7 @@ export class EventService {
     createEventDto: CreateEventDto,
     coverImage: Express.Multer.File,
   ) {
-    const group = await this.groupService.findByIdentifier(
-      createEventDto.uuidGroup,
-    );
+    const group = await this.groupService.findByUUID(createEventDto.uuidGroup);
 
     if (!group.isPublised) {
       throw new BadRequestException('Group is not publised');
@@ -215,7 +213,7 @@ export class EventService {
       throw new BadRequestException(`Event not found.`);
     }
 
-    const group = await this.groupService.findByIdentifier(event.group.uuid);
+    const group = await this.groupService.findByUUID(event.group.uuid);
     if (!group) {
       throw new BadRequestException(`Group not found.`);
     }

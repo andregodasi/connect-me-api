@@ -11,6 +11,7 @@ import {
   UserGroup,
   UserGroupRole,
   UserGroupStatus,
+  UserStatus,
 } from '@prisma/client';
 import { FileService } from 'src/file/file.service';
 import { CreateGroupDto } from './dto/create-group.dto';
@@ -19,6 +20,12 @@ import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { GroupRepository } from './group.repository';
 import { MailService } from 'src/mail/mail.service';
+import { PageDto } from 'src/common/repository/dto/page.dto';
+
+type GroupWithUsers = Group & {
+  users: Partial<UserGroup>[];
+  _count: { users: number };
+};
 
 @Injectable()
 export class GroupService {
@@ -40,6 +47,22 @@ export class GroupService {
           u.role == UserGroupRole.ADMIN,
       )?.length > 0
     );
+  }
+
+  private static userIsFollowed(group: GroupWithUsers, user: User) {
+    return group.users.find((u) => user.id === u.fk_id_user);
+  }
+
+  private static prepareEntity(group: GroupWithUsers, user: User) {
+    const isFollowed = this.userIsFollowed(group, user);
+
+    group['isFollowed'] = isFollowed;
+    group['countUsers'] = group._count.users;
+
+    delete group._count;
+    delete group.id;
+
+    return group;
   }
 
   async create(
@@ -77,8 +100,9 @@ export class GroupService {
     return this.groupRepository.unfollow(currntUser, uuid);
   }
 
-  async findByIdentifier(identifier: string) {
-    return this.groupRepository.findByIdentifier(identifier);
+  async findByIdentifier(currentUser: User, identifier: string) {
+    const group = await this.groupRepository.findByIdentifier(identifier);
+    return GroupService.prepareEntity(group, currentUser);
   }
 
   async findByUUID(uuid: string) {
@@ -95,7 +119,7 @@ export class GroupService {
     communityImage: Express.Multer.File,
     updateGroupDto: UpdateGroupDto,
   ) {
-    const group = await this.findByIdentifier(uuid);
+    const group = await this.groupRepository.findByUUID(uuid);
     if (!group) {
       throw new BadRequestException(`Group not found.`);
     }
@@ -103,8 +127,8 @@ export class GroupService {
     const isCheckUserAdmin = group.users.find(
       (data) =>
         data.user.uuid === currentUser.uuid &&
-        data.role === 'ADMIN' &&
-        data.status === 'ACTIVATED',
+        data.role === UserGroupRole.ADMIN &&
+        data.status === UserStatus.ACTIVATED,
     );
 
     if (!isCheckUserAdmin) {
@@ -142,7 +166,7 @@ export class GroupService {
   }
 
   async getPaginated(pageOption: PageOptionGroupDto, currentUser: User) {
-    return this.groupRepository.getPaginated(
+    const pageGroup = await this.groupRepository.getPaginated(
       new PageOptionGroupDto(
         pageOption.page,
         pageOption.take,
@@ -151,6 +175,12 @@ export class GroupService {
       ),
       currentUser,
     );
+
+    const groups = pageGroup.data.map((g) =>
+      GroupService.prepareEntity(g, currentUser),
+    );
+
+    return new PageDto(groups, pageGroup.meta);
   }
 
   async insertComment(
@@ -242,9 +272,5 @@ export class GroupService {
       throw new BadRequestException('group not found');
     }
     return this.groupRepository.findEvents(group.id, !userIsAdmin);
-  }
-
-  findAllIsPublised() {
-    return this.groupRepository.findAllIsPublised();
   }
 }

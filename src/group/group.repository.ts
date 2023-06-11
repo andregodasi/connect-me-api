@@ -117,6 +117,7 @@ export class GroupRepository {
         isPublised: true,
         users: {
           select: {
+            fk_id_user: true,
             role: true,
             status: true,
             user: {
@@ -192,9 +193,11 @@ export class GroupRepository {
   ) {
     let queryUser: Prisma.UserGroupFindManyArgs | boolean = false;
     let queryIsFollowing: Prisma.UserGroupListRelationFilter;
+
     if (currentUser) {
       queryUser = {
         select: {
+          fk_id_user: true,
           role: true,
           user: {
             select: {
@@ -231,15 +234,21 @@ export class GroupRepository {
       };
     }
 
-    const itemCount: number = await this.prisma.group.count({
-      where: {
-        users: queryIsFollowing,
-      },
+    const where: Prisma.GroupWhereInput = {
+      isPublised: true,
+      users: queryIsFollowing,
+    };
+
+    const itemCount = await this.prisma.group.count({
+      where,
     });
+
     const data = await this.prisma.group.findMany({
       take: pageOptionGroupDto.take,
       skip: pageOptionGroupDto.skip,
       select: {
+        id: true,
+        isPublised: true,
         uuid: true,
         name: true,
         description: true,
@@ -254,12 +263,17 @@ export class GroupRepository {
           },
         },
       },
-      orderBy: {
-        name: pageOptionGroupDto.order,
-      },
-      where: {
-        users: queryIsFollowing,
-      },
+      orderBy: [
+        {
+          name: pageOptionGroupDto.order,
+        },
+        {
+          users: {
+            _count: Prisma.SortOrder.desc,
+          },
+        },
+      ],
+      where,
     });
 
     const pageMetaDto = new PageMetaDto(pageOptionGroupDto, itemCount);
@@ -270,7 +284,7 @@ export class GroupRepository {
   async findByUUID(uuid: string) {
     return this.prisma.group.findUnique({
       where: { uuid },
-      include: { users: true },
+      include: { users: { include: { user: { select: { uuid: true } } } } },
     });
   }
 
@@ -412,30 +426,6 @@ export class GroupRepository {
 
     return this.prisma.event.findMany({
       where,
-    });
-  }
-
-  findAllIsPublised() {
-    return this.prisma.group.findMany({
-      where: {
-        isPublised: true,
-      },
-      select: {
-        uuid: true,
-        name: true,
-        description: true,
-        coverUrl: true,
-        _count: {
-          select: {
-            users: true,
-          },
-        },
-      },
-      orderBy: {
-        users: {
-          _count: Prisma.SortOrder.desc,
-        },
-      },
     });
   }
 }

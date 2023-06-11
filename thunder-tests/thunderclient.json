@@ -83,7 +83,7 @@
     "_id": "b8519fee-e877-4fb7-9413-fcf72a8db4ef",
     "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
     "containerId": "",
-    "name": "findOne",
+    "name": "findByIdentifier",
     "url": "{{url_api}}/group/09182dd7-cda3-4c9b-a616-6b539361fd6d",
     "method": "GET",
     "sortNum": 30000,
@@ -748,24 +748,6 @@
     "sortNum": 100000,
     "created": "2023-05-20T01:09:21.637Z",
     "modified": "2023-05-20T01:09:40.366Z",
-    "headers": [],
-    "params": [],
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{token}}"
-    },
-    "tests": []
-  },
-  {
-    "_id": "6a9d4583-2191-4bfd-8f6c-3648e06533f1",
-    "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
-    "containerId": "",
-    "name": "findAllIsPublised",
-    "url": "{{url_api}}/group/publised",
-    "method": "GET",
-    "sortNum": 22500,
-    "created": "2023-05-21T23:50:33.547Z",
-    "modified": "2023-05-21T23:50:45.106Z",
     "headers": [],
     "params": [],
     "auth": {
