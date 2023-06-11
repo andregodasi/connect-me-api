@@ -68,6 +68,7 @@ model Group {
   slug         String         @unique
   coverUrl     String?        @map("cover_url")
   isPublised   Boolean        @default(false) @map("is_publised")
+  category     String?
   users        UserGroup[]
   events       Event[]
   groupComment GroupComment[]

@@ -115,6 +115,7 @@ export class GroupRepository {
         createdAt: true,
         updatedAt: true,
         isPublised: true,
+        category: true,
         users: {
           select: {
             fk_id_user: true,
@@ -256,6 +257,7 @@ export class GroupRepository {
         createdAt: true,
         updatedAt: true,
         slug: true,
+        category: true,
         users: queryUser,
         _count: {
           select: {

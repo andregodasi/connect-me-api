@@ -13,4 +13,8 @@ export class CreateGroupDto {
   @IsOptional()
   @IsString()
   coverUrl: string;
+
+  @IsOptional()
+  @IsString()
+  category: string;
 }
