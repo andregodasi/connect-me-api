@@ -34,7 +34,7 @@ export class EventService {
   ) {}
 
   private static userIsFollowed(event: EventWithUsers, user: User) {
-    return event.users.find((u) => user.id === u.fk_id_user);
+    return event.users.some((u) => user.id === u.fk_id_user);
   }
 
   private static prepareEntity(event: EventWithUsers, user: User) {

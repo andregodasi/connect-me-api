@@ -50,7 +50,7 @@ export class GroupService {
   }
 
   private static userIsFollowed(group: GroupWithUsers, user: User) {
-    return group.users.find((u) => user.id === u.fk_id_user);
+    return group.users.some((u) => user.id === u.fk_id_user);
   }
 
   private static prepareEntity(group: GroupWithUsers, user: User) {
