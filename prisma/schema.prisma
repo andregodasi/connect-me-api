@@ -154,6 +154,7 @@ enum SocialNetworkType {
   LINKEDIN
   GITHUB
   TWITTER
+  INSTAGRAM
 }
 
 model SocialNetwork {
