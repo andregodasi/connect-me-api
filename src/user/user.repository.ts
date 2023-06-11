@@ -89,7 +89,7 @@ export class UserRepository {
   }
 
   updateProfile(userId: number, update: UpdateUserDto) {
-    return this.prisma.$transaction([
+    return  this.prisma.$transaction([
       this.prisma.knowledge.deleteMany({ where: { fk_id_user: userId } }),
       this.prisma.socialNetwork.deleteMany({ where: { fk_id_user: userId } }),
       this.prisma.user.update({
@@ -97,12 +97,12 @@ export class UserRepository {
           ...update,
           knowledge: {
             createMany: {
-              data: update.knowledge,
+              data: update.knowledge || [],
             },
           },
           socialNetworks: {
             createMany: {
-              data: update.socialNetworks,
+              data: update.socialNetworks || [],
             },
           },
         },
@@ -112,6 +112,7 @@ export class UserRepository {
       }),
     ]);
   }
+  
 
   findWithProfileByUUID(uuid: string) {
     return this.prisma.user.findUnique({

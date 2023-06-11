@@ -229,31 +229,82 @@ export class EventRepository {
       isPublised: true,
     };
 
+    where.OR = [
+      {
+        initialDate: {
+          gte: new Date(),
+        },
+      },
+      {
+        finishDate: {
+          gte: new Date(),
+        },
+      },
+    ];
+
     if (
       pageOptionEventDto.dateInitial &&
       pageOptionEventDto.dateFinal &&
       pageOptionEventDto.dateInitial <= pageOptionEventDto.dateFinal
     ) {
-      where.initialDate = {
-        gte: pageOptionEventDto.dateInitial,
-        lte: pageOptionEventDto.dateFinal,
-      };
+      where.OR = [
+        {
+          initialDate: {
+            gte: pageOptionEventDto.dateInitial,
+            lte: pageOptionEventDto.dateFinal,
+          },
+        },
+        {
+          finishDate: {
+            gte: pageOptionEventDto.dateInitial,
+            lte: pageOptionEventDto.dateFinal,
+          },
+        },
+      ];
     } else if (
       pageOptionEventDto.dateInitial &&
       !pageOptionEventDto.dateFinal
     ) {
-      where.initialDate = {
-        gte: new Date(pageOptionEventDto.dateInitial.setHours(0, 0, 0, 0)),
-        lte: new Date(pageOptionEventDto.dateInitial.setHours(23, 59, 59, 999)),
-      };
+      where.OR = [
+        {
+          initialDate: {
+            gte: new Date(pageOptionEventDto.dateInitial.setHours(0, 0, 0, 0)),
+            lte: new Date(
+              pageOptionEventDto.dateInitial.setHours(23, 59, 59, 999),
+            ),
+          },
+        },
+        {
+          finishDate: {
+            gte: new Date(pageOptionEventDto.dateInitial.setHours(0, 0, 0, 0)),
+            lte: new Date(
+              pageOptionEventDto.dateInitial.setHours(23, 59, 59, 999),
+            ),
+          },
+        },
+      ];
     } else if (
       !pageOptionEventDto.dateInitial &&
       pageOptionEventDto.dateFinal
     ) {
-      where.initialDate = {
-        gte: new Date(pageOptionEventDto.dateFinal.setHours(0, 0, 0, 0)),
-        lte: new Date(pageOptionEventDto.dateFinal.setHours(23, 59, 59, 999)),
-      };
+      where.OR = [
+        {
+          initialDate: {
+            gte: new Date(pageOptionEventDto.dateFinal.setHours(0, 0, 0, 0)),
+            lte: new Date(
+              pageOptionEventDto.dateFinal.setHours(23, 59, 59, 999),
+            ),
+          },
+        },
+        {
+          finishDate: {
+            gte: new Date(pageOptionEventDto.dateFinal.setHours(0, 0, 0, 0)),
+            lte: new Date(
+              pageOptionEventDto.dateFinal.setHours(23, 59, 59, 999),
+            ),
+          },
+        },
+      ];
     }
 
     const itemCount: number = await this.prisma.event.count({
@@ -285,6 +336,7 @@ export class EventRepository {
             uuid: true,
             name: true,
             description: true,
+            coverUrl: true,
           },
         },
         users: queryUser,
