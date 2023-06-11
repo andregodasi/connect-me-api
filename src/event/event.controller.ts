@@ -81,8 +81,11 @@ export class EventController {
   }
 
   @Get(':identifier')
-  findByIdentifier(@Param('identifier') identifier: string) {
-    return this.eventService.findByIdentifier(identifier);
+  findByIdentifier(
+    @CurrentUser() currentUser: User,
+    @Param('identifier') identifier: string,
+  ) {
+    return this.eventService.findByIdentifier(currentUser, identifier);
   }
 
   @Post('/:uuid/comment')

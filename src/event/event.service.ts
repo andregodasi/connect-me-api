@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { EventNotificationType, User, UserEvent } from '@prisma/client';
+import { Event, EventNotificationType, User, UserEvent } from '@prisma/client';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
@@ -16,6 +16,12 @@ import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventRepository } from './event.repository';
+import { PageDto } from 'src/common/repository/dto/page.dto';
+
+type EventWithUsers = Event & {
+  users: Partial<UserEvent>[];
+  _count: { users: number };
+};
 
 @Injectable()
 export class EventService {
@@ -26,6 +32,23 @@ export class EventService {
     private readonly mailService: MailService,
     private readonly eventNotificationService: EventNotificationService,
   ) {}
+
+  private static userIsFollowed(event: EventWithUsers, user: User) {
+    return event.users.find((u) => user.id === u.fk_id_user);
+  }
+
+  private static prepareEntity(event: EventWithUsers, user: User) {
+    const isFollowed = this.userIsFollowed(event, user);
+
+    event['isFollowed'] = isFollowed;
+    event['countUsers'] = event._count.users;
+
+    delete event._count;
+    delete event.id;
+    delete event.groupId;
+
+    return event;
+  }
 
   async create(
     currentUser: User,
@@ -79,8 +102,9 @@ export class EventService {
     return this.eventRepository.unsubscribe(currntUser, uuid);
   }
 
-  findByIdentifier(identifier: string) {
-    return this.eventRepository.findByIdentifier(identifier);
+  async findByIdentifier(currentUser: User, identifier: string) {
+    const event = await this.eventRepository.findByIdentifier(identifier);
+    return EventService.prepareEntity(event, currentUser);
   }
 
   async findByUUID(uuid: string) {
@@ -92,14 +116,25 @@ export class EventService {
   }
 
   async getPaginated(pageOption: PageOptionEventDto, currentUser: User) {
-    return this.eventRepository.getPaginated(pageOption, currentUser);
+    const paged = await this.eventRepository.getPaginated(
+      pageOption,
+      currentUser,
+    );
+    const events = paged.data.map((e) =>
+      EventService.prepareEntity(e, currentUser),
+    );
+    return new PageDto(events, paged.meta);
   }
 
   async getMyPaginated(page: number, currentUser: User) {
-    return this.eventRepository.getMyPaginated(
+    const paged = await this.eventRepository.getMyPaginated(
       new PageOptionsDto(page),
       currentUser,
     );
+    const events = paged.data.map((e) =>
+      EventService.prepareEntity(e, currentUser),
+    );
+    return new PageDto(events, paged.meta);
   }
 
   async getEventsByGroup(page: number, uuid: string, currentUser: User) {
@@ -110,11 +145,16 @@ export class EventService {
       throw new UnauthorizedException('you are not admin');
     }
 
-    return this.eventRepository.getEventsByGroup(
+    const paged = await this.eventRepository.getEventsByGroup(
       new PageOptionsDto(page),
       uuid,
       currentUser,
     );
+
+    const events = paged.data.map((e) =>
+      EventService.prepareEntity(e, currentUser),
+    );
+    return new PageDto(events, paged.meta);
   }
 
   async insertComment(
@@ -208,7 +248,7 @@ export class EventService {
     eventImage: Express.Multer.File,
     updateEventDto: UpdateEventDto,
   ) {
-    const event = await this.findByIdentifier(uuid);
+    const event = await this.eventRepository.findByUUID(uuid);
     if (!event) {
       throw new BadRequestException(`Event not found.`);
     }

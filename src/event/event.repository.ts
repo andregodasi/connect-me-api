@@ -1,5 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Event, Group, Prisma, User, UserEvent } from '@prisma/client';
+import {
+  Event,
+  Group,
+  Prisma,
+  User,
+  UserEvent,
+  UserGroupRole,
+} from '@prisma/client';
 import { isUUID } from 'class-validator';
 import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
 import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
@@ -115,6 +122,10 @@ export class EventRepository {
     return this.prisma.event.findFirst({
       where: queryEvent,
       select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        groupId: true,
         uuid: true,
         name: true,
         description: true,
@@ -126,6 +137,7 @@ export class EventRepository {
         link: true,
         type: true,
         limitParticipants: true,
+        isPublised: true,
         group: {
           select: {
             uuid: true,
@@ -134,6 +146,7 @@ export class EventRepository {
         },
         users: {
           select: {
+            fk_id_user: true,
             user: {
               select: {
                 uuid: true,
@@ -251,6 +264,10 @@ export class EventRepository {
       take: pageOptionEventDto.take,
       skip: pageOptionEventDto.skip,
       select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        isPublised: true,
         uuid: true,
         name: true,
         description: true,
@@ -260,6 +277,9 @@ export class EventRepository {
         limitParticipants: true,
         link: true,
         type: true,
+        coverUrl: true,
+        slug: true,
+        groupId: true,
         group: {
           select: {
             uuid: true,
@@ -339,6 +359,10 @@ export class EventRepository {
         ],
       },
       select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        isPublised: true,
         uuid: true,
         name: true,
         description: true,
@@ -349,6 +373,8 @@ export class EventRepository {
         coverUrl: true,
         link: true,
         type: true,
+        slug: true,
+        groupId: true,
         group: {
           select: {
             uuid: true,
@@ -359,6 +385,11 @@ export class EventRepository {
                 fk_id_user: currentUser.id,
               },
             },
+          },
+        },
+        users: {
+          select: {
+            fk_id_user: true,
           },
         },
         _count: {
@@ -391,7 +422,7 @@ export class EventRepository {
               users: {
                 some: {
                   fk_id_user: currentUser.id,
-                  role: 'ADMIN',
+                  role: UserGroupRole.ADMIN,
                 },
               },
             },
@@ -410,7 +441,7 @@ export class EventRepository {
               users: {
                 some: {
                   fk_id_user: currentUser.id,
-                  role: 'ADMIN',
+                  role: UserGroupRole.ADMIN,
                 },
               },
             },
@@ -418,6 +449,11 @@ export class EventRepository {
         ],
       },
       select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        slug: true,
+        groupId: true,
         uuid: true,
         name: true,
         description: true,
@@ -434,6 +470,11 @@ export class EventRepository {
             uuid: true,
             name: true,
             description: true,
+          },
+        },
+        users: {
+          select: {
+            fk_id_user: true,
           },
         },
         _count: {
