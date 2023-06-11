@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, UserStatus } from '@prisma/client';
-import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
-import { PageOptionsBaseDto } from 'src/common/repository/dto/page-options-base.dto';
-import { PageDto } from 'src/common/repository/dto/page.dto';
+import { PageMetaDto } from 'src/common/page/page-meta.dto';
+import { PageOptionsBaseDto } from 'src/common/page/page-options-base.dto';
+import { PageDto } from 'src/common/page/page.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';

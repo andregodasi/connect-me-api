@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Prisma, User, UserStatus } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
-import { PageOptionsBaseDto } from 'src/common/repository/dto/page-options-base.dto';
-import { PageDto } from 'src/common/repository/dto/page.dto';
+import { PageMetaDto } from 'src/common/page/page-meta.dto';
+import { PageOptionsBaseDto } from 'src/common/page/page-options-base.dto';
+import { PageDto } from 'src/common/page/page.dto';
 import { EventService } from 'src/event/event.service';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';

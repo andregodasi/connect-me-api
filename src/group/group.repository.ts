@@ -8,8 +8,8 @@ import {
   UserStatus,
 } from '@prisma/client';
 import { isUUID } from 'class-validator';
-import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
-import { PageDto } from 'src/common/repository/dto/page.dto';
+import { PageMetaDto } from 'src/common/page/page-meta.dto';
+import { PageDto } from 'src/common/page/page.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { PageOptionGroupCommentDto } from './dto/page-option-group-comment.dto';

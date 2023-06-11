@@ -18,7 +18,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from '@prisma/client';
-import { PageOptionsBaseDto } from 'src/common/repository/dto/page-options-base.dto';
+import { PageOptionsBaseDto } from 'src/common/page/page-options-base.dto';
 
 @Controller('user')
 export class UserController {

@@ -20,12 +20,8 @@ import { PageOptionGroupDto } from './dto/page-option-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { GroupRepository } from './group.repository';
 import { MailService } from 'src/mail/mail.service';
-import { PageDto } from 'src/common/repository/dto/page.dto';
-
-type GroupWithUsers = Group & {
-  users: Partial<UserGroup>[];
-  _count: { users: number };
-};
+import { PageDto } from 'src/common/page/page.dto';
+import { GroupWithUsers } from 'src/common/types/group-with-users.type';
 
 @Injectable()
 export class GroupService {

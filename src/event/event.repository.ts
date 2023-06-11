@@ -8,9 +8,9 @@ import {
   UserGroupRole,
 } from '@prisma/client';
 import { isUUID } from 'class-validator';
-import { PageMetaDto } from 'src/common/repository/dto/page-meta.dto';
-import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
-import { PageDto } from 'src/common/repository/dto/page.dto';
+import { PageMetaDto } from 'src/common/page/page-meta.dto';
+import { PageOptionsDto } from 'src/common/page/page-options.dto';
+import { PageDto } from 'src/common/page/page.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';

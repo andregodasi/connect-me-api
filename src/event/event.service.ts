@@ -6,7 +6,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Event, EventNotificationType, User, UserEvent } from '@prisma/client';
-import { PageOptionsDto } from 'src/common/repository/dto/page-options.dto';
+import { PageOptionsDto } from 'src/common/page/page-options.dto';
 import { FileService } from 'src/file/file.service';
 import { GroupService } from 'src/group/group.service';
 import { MailService } from 'src/mail/mail.service';
@@ -16,12 +16,8 @@ import { PageOptionEventCommentDto } from './dto/page-option-event-comment.dto';
 import { PageOptionEventDto } from './dto/page-option-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventRepository } from './event.repository';
-import { PageDto } from 'src/common/repository/dto/page.dto';
-
-type EventWithUsers = Event & {
-  users: Partial<UserEvent>[];
-  _count: { users: number };
-};
+import { PageDto } from 'src/common/page/page.dto';
+import { EventWithUsers } from 'src/common/types/event-with-users.type';
 
 @Injectable()
 export class EventService {

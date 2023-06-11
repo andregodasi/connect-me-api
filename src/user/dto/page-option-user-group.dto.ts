@@ -1,5 +1,5 @@
 import { IsUUID } from 'class-validator';
-import { PageOptionsBaseDto } from 'src/common/repository/dto/page-options-base.dto';
+import { PageOptionsBaseDto } from 'src/common/page/page-options-base.dto';
 
 export class PageOptionUserGroupDto extends PageOptionsBaseDto {
   constructor(page: number, take: number, groupUUID: string) {
