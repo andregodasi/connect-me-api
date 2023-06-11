@@ -140,6 +140,8 @@ model RecoveryPassword {
 }
 
 enum Degree {
+  INCOMPLETE_HIGH_SCHOOL
+  HIGH_SCHOOL
   UNDER_GRADUATE
   GRADUATE
   MASTER
