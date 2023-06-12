@@ -171,6 +171,7 @@ export class GroupRepository {
         users: {
           some: {
             fk_id_user: currentUser.id,
+            role: UserGroupRole.ADMIN,
           },
         },
       },
