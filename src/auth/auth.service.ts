@@ -23,6 +23,7 @@ export class AuthService {
       sub: user.uuid,
       name: user.name,
       email: user.email,
+      photoUrl: user.photoUrl,
     };
 
     return {
