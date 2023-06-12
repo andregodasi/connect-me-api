@@ -21,6 +21,6 @@ async function bootstrap() {
     region: process.env.AWS_BUCKET_REGION,
   });
 
-  await app.listen(3333);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
