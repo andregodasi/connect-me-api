@@ -21,12 +21,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - run: npm ci
       - run: npm run build --if-present
       - run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
   deploy: ## <-- this is the new stuff
     needs: build
     runs-on: ubuntu-latest
