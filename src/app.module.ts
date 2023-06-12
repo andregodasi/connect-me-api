@@ -15,6 +15,7 @@ import { RecoveryPasswordModule } from './recovery-password/recovery-password.mo
 import { TaskService } from './task/task.service';
 import { UserModule } from './user/user.module';
 import { PrismaClientExceptionFilter } from './prisma-client-exception.filter';
+import { SendMessageModule } from './send-message/send-message.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PrismaClientExceptionFilter } from './prisma-client-exception.filter';
     HttpModule,
     RecoveryPasswordModule,
     EventNotificationModule,
+    SendMessageModule,
   ],
   controllers: [AppController],
   providers: [

@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { EventComment, GroupComment, User } from '@prisma/client';
+import { UserWithoutPassword } from 'src/common/types/user-wtihout-password.type';
 
 @Injectable()
 export class MailService {
@@ -55,6 +56,18 @@ export class MailService {
       context: {
         reason: reasonDeleted,
       },
+    });
+  }
+
+  async sendMessage(
+    fromUser: UserWithoutPassword,
+    toUser: UserWithoutPassword,
+    message: string,
+  ) {
+    await this.mailerService.sendMail({
+      to: toUser.email,
+      cc: fromUser.email,
+      text: message,
     });
   }
 }

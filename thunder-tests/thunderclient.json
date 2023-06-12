@@ -809,5 +809,28 @@
       "bearer": "{{token}}"
     },
     "tests": []
+  },
+  {
+    "_id": "54e8b3a3-7fff-4440-a060-9ca6b0b11370",
+    "colId": "4d4dc526-c3fb-4ba3-88af-bfcbc51370e0",
+    "containerId": "",
+    "name": "sendMessage",
+    "url": "{{url_api}}/send-message",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2023-06-12T00:05:13.848Z",
+    "modified": "2023-06-12T00:06:15.589Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"toUserUUID\": \"uuid\",\n  \"message\": \"message here\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{token}}"
+    },
+    "tests": []
   }
 ]
