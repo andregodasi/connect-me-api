@@ -16,6 +16,6 @@ export class SendMessageService {
       throw new UnprocessableEntityException('User not found');
     }
 
-    this.mailService.sendMessage(currentUser, toUser, message);
+    await this.mailService.sendMessage(currentUser, toUser, message);
   }
 }
