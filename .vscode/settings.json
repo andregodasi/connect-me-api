@@ -1,5 +1,6 @@
 {
   "workbench.colorCustomizations": {
     "statusBar.background": "#1d4ed8"
-  }
+  },
+  "prettier.prettierPath": "./node_modules/prettier"
 }
