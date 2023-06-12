@@ -29,14 +29,14 @@ export class EventService {
     private readonly eventNotificationService: EventNotificationService,
   ) {}
 
-  private static userIsFollowed(event: EventWithUsers, user: User) {
-    return event.users.some((u) => user.id === u.fk_id_user);
+  private static userIsFollowed(event: any, user: User) {
+    return event.users.some((u) => user.uuid === u.user.uuid);
   }
 
   private static prepareEntity(event: EventWithUsers, user: User) {
-    const isFollowed = this.userIsFollowed(event, user);
+    const isSubscribed = this.userIsFollowed(event, user);
 
-    event['isFollowed'] = isFollowed;
+    event['isSubscribed'] = isSubscribed;
     event['countUsers'] = event._count.users;
 
     delete event._count;
