@@ -8,16 +8,14 @@ import { MailService } from './mail.service';
   imports: [
     MailerModule.forRoot({
       transport: {
-        host: process.env.EMAIL_HOST,
-        port: Number(process.env.EMAIL_PORT),
-        secure: false,
+        service:'gmail',
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASSWORD,
         },
       },
       defaults: {
-        from: 'andre.godasi@hotmail.com',
+        from: 'connect.me.develop@gmail.com',
       },
       preview: true,
       template: {
