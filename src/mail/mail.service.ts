@@ -7,26 +7,28 @@ import { UserWithoutPassword } from 'src/common/types/user-wtihout-password.type
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
-  async sendConfirmEmail(email: string, uuid: string) {
-    const url = `${process.env.API_URL}/user/confirm-email/${uuid}`;
+  async sendConfirmEmail(email: string, uuid: string, name: string) {
+    const url = `${process.env.FRONTEND_URL}/confirm-email/${uuid}`;
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Confirm email',
+      subject: 'Confirmação de e-mail!',
       template: 'confirm_email',
       context: {
         url,
+        name,
       },
     });
   }
 
-  async sendRecoveryPassword(email: string, uuid: string) {
+  async sendRecoveryPassword(email: string, name: string, uuid: string) {
     const url = `${process.env.FRONTEND_URL}/recovery-password/${uuid}`;
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Recovery Password',
+      subject: 'Solicitação de recuperação de senha.',
       template: 'recovery_password',
       context: {
         url,
+        name,
       },
     });
   }
