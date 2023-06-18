@@ -1,1 +1,284 @@
-<link>{{url}}</link>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Email Template</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+  </head>
+  <body style="margin: 0; padding: 0">
+    <style type="text/css">
+      #outlook a {
+        padding: 0;
+      } /* Force Outlook to provide a "view in browser" message */
+      .ExternalClass p,
+      .ExternalClass span,
+      .ExternalClass font,
+      .ExternalClass td {
+        line-height: 100%;
+      }
+      .ExternalClass {
+        width: 100%;
+      }
+      html,
+      body {
+        height: 100%;
+        background-color: #f9fafb;
+        font-family: Roboto, Raleway, Open Sans, Helvetica, Arial, sans-serif;
+      }
+      body,
+      table,
+      td,
+      a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      } /* Prevent WebKit and Windows mobile changing default text sizes */
+      table,
+      td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      } /* Remove spacing between tables in Outlook 2007 and up */
+      img {
+        -ms-interpolation-mode: bicubic;
+      } /* Allow smoother rendering of resized image in Internet Explorer */
+
+      /* RESET STYLES */
+
+      a:hover {
+        text-decoration: underline;
+      }
+      a:visited {
+        text-decoration: none;
+        color: inherit;
+      }
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      table {
+        border-collapse: collapse !important;
+      }
+
+      .table-container {
+        border-radius: 10px;
+        border-collapse: inherit;
+      }
+
+      .btn-action {
+        font-size: 16px;
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 28px;
+        background-color: #2563eb;
+        text-decoration-line: none;
+        padding: 10px 20px 10px 20px;
+        border: 1px solid #fff;
+        display: block;
+      }
+
+      .btn-action:hover {
+        opacity: 0.8;
+        text-decoration-line: none;
+      }
+
+      .title {
+        font-weight: 700;
+        color: #111827;
+      }
+
+      .paragraph {
+        color: #111827;
+        font-weight: 700;
+      }
+
+      @media screen and (max-width: 601px) {
+        table[class='responsive-table'] {
+          width: 100% !important;
+        }
+      }
+    </style>
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+      bgcolor="#f9fafb"
+      style="table-layout: fixed"
+    >
+      <tbody>
+        <tr>
+          <td valign="top" align="center" style="padding-top: 30px">
+            <a href="/" target="_blank">
+              <img
+                width="200px"
+                style="margin-bottom: 1rem;"
+                src="https://s3-dev-connect-me.s3.sa-east-1.amazonaws.com/assets/new-logo-connect-me.svg"
+                alt="Company Logo"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="center">
+            <table
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              height="100%"
+              width="600px"
+              class="responsive-table"
+              style="table-layout: fixed"
+            >
+              <tr>
+                <td
+                  valign="top"
+                  style="padding-top: 10px; padding-bottom: 15px"
+                >
+                  <table
+                    class="table-container"
+                    cellpadding="0"
+                    cellspacing="0"
+                    width="100%"
+                    bgcolor="#ffffff"
+                    style="
+                      border: 1px solid #eee;
+                      table-layout: fixed;
+                      border-collapse: initial !important;
+                    "
+                  >
+                    <tbody>
+                      <tr>
+                        <td valign="top" style="padding: 30px">
+                          <h1
+                            class="title"
+                            style="margin: 0; mso-line-height-rule: exactly"
+                          >
+                            Confirme seu e-mail
+                          </h1>
+
+                          <p  class="paragraph">Fala {{name}},</p>
+                          <p  class="paragraph">
+                            Confirme seu endereço de e-mail para completar o
+                            cadastro da sua conta. Basta clicar no botão abaixo.
+                          </p>
+                          <table
+                            border="0"
+                            cellpadding="0"
+                            cellspacing="0"
+                            width="100%"
+                            style="table-layout: fixed"
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  align="center"
+                                  style="
+                                    padding-top: 15px;
+                                    padding-bottom: 30px;
+                                  "
+                                >
+                                  <table
+                                    border="0"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    width="250"
+                                    style="
+                                      margin: 0;
+                                      padding: 0;
+                                      table-layout: fixed;
+                                      border-radius: 4px;
+                                    "
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          align="center"
+                                          style="border-radius: 100px"
+                                        >
+                                          <a
+                                            href="{{url}}"
+                                            target="_blank"
+                                            class="btn-action"
+                                          >
+                                            Confirmar seu e-mail</a
+                                          >
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <p
+                            style="
+                              line-height: 1.5;
+                              font-size: 12px;
+                              color: #999;
+                            "
+                          >
+                            Não criou uma conta?
+                            <br />
+                            Você pode ignorar esta mensagem com segurança, pois
+                            seu e-mail provavelmente foi digitado por engano.
+                          </p>
+                          <p class="paragraph">
+                            Obrigado,
+                            <br />
+                            O time do Connect me
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            align="center"
+            style="padding-bottom: 10px; color: #999; font-size: 12px"
+          >
+            © 2021 Connect me. Todos os direitos reservados.
+          </td>
+        </tr>
+        <tr>
+          <td
+            valign="top"
+            align="center"
+            style="font-size: 12px; padding-bottom: 50px"
+          >
+            <a
+              href="https://connect-me-dev.vercel.app/"
+              target="_blank"
+              style="color: #999; text-decoration: none"
+              >Política de privacidade</a
+            >
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a
+              href="https://connect-me-dev.vercel.app/"
+              target="_blank"
+              style="color: #999; text-decoration: none"
+              >Entre em contato</a
+            >
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a
+              href="https://connect-me-dev.vercel.app/"
+              target="_blank"
+              style="color: #999; text-decoration: none"
+              >connect-me-dev.vercel.app</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
