@@ -62,9 +62,10 @@ export class UserController {
   }
 
   @IsPublic()
-  @Get('/confirm-email/:uuid')
+  @Put('/confirm-email/:uuid')
   async confirmEmail(@Param('uuid') uuid: string) {
-    await this.userService.setConfirmEmail(uuid);
+    const data = await this.userService.setConfirmEmail(uuid);
+    return data;
   }
 
   @Put('/current/profile')

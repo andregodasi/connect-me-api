@@ -14,6 +14,7 @@ import { PageOptionUserGroupDto } from './dto/page-option-user-group.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserRepository } from './user.repository';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class UserService {
@@ -43,7 +44,7 @@ export class UserService {
     const createdUser = await this.userRepository.create(data);
 
     this.mailService
-      .sendConfirmEmail(createdUser.email, createdUser.uuid)
+      .sendConfirmEmail(createdUser.email, createdUser.uuid, createdUser.name)
       .catch((e) => console.error(`Error to send confirm email: ${e}`));
 
     return UserDto.removeBaseFieldsAndPassword(createdUser);
@@ -59,11 +60,15 @@ export class UserService {
   }
 
   async setConfirmEmail(uuid: string) {
-    await this.userRepository.updateConfirmEmailAndStatus(
+    if (!isUUID(uuid)) {
+      throw new UnauthorizedException('invalid uuid');
+    }
+    const data = await this.userRepository.updateConfirmEmailAndStatus(
       uuid,
       true,
       UserStatus.ACTIVATED,
     );
+    return UserDto.removeBaseFieldsAndPassword(data);
   }
 
   async paginateByGroup(page: PageOptionUserGroupDto) {

@@ -12,16 +12,22 @@ export class RecoveryPasswordService {
   ) {}
 
   async insert(userEmail: string) {
-    const user = await this.prismaService.user.findUniqueOrThrow({
+    const user = await this.prismaService.user.findUnique({
       where: { email: userEmail },
     });
+
+    if (!user) {
+      throw new BadRequestException(
+        'Não encontramos esse e-mail em nossa base.',
+      );
+    }
 
     const recoveryPassword = await this.prismaService.recoveryPassword.create({
       data: { user: { connect: { id: user.id } } },
     });
 
     this.mailService
-      .sendRecoveryPassword(user.email, recoveryPassword.uuid)
+      .sendRecoveryPassword(user.email, user.name, recoveryPassword.uuid)
       .catch((e) => console.error(`Error to send recovery password: ${e}`));
   }
 
