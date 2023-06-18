@@ -195,6 +195,7 @@ export class GroupRepository {
   ) {
     let queryUser: Prisma.UserGroupFindManyArgs | boolean = false;
     let queryIsFollowing: Prisma.UserGroupListRelationFilter;
+    let queryGroupName: string | Prisma.StringFilter;
 
     if (currentUser) {
       queryUser = {
@@ -236,8 +237,16 @@ export class GroupRepository {
       };
     }
 
+    if (pageOptionGroupDto.q) {
+      queryGroupName = {
+        contains: pageOptionGroupDto.q,
+        mode: 'insensitive',
+      };
+    }
+
     const where: Prisma.GroupWhereInput = {
       isPublised: true,
+      name: queryGroupName,
       users: queryIsFollowing,
     };
 
