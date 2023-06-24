@@ -126,6 +126,8 @@ export class GroupRepository {
                 uuid: true,
                 name: true,
                 nickname: true,
+                photoUrl: true,
+                title: true,
               },
             },
           },
@@ -135,6 +137,7 @@ export class GroupRepository {
             uuid: true,
             name: true,
             description: true,
+            coverUrl: true,
           },
         },
         _count: {

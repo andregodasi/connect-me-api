@@ -49,11 +49,21 @@ export class GroupService {
     return group.users.some((u) => user.id === u.fk_id_user);
   }
 
+  private static getOrganizer(group: GroupWithUsers) {
+    return group.users.find(
+      (u) =>
+        u.role === UserGroupRole.ADMIN &&
+        u.status === UserGroupStatus.ACTIVATED,
+    );
+  }
+
   private static prepareEntity(group: GroupWithUsers, user: User) {
     const isFollowed = this.userIsFollowed(group, user);
+    const organizer = this.getOrganizer(group);
 
     group['isFollowed'] = isFollowed;
     group['countUsers'] = group._count.users;
+    group['organizer'] = organizer?.[`user`];
 
     delete group._count;
     delete group.id;
@@ -246,7 +256,6 @@ export class GroupService {
     }
 
     await this.groupRepository.deleteComment(comment.id, reasonDeleted);
-
     await this.mailService.sendReasonGroupCommentDeleted(
       comment,
       reasonDeleted,
