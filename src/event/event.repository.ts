@@ -142,16 +142,35 @@ export class EventRepository {
           select: {
             uuid: true,
             name: true,
+            users: {
+              select: {
+                user: {
+                  select: {
+                    uuid: true,
+                    name: true,
+                    photoUrl: true,
+                    title: true,
+                  },
+                },
+              },
+              where: {
+                role: {
+                  equals: UserGroupRole.ADMIN,
+                },
+              },
+            },
           },
         },
         users: {
           select: {
             fk_id_user: true,
+
             user: {
               select: {
                 uuid: true,
                 name: true,
                 nickname: true,
+                photoUrl: true,
               },
             },
           },
@@ -596,6 +615,7 @@ export class EventRepository {
         text: true,
         starts: true,
         reasonDeleted: true,
+        createdAt: true,
         user: {
           select: {
             uuid: true,

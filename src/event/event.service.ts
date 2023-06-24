@@ -44,7 +44,6 @@ export class EventService {
     delete event._count;
     delete event.id;
     delete event.groupId;
-
     return event;
   }
 
@@ -233,7 +232,6 @@ export class EventService {
     }
 
     await this.eventRepository.deleteComment(comment.id, reasonDeleted);
-
     await this.mailService.sendReasonEventCommentDeleted(
       comment,
       reasonDeleted,
