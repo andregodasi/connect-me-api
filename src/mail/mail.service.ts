@@ -11,7 +11,7 @@ export class MailService {
     const url = `${process.env.FRONTEND_URL}/confirm-email/${uuid}`;
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Confirmação de e-mail!',
+      subject: 'Confirmação de e-mail! | Connect me',
       template: 'confirm_email',
       context: {
         url,
@@ -24,7 +24,7 @@ export class MailService {
     const url = `${process.env.FRONTEND_URL}/recovery-password/${uuid}`;
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Solicitação de recuperação de senha.',
+      subject: 'Solicitação de recuperação de senha. | Connect me',
       template: 'recovery_password',
       context: {
         url,
@@ -39,10 +39,12 @@ export class MailService {
   ) {
     await this.mailerService.sendMail({
       to: eventComment.user.email,
-      subject: 'Event Comment Deleted',
+      subject: 'Seu comentáro foi arquivado! | Connect me',
       template: 'reason_event_comment_deleted',
       context: {
+        eventName: eventComment['event']['name'],
         reason: reasonDeleted,
+        comment: eventComment['text'],
       },
     });
   }
@@ -53,10 +55,12 @@ export class MailService {
   ) {
     await this.mailerService.sendMail({
       to: groupComment.user.email,
-      subject: 'Group Comment Deleted',
+      subject: 'Seu comentáro foi arquivado! | Connect me',
       template: 'reason_group_comment_deleted',
       context: {
+        communityName: groupComment['group']['name'],
         reason: reasonDeleted,
+        comment: groupComment.text,
       },
     });
   }
@@ -69,7 +73,14 @@ export class MailService {
     await this.mailerService.sendMail({
       to: toUser.email,
       cc: fromUser.email,
-      text: message,
+      subject: 'Você recebeu um salve ! | Connect me',
+      template: 'send_hail',
+      context: {
+        message,
+        fromName: fromUser.name,
+        toName: toUser.name,
+        fromProfileUrl: `${process.env.FRONTEND_URL}/profile/${fromUser.uuid}`,
+      },
     });
   }
 }
