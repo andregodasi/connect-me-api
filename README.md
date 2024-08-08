@@ -71,10 +71,6 @@ $ npm run start:prod
 
 A api estará disponível em [http://localhost:3333](http://localhost:3333).
 
-## 📝 License
-
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
-
 ---
 
 ## 🦸 Autor
