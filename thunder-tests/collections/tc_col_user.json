@@ -1,0 +1,167 @@
+{
+    "_id": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+    "colName": "user",
+    "created": "2022-07-26T01:38:58.220Z",
+    "sortNum": 20000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "970aa03a-a383-4313-8eb2-e45f7df3fd6e",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "create",
+            "url": "{{url_api}}/user",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-07-26T01:41:17.608Z",
+            "modified": "2023-06-12T20:24:32.940Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"email\": \"wehig43606@peogi.com\",\n    \"password\": \"@Juca123\",\n    \"name\": \"Juca G\",\n    \"nickname\": \"teste222\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ea94f38a-0e01-4f55-9981-e8312cb4657b",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "me",
+            "url": "{{url_api}}/me",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2022-07-29T02:10:43.060Z",
+            "modified": "2022-07-29T02:13:15.292Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9af9f1df-afbe-41e4-8a76-0dee9afb3f42",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "confirmEmail",
+            "url": "{{url_api}}/user/confirm-email/8945fc87-04df-46d1-a5f3-e422e26f07fb",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-04-25T19:54:15.852Z",
+            "modified": "2023-05-29T00:44:17.387Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b2bd2235-eda5-4953-a09c-2cbc49853076",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "paginateByGroup",
+            "url": "{{url_api}}/user/page/group?groupUUID",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-04-27T00:09:09.205Z",
+            "modified": "2023-04-27T00:11:08.718Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "groupUUID",
+                    "value": "",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "5e46706e-489a-4a27-9dca-dfa8fe745331",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "paginateByEvent",
+            "url": "{{url_api}}/user/page/event?eventUUID",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-04-27T00:10:05.551Z",
+            "modified": "2023-04-27T00:11:07.046Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "eventUUID",
+                    "value": "",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e4f881ae-8944-4c9e-8b7c-c698bd875471",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "updateCurrentProfile",
+            "url": "{{url_api}}/user/current/profile",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2023-05-19T20:35:48.012Z",
+            "modified": "2023-05-19T21:44:42.118Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Juca G\",\n  \"nickname\": \"caju\",\n  \"title\": \"alterado\",\n  \"aboutMe\": \"about meeee\",\n  \"companyName\": \"company\",\n  \"companyRole\": \"company role\",\n  \"degree\": \"GRADUATE\",\n  \"socialNetworks\": [\n    {\n      \"type\": \"GITHUB\",\n      \"link\": \"github.com\"\n    }\n  ],\n  \"knowledge\": [\n    {\n      \"name\": \"knowledge\",\n      \"description\": \"descriptioonnn\"\n    }\n  ]\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "e037c953-3289-4505-890e-f3beb543c674",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "getCurrentProfile",
+            "url": "{{url_api}}/user/current/profile",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-05-19T21:42:53.385Z",
+            "modified": "2023-05-19T21:44:49.158Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "91cd5f8a-9897-4fc4-b71f-adf559da1fd5",
+            "colId": "d8ff4868-5a19-4334-b66e-ef3978e0e6e2",
+            "containerId": "",
+            "name": "getProfileByUUID",
+            "url": "{{url_api}}/user/36411e7c-c239-452c-ad6f-9eb3510a4319/profile",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-05-19T21:43:15.328Z",
+            "modified": "2023-05-19T21:44:55.802Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        }
+    ]
+}

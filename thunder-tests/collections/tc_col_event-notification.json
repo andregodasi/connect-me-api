@@ -1,0 +1,45 @@
+{
+    "_id": "754f81a8-b235-4663-9762-9c431504c413",
+    "colName": "event notification",
+    "created": "2023-05-28T01:25:16.432Z",
+    "sortNum": 80000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "0f998b6e-504f-4ce1-918c-f2c19415cd33",
+            "colId": "754f81a8-b235-4663-9762-9c431504c413",
+            "containerId": "",
+            "name": "findByUserIdAndIsNotRead",
+            "url": "{{url_api}}/event-notification",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-05-28T01:26:34.378Z",
+            "modified": "2023-05-28T01:26:56.465Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "87763ce4-4626-465a-81cd-c2fbff197e41",
+            "colId": "754f81a8-b235-4663-9762-9c431504c413",
+            "containerId": "",
+            "name": "markAsRead",
+            "url": "{{url_api}}/event-notification/c69a5fc0-c4f4-4715-a721-7381ed86379a/read",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2023-05-28T01:27:42.471Z",
+            "modified": "2023-05-28T01:28:44.718Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        }
+    ]
+}

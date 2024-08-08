@@ -1,32 +1,56 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img alt="Inoa" width="220" src="https://raw.githubusercontent.com/andregodasi/connect-me-ui/3161a801e8b4978b1258cca7eccb013898650fea/src/images/logos/new-logo-connect-me.svg">
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 💻 Projeto
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Monografia apresentada ao curso de Pós graduação em Desenvolvimento Ágil de Software, Setor de Educação Profissional e Tecnologia, Universidade Federal do Paraná, como requisito parcial à obtenção do título de Especialista em Desenvolvimento Ágil de Software
 
-## Description
+## 📜 Monografia
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Acesse a monografia clicando [aqui](https://github.com/andregodasi/connect-me-ui/blob/main/public/doc-connect-me.pdf).
 
-## Installation
+## 📑 Resumo
+
+No contexto atual, há uma demanda crescente por eventos e comunidades que promovam networking, aprendizado e troca de conhecimentos. No entanto, a organização desses eventos e a busca por comunidades adequadas podem ser desafiadoras, com a dispersão de informações e a falta de uma plataforma centralizada. Este trabalho apresenta o desenvolvimento da Plataforma Connect me, um sistema de gerenciamento de eventos e comunidades. O objetivo do sistema é proporcionar uma plataforma que conecta pessoas interessadas em eventos e comunidades, facilitando a organização e participação em atividades relevantes. O sistema oferece um ambiente online onde os usuários podem encontrar informações sobre eventos e comunidades relacionadas aos seus interesses profissionais, acadêmicos ou pessoais. Foi desenvolvido utilizando-se da linguagem JavaScript, os frameworks ReactJS com NextJS e NestJS e banco de dados Postgresql.
+
+## 🧪 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+- [Node](https://nodejs.org/)
+- [Nest](https://nestjs.com/)
+- [Prisma](https://www.prisma.io/)
+- [postgres](https://www.postgresql.org/)
+
+## 🖼️ Veja mais sobre projeto
+
+<h1 align="center">
+    <img alt="home" src="https://github.com/andregodasi/connect-me-ui/blob/main/src/images/screenshots/home-page.png?raw=true" />
+</h1>
+
+<h1 align="center">
+    <img alt="home-logged" src="https://github.com/andregodasi/connect-me-ui/blob/main/src/images/screenshots/home-logged.png?raw=true" />
+</h1>
+
+<h1 align="event">
+    <img alt="Challenge" src="https://github.com/andregodasi/connect-me-ui/blob/main/src/images/screenshots/event-details.png?raw=true" />
+</h1>
+
+<h1 align="community">
+    <img alt="Challenge" src="https://github.com/andregodasi/connect-me-ui/blob/main/src/images/screenshots/community-details.png?raw=true" />
+</h1>
+
+## 🚀 Como executar
+
+Clone o projeto e acesse a pasta do mesmo.
+
+```bash
+$ git clone https://github.com/andregodasi/connect-me-api.git
+$ cd connect-me-api
+```
+
+Para iniciá-lo, siga os passos abaixo:
 
 ```bash
 $ npm install
@@ -45,29 +69,26 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+A api estará disponível em [http://localhost:3333](http://localhost:3333).
 
-```bash
-# unit tests
-$ npm run test
+## 📝 License
 
-# e2e tests
-$ npm run test:e2e
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
 
-# test coverage
-$ npm run test:cov
-```
+---
 
-## Support
+## 🦸 Autor
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+<a href="https://www.linkedin.com/in/andre-godasi/">
+ <img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/C4D03AQGxOMYvdCao3A/profile-displayphoto-shrink_200_200/0/1661188755674?e=1724284800&v=beta&t=9ZeBK2WzsdYpBxjA4RG2TijNkI4d0iKD2HyL7zT9mn4" width="100px;" alt=""/>
+ <br />
+ <sub><b>André Gonçalves</b></sub></a> <a href="https://www.linkedin.com/in/andre-godasi/" title="André Gonçalves">🚀</a>
+ <br />
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 📝 Licença
 
-## License
+Este projeto esta sobe a licença [MIT](./LICENSE).
 
-Nest is [MIT licensed](LICENSE).
+Feito por André Gonçalves 👋🏽 [Entre em contato!](https://www.linkedin.com/in/andre-godasi/)

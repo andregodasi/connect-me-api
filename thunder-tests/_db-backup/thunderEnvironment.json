@@ -9,7 +9,7 @@
     "data": [
       {
         "name": "url_api",
-        "value": "localhost:3333"
+        "value": "https://connectme-dev.herokuapp.com"
       },
       {
         "name": "token",

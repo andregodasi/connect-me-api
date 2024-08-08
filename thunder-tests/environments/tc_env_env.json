@@ -1,0 +1,18 @@
+{
+    "_id": "d5f5731a-3e4d-4fb4-97f4-81294dd8360b",
+    "name": "env",
+    "default": true,
+    "sortNum": 5000,
+    "created": "2022-07-26T00:23:58.943Z",
+    "modified": "2022-10-24T19:39:59.194Z",
+    "data": [
+        {
+            "name": "url_api",
+            "value": "https://connectme-dev.herokuapp.com"
+        },
+        {
+            "name": "token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZDcwMjQxOS1jYzJjLTQzNGEtOWNjNi1jNjFjMDAxMmE4YTIiLCJuYW1lIjoiSnVjYSBHIiwiZW1haWwiOiJwZXN1bkBlbXZpbC5jb20iLCJpYXQiOjE2ODU0ODU2MDEsImV4cCI6MTY4ODA3NzYwMX0.QrKCvRaneCAuM_LBw8FYUYzb-hko98vCZ3VaNlld9ao"
+        }
+    ]
+}

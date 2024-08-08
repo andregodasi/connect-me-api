@@ -1,0 +1,296 @@
+{
+    "_id": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+    "colName": "group",
+    "created": "2022-07-28T01:28:44.780Z",
+    "sortNum": 30000,
+    "folders": [],
+    "settings": {
+        "headers": [],
+        "auth": {
+            "type": "bearer",
+            "bearer": "{{token}}"
+        },
+        "tests": []
+    },
+    "requests": [
+        {
+            "_id": "7e58c7e8-f60c-4968-9437-d92087cc9c8e",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "create",
+            "url": "{{url_api}}/group",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-07-28T01:35:02.414Z",
+            "modified": "2023-05-30T22:27:48.508Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "teste1"
+                    },
+                    {
+                        "name": "description",
+                        "value": "teste1"
+                    },
+                    {
+                        "name": "slug",
+                        "value": "teste1"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "coverImage",
+                        "value": "../../../../../Downloads/group_image.png"
+                    }
+                ]
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b8519fee-e877-4fb7-9413-fcf72a8db4ef",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "findByIdentifier",
+            "url": "{{url_api}}/group/09182dd7-cda3-4c9b-a616-6b539361fd6d",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2022-07-28T02:33:57.804Z",
+            "modified": "2022-09-14T21:09:07.953Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "43ec7280-59cf-4abd-8439-2cf2d62b0356",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "update",
+            "url": "{{url_api}}/group/3b139d0a-bdba-4459-ab4e-2cf6643b4da5",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2022-07-28T03:02:56.263Z",
+            "modified": "2022-09-19T19:14:51.359Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Mussum\",\n  \"slug\": \"Mussum\",\n  \"description\": \"Mussum Ipsum, cacilds vidis litro abertis. Atirei o pau no gatis, per gatis num morreus.Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Quem num gosta di mim que vai caçá sua turmis!Si num tem leite então bota uma pinga aí cumpadi!\",\n  \"uuid\": \"3b139d0a-bdba-4459-ab4e-2cf6643b4da5\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "3d6f0690-9f98-47ed-ac4f-c81da9fd6d87",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "deleteGroup",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2022-07-28T03:39:34.594Z",
+            "modified": "2023-05-27T14:41:05.655Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "52501908-5904-4e1d-ba85-3ea32eaff2b1",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "findAllMyGroups",
+            "url": "{{url_api}}/group/my",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2022-08-23T03:46:41.336Z",
+            "modified": "2022-08-23T03:48:08.246Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "b8352805-f61b-4dc5-b598-eb04dac206d3",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "paginated",
+            "url": "{{url_api}}/group/paginated?page=1",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2022-09-13T22:07:20.044Z",
+            "modified": "2022-09-14T01:46:24.220Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "83da6517-9f7a-42ae-8ffa-e983b5b7f8fd",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "publish",
+            "url": "{{url_api}}/group/67c00416-b846-4ea9-a7da-72e4684ada90/publish",
+            "method": "PUT",
+            "sortNum": 70000,
+            "created": "2023-05-19T22:04:40.724Z",
+            "modified": "2023-06-09T00:13:40.642Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "d1efa109-147f-4e37-896d-9832a40c2f63",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "insertComment",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/comment",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2023-05-19T22:06:47.550Z",
+            "modified": "2023-05-20T00:40:55.847Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"text\": \"olhaaa\",\n  \"starts\": 5\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "72b4c94e-f2e6-4c16-8d5b-d796d4a71044",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "getPaginatedPublicComments",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/comment/public-paginated",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-05-19T22:09:37.674Z",
+            "modified": "2023-05-19T22:09:56.592Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "5db45901-e02f-4404-a1f1-1525b7dd598c",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "getPaginatedComments",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/comment/paginated",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2023-05-19T22:10:10.700Z",
+            "modified": "2023-05-19T22:10:23.519Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "9cf9da49-c21a-4f6e-b058-e469bc94a4ed",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "deleteComment",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/comment/b65dabc1-d5f6-4b14-8fee-4882230adadf",
+            "method": "PUT",
+            "sortNum": 110000,
+            "created": "2023-05-19T22:10:38.639Z",
+            "modified": "2023-05-20T00:43:33.123Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"reasonDeleted\": \"apagado\"\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "7e9407a4-8a20-45c1-8a22-1770297db724",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "getFollowers",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/followers",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2023-05-20T00:44:34.309Z",
+            "modified": "2023-05-20T00:44:54.428Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "a0ec9b4a-aaa9-4564-b68c-ef7fb120a7f8",
+            "colId": "0a971558-0c42-4cad-a7ff-d0d28ab20c9e",
+            "containerId": "",
+            "name": "getEvents",
+            "url": "{{url_api}}/group/ac2a7d27-3783-4be6-a2c8-2b9d915563b1/events",
+            "method": "GET",
+            "sortNum": 130000,
+            "created": "2023-05-20T00:45:15.369Z",
+            "modified": "2023-05-20T00:45:25.372Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        }
+    ]
+}
